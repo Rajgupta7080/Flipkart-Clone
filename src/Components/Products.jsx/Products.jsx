@@ -1,27 +1,68 @@
 import React, { useState } from 'react'
 // import ProductItem from './ProductItem'
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Badge, Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Center, Checkbox, CheckboxGroup, Flex, HStack, Image, LinkBox, RangeSlider, RangeSliderFilledTrack, RangeSliderThumb, RangeSliderTrack, SimpleGrid, Square, Stack, StackDivider, Tab, TabList, TabPanel, TabPanels, Tabs, Tag, TagCloseButton, TagLabel, Text, useCheckboxGroup, VStack, Wrap, WrapItem } from '@chakra-ui/react'
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Badge, Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Center, Checkbox, CheckboxGroup, Flex, HStack, Image, LinkBox, RangeSlider, RangeSliderFilledTrack, RangeSliderThumb, RangeSliderTrack, SimpleGrid, Square, Stack, StackDivider, Tab, TabList, TabPanel, TabPanels, Tabs, Tag, TagCloseButton, TagLabel, Text, useCheckboxGroup, VStack, Wrap, WrapItem } from '@chakra-ui/react'
 import { ChevronRightIcon, StarIcon } from '@chakra-ui/icons'
 import { useEffect } from 'react'
 import ProductItem from './ProductItem'
 // import {StarIcon} from '@chakra-ui/icons'
-const url = `http://localhost:3006/TSHGGVCBZA4DGEES`
+const url = `http://localhost:3005`
 const Products = () => {
-    const { value, getCheckboxProps } = useCheckboxGroup()
     const [date, setData] =  useState([]);
+    const [page, setPage] = useState(1);
+    const perPagelimitProduct = 12;
+    const [total, setTotal] = useState(0);
+    // console.log(page , " page");
+    const [categories, setCategories] = useState("all");
+
+    const [discountFilter, setDiscountFilter] = useState(0);
+    const discountFilterurl = discountFilter!==0
+
+    const [priceRange, setPriceRange] = useState([]);
+    const priceRangeurl = priceRange[0]>0 || priceRange[1]<100?
+    `&new_price_gte=${priceRange[0]*10}${priceRange[1]<100?`&new_price_lte=${priceRange[1]*10}`:""}`:""
+
+    const [sortprice, setPriceSort] = useState("");
+    const pricesorturl = sortprice===""?"":`&_sort=new_price&_order=${sortprice}`
+
+    // const [sortRating, setSortRating] = useState("");
+    // const ratingsorturl = sortRating===""?"":`&hidden_stars_gte=${sortRating}`
+
+
+    const { value, getCheckboxProps } = useCheckboxGroup()
+    console.log(value, " val of checkbox ");
+    
+
     useEffect(()=>{
-        fetchData()
-    },[])
-    const fetchData = ()=>{
-        fetch(`${url}?_limit=20&_page=1`)
-        .then((res)=>res.json())
+        fetchData(categories)
+    },[page, sortprice, priceRangeurl, categories])
+
+    const fetchData = (categories="all")=>{
+        // const categories = categories
+        fetch(`${url}/${categories}?_limit=${perPagelimitProduct}&_page=${page}${pricesorturl}${priceRangeurl}`)
         .then((res)=>{
-            console.log(res, " res");
+            const total = res.headers.get('X-Total-Count')
+            setTotal(total);
+            // console.log(total, " total h");
+            return res.json()
+        })
+        .then((res)=>{
+            // console.log(res, " res");
             setData(res)
             // setData(res.attributeOptions[0])
         })
     }
+
+    const handlepagination= (curr)=>{
+        if(curr<=Math.ceil(total/perPagelimitProduct)){
+            setPage(curr)
+        }
+    }
+
+    const range = (start, stop) => Array.from({ length: (stop - start)}, (_, i) => start + (i))
     // console.log(value);
+    let arrpage = range(page-4,page+6);
+    // console.log( arrpage, " page");
+    
     return (
         <Box bg='#f1f3f6' border='1px solid #f1f3f6' fontFamily='Roboto,Arial,sans-serif'>
             <Flex spacing='10px' m={'8px'} >
@@ -64,16 +105,16 @@ const Products = () => {
                                     </AccordionButton>
                                     </h2>
                                     <AccordionPanel pb={4}>
-                                    <CheckboxGroup  defaultValue={['']}>
-                                        <Stack spacing={[1]} direction={['column']}>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Electronics' })} ><Text fontSize={'small'} fontWeight='500'>Electronics</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'TVs & Appliances' })}><Text fontSize={'small'} fontWeight='500'>TVs & Appliances</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "Men" })} ><Text fontSize={'small'} fontWeight='500'>Men</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Women' })} ><Text fontSize={'small'} fontWeight='500'>Women</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Baby & Kids' })} ><Text fontSize={'small'} fontWeight='500'>Baby & Kids</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Home & Furniture' })} ><Text fontSize={'small'} fontWeight='500'>Home & Furniture</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Sports' })} ><Text fontSize={'small'} fontWeight='500'>Sports</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Books' })} ><Text fontSize={'small'} fontWeight='500'>Books</Text></Checkbox>
+                                    <CheckboxGroup  defaultValue={['']} >
+                                        <Stack spacing={[1]} direction={['column']} >
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Appliances' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setCategories("appliances")}>Appliances</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Electronics' })}><Text fontSize={'small'} fontWeight='500' onClick={()=>setCategories("electronics")} >Electronics</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "Fashion" })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setCategories("fashion")}>Fashion</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Groceries' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setCategories("grocery")}>Groceries</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Mobiles' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setCategories("mobiles")}>Mobiles</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Home' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setCategories("home")}>Home</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'TopOffers' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setCategories("TopOffers")}>TopOffers</Text></Checkbox>
+                                            {/* <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Books' })} ><Text fontSize={'small'} fontWeight='500'>Books</Text></Checkbox> */}
                                         </Stack>
                                     </CheckboxGroup>
                                     </AccordionPanel>
@@ -111,14 +152,19 @@ const Products = () => {
                                     </AccordionButton>
                                     </h2>
                                     <AccordionPanel pb={4}>
-                                    <RangeSlider defaultValue={[0, 100]} 
-                                        onChangeEnd={(val) => console.log(val)}>
-                                                <RangeSliderTrack>
-                                                    <RangeSliderFilledTrack bg={'#2874F0'}/>
-                                                </RangeSliderTrack>
-                                                <RangeSliderThumb index={0} />
-                                                <RangeSliderThumb index={1} />
-                                            </RangeSlider>
+                                        <RangeSlider defaultValue={[0, 100]} 
+                                            onChangeEnd={(val) => setPriceRange(val)}>
+                                            <RangeSliderTrack>
+                                                <RangeSliderFilledTrack bg={'#2874F0'}/>
+                                            </RangeSliderTrack>
+                                            <RangeSliderThumb index={0} />
+                                            <RangeSliderThumb index={1} />
+                                        </RangeSlider>
+                                        <Flex mt='10px' justify={'space-between'} align='center'>
+                                            <Text color={'black'} bg='#fff' border={'0.6px solid #d7d7d7'} borderRadius='2px' p='0px 28px' fontSize={'14px'}>{priceRange[0]>0?priceRange[0]*10:"Min"}</Text>
+                                            <Text fontSize={'15px'} >to</Text>
+                                            <Text bg='#fff' border={'0.6px solid #d7d7d7'} borderRadius='2px' p='0px 28px' fontSize={'14px'}>{priceRange[1]<100?priceRange[1]*10:"1000+"}</Text>
+                                        </Flex>
                                     </AccordionPanel>
                                 </AccordionItem>
 
@@ -151,26 +197,6 @@ const Products = () => {
                                     <h2>
                                     <AccordionButton>
                                         <Box flex='1'  textAlign='left' fontWeight='bold' fontSize='small' textTransform={'uppercase'}>
-                                        OFFERS
-                                        </Box>
-                                        <AccordionIcon />
-                                    </AccordionButton>
-                                    </h2>
-                                    <AccordionPanel pb={4}>
-                                    <CheckboxGroup  defaultValue={['']}>
-                                        <Stack spacing={[1]} direction={['column']}>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Buy More, Save More' })} ><Text fontSize={'small'} fontWeight='500'>Buy More, Save More</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'No Cost EMI' })}><Text fontSize={'small'} fontWeight='500'>No Cost EMI</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "Special Price" })} ><Text fontSize={'small'} fontWeight='500'>Special Price</Text></Checkbox>
-                                        </Stack>
-                                    </CheckboxGroup>
-                                    </AccordionPanel>
-                                </AccordionItem>
-
-                                <AccordionItem p={'5px'}>
-                                    <h2>
-                                    <AccordionButton>
-                                        <Box flex='1'  textAlign='left' fontWeight='bold' fontSize='small' textTransform={'uppercase'}>
                                         DISCOUNT
                                         </Box>
                                         <AccordionIcon />
@@ -179,11 +205,11 @@ const Products = () => {
                                     <AccordionPanel pb={4}>
                                     <CheckboxGroup  defaultValue={['']}>
                                         <Stack spacing={[1]} direction={['column']}>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '30% or more' })} ><Text fontSize={'small'} fontWeight='500'>30% or more</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '40% or more' })}><Text fontSize={'small'} fontWeight='500'>40% or more</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "50% or more" })} ><Text fontSize={'small'} fontWeight='500'>50% or more</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '60% or more' })} ><Text fontSize={'small'} fontWeight='500'>60% or more</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '70% or more' })} ><Text fontSize={'small'} fontWeight='500'>70% or more</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '30% or more' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setDiscountFilter(30)}>30% or more</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '40% or more' })}><Text fontSize={'small'} fontWeight='500'  onClick={()=>setDiscountFilter(40)}>40% or more</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "50% or more" })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setDiscountFilter(50)}>50% or more</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '60% or more' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setDiscountFilter(60)}>60% or more</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '70% or more' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setDiscountFilter(70)}>70% or more</Text></Checkbox>
                                         </Stack>
                                     </CheckboxGroup>
                                     </AccordionPanel>
@@ -231,8 +257,27 @@ const Products = () => {
                                     </AccordionPanel>
                                 </AccordionItem>
 
-
                                 <AccordionItem p={'5px'}>
+                                    <h2>
+                                    <AccordionButton>
+                                        <Box flex='1'  textAlign='left' fontWeight='bold' fontSize='small' textTransform={'uppercase'}>
+                                        OFFERS
+                                        </Box>
+                                        <AccordionIcon />
+                                    </AccordionButton>
+                                    </h2>
+                                    <AccordionPanel pb={4}>
+                                    <CheckboxGroup  defaultValue={['']}>
+                                        <Stack spacing={[1]} direction={['column']}>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Buy More, Save More' })} ><Text fontSize={'small'} fontWeight='500'>Buy More, Save More</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'No Cost EMI' })}><Text fontSize={'small'} fontWeight='500'>No Cost EMI</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "Special Price" })} ><Text fontSize={'small'} fontWeight='500'>Special Price</Text></Checkbox>
+                                        </Stack>
+                                    </CheckboxGroup>
+                                    </AccordionPanel>
+                                </AccordionItem>
+
+                                {/* <AccordionItem p={'5px'}>
                                     <h2>
                                     <AccordionButton>
                                         <Box flex='1'  textAlign='left' fontWeight='bold' fontSize='small' textTransform={'uppercase'}>
@@ -255,7 +300,7 @@ const Products = () => {
                                         </Stack>
                                     </CheckboxGroup>
                                     </AccordionPanel>
-                                </AccordionItem>
+                                </AccordionItem> */}
 
                             </Accordion>
                         </VStack>
@@ -284,7 +329,9 @@ const Products = () => {
                         </Box>
                         <Flex alignItems='center' p='5px 0px 0px 0' gap='2'>
                             <Text fontSize={'16px'} fontWeight={'bold'}>Men's T Shirts</Text>
-                            <Text fontSize={'12px'} color={'#878787'}>(Showing 1 – 40 products of 23,291 products)</Text>
+                            <Text fontSize={'12px'} color={'#878787'}>
+                                (Showing {(page*perPagelimitProduct)-(perPagelimitProduct-1)} – {page*perPagelimitProduct}  
+                                {" "}products of {total} products)</Text>
                         </Flex>
                         
                         {/* <Box> */}
@@ -292,8 +339,8 @@ const Products = () => {
                                 <TabList borderBottom={0}>
                                     <Tab  _selected={{cursor:'text'}} p={'8px 0 4px'} mr={'10px'} fontWeight={'600'} fontSize={'14px'} color='black'>Sort By</Tab>
                                     <Tab _selected={{fontWeight:'600', color:'#2874f0', borderBottom:'2px solid #2874f0'}} p={'8px 0 4px'} m={'0 10px'} fontSize={'14px'} color='black'>Popularity</Tab>
-                                    <Tab _selected={{fontWeight:'600', color:'#2874f0', borderBottom:'2px solid #2874f0'}} p={'8px 0 4px'} m={'0 10px'} fontSize={'14px'} color='black'>Price - Low to High</Tab>
-                                    <Tab _selected={{fontWeight:'600', color:'#2874f0', borderBottom:'2px solid #2874f0'}} p={'8px 0 4px'} m={'0 10px'} fontSize={'14px'} color='black'>Price - High to Low</Tab>
+                                    <Tab _selected={{fontWeight:'600', color:'#2874f0', borderBottom:'2px solid #2874f0'}} p={'8px 0 4px'} m={'0 10px'} fontSize={'14px'} color='black' onClick={()=>setPriceSort("asc")}>Price - Low to High</Tab>
+                                    <Tab _selected={{fontWeight:'600', color:'#2874f0', borderBottom:'2px solid #2874f0'}} p={'8px 0 4px'} m={'0 10px'} fontSize={'14px'} color='black' onClick={()=>setPriceSort("desc")} >Price - High to Low</Tab>
                                     <Tab _selected={{fontWeight:'600', color:'#2874f0', borderBottom:'2px solid #2874f0'}} p={'8px 0 4px'} m={'0 10px'} fontSize={'14px'} color='black'>Newest First</Tab>
                                 </TabList>
                             </Tabs>
@@ -314,20 +361,20 @@ const Products = () => {
                                             >
                                                 
                                             {/* imgage link box  */}
-                                            <LinkBox position={'relative'} display='block' mb={'5px'} cursor='pointer' p={'0 40px 80px'}>
+                                            <Flex position={'relative'} display='block' justifyContent={'center'} alignItems='center' mb={'5px'} cursor='pointer'>
                                                 {/* imgage box  */}
-                                                <Box>
+                                                <Box >
                                                     <Box>
-                                                        <Box w={'100%'} pos={'relative'} 
-                                                            pt='120%'
+                                                        <Box w={'100%'} minH='320px' pos={''} 
+                                                            pt='' display={'flex'} justifyContent='center' alignItems={'center'}
                                                             >
-                                                            <Flex pos={'absolute'} top='0' left={'0'} w={'100%'} overflow='hidden'
-                                                            align={'center'} justify='center'
+                                                            <Flex pos={''} top='0' left={'0'} w={'100%'} overflow='hidden'
+                                                            align={'center'} justify='center' 
                                                             >
                                                                 <Image pos={'relative'} top='0' left='0' buttom='0' right='0'
-                                                                        maxW='100%' maxH={'100%'}
-                                                                        transition= 'opacity .5s linear' opacity={'1'} m={'auto'} zIndex='0' 
-                                                                        src={property.images[0].url} 
+                                                                        maxW='100%' maxH={'260px'}
+                                                                        transition= 'opacity .5s linear' opacity={'1'} m={'auto'} pl='30px' pr={'30px'}
+                                                                        src={property.image} 
                                                                         // src={property.imageUrl}
                                                                         alt={'pic'} />
                                                             </Flex>
@@ -350,36 +397,41 @@ const Products = () => {
                                                         </svg>
                                                     </Box>
                                                 </Box>
-                                            </LinkBox>
+                                            </Flex>
 
                                             {/* description box  */}
                                             {/* <Box pos={'relative'} border={'1px solid gray'} w='100%' h={'150px'  _hover={{ fontWeight: 'semibold', height:'140px',zIndex:'10' }} transform= "translate3d(0px, -36.5938px, 0px)"}> transition= 'transform .35s cubic-bezier(.17,.67,.21,1),-webkit-transform .35s cubic-bezier(.17,.67,.21,1)' */}
-                                                <Box bg={'#fff'} p='5px 16px 8px' pos={'relative'} zIndex='2' >
-                                                    <Box
-                                                        // color='gray.500'
-                                                        color={'#878787'}
-                                                        fontWeight='bold'
-                                                        fontSize='14px'
-                                                        textAlign={'left'}
-                                                        textTransform='uppercase'
+                                                <Box bg={'#fff'} h='130px' p='5px 16px 0px' pos={'relative'} zIndex='10' >
+                                                    <Box pos='absolute' zIndex='10' pt={'40px'} _hover={{ fontWeight: '', pt:'0'}} >
+                                                        <Box
+                                                            // color='gray.500'
+                                                            color={'#878787'}
+                                                            fontWeight='bold'
+                                                            fontSize='14px'
+                                                            textAlign={'left'}
+                                                            textTransform='uppercase'
+                                                            >
+                                                            {property.category_name}
+                                                        </Box>
+                                                        <Box
+                                                            fontSize={'14px'}
+                                                            fontWeight='500'
+                                                            lineHeight='tight'
+                                                            noOfLines={1}
+                                                            cursor='pointer'
                                                         >
-                                                        {property.titles.superTitle}
+                                                            {property.description}
+                                                        </Box>
+                                                        <Flex gap={3} mt={1} alignItems='center' cursor='pointer'>
+                                                            <Text color={'#212121'} fontWeight={'600'} fontSize='16px'>₹{property.new_price}</Text> 
+                                                            <Text textDecoration='line-through'>₹{property.old_price}</Text>
+                                                            <Text color={'#388e3c'} fontWeight='bold' fontSize={'13px'}>{property.discount}%off</Text>
+                                                        </Flex>
+                                                        <Flex mt={3} alignItems='center' gap={2}>
+                                                            <Text color={'#878787'} fontWeight={'600'} fontSize='14px'>Size</Text>
+                                                            <Text>{property.size}</Text>
+                                                        </Flex>
                                                     </Box>
-                                                    <Box
-                                                        fontSize={'14px'}
-                                                        fontWeight='500'
-                                                        lineHeight='tight'
-                                                        noOfLines={1}
-                                                        cursor='pointer'
-                                                    >
-                                                        {property.titles.newTitle}
-                                                    </Box>
-                                                    <Flex gap={3} mt={1} alignItems='center' cursor='pointer'>
-                                                        <Text color={'#212121'} fontWeight={'600'} fontSize='16px'>₹{property.pricing.finalPrice.value}</Text> 
-                                                        <Text textDecoration='line-through'>₹{property.pricing.mrp.value}</Text>
-                                                        <Text color={'#388e3c'} fontWeight='bold' fontSize={'13px'}>{property.pricing.totalDiscount}%off</Text>
-                                                    </Flex>
-                                                    <Flex mt={3}>{property.titles.coSubtitle}</Flex>
                                                 </Box>
                                             {/* </Box> */}
                                         </Box>
@@ -388,27 +440,91 @@ const Products = () => {
                             }
                         </SimpleGrid>
                     </Box>
-                    <Box>
-                        <Text ml={5}>Page 1 of 349</Text>
-                        <Center>
-
-                        </Center>
+                    <Flex borderTop={'1px solid #e0e0e0'} justify='space-between' align={'center'}
+                            p='10px' lineHeight={'32px'}>
+                        <Text ml={5}>Page {page} of {Math.ceil(total/perPagelimitProduct)}</Text>
+                        {/* <Flex gap={3} p='4px 0px' textAlign={'center'} justify='center' align={'center'} 
+                                color={'#212121'} fontWeight={'600'}>
+                            {[1,2,3,4,5,6,7,8,9,10,"NEXT"].map((item, i)=>{
+                                return <Text key={i} display={'inline-block'} cursor='pointer' fontSize={'15px'}
+                                            height={'32px'} minW='32px' borderRadius={'50%'}
+                                            _selected={{bg:'#2874f0', color:'#fff'}}
+                                        > {item} </Text>
+                            })}
+                        </Flex> */}
+                        <Tabs>
+                            <TabList borderBottom={0}>
+                                {/* {Array.from({length: total/10}, (v, i) => i).map((item, i)=>{
+                                    return <Tab key={i} cursor='pointer'
+                                                _selected={{bg:'#2874f0', color:'#fff'}}
+                                                height={'32px'} w='32px' borderRadius={'50%'}
+                                                onClick={()=>setPage(item+1)}
+                                                >
+                                                {item+1}
+                                            </Tab>
+                                })} */}
+                                {
+                                    page>1?<Text>PREV</Text>:""
+                                }
+                                {
+                                    page<=5?
+                                    Array.from({length: 10}, (v, i) => i).map((item, i)=>{
+                                        return <Tab key={i} cursor='pointer' fontSize={'15px'}
+                                                    _selected={{bg:'#2874f0', color:'#fff'}}
+                                                    height={'32px'} w='32px' borderRadius={'50%'}
+                                                    onClick={()=>setPage(item+1)}
+                                                    >
+                                                    {item+1}
+                                                </Tab>
+                                    })
+                                    :
+                                    arrpage.map((ele,i)=>(
+                                        <Tab key={i} cursor='pointer' fontSize={'15px'}
+                                                bg={i===4?'#2874f0':"#fff"} color={i===4?'#fff':"black"}
+                                                _selected={{bg:'', color:''}}
+                                                h={'32px'} w='32px' borderRadius={'50%'}
+                                                onClick={()=>handlepagination(ele)}
+                                                >
+                                                {ele}
+                                            </Tab>
+                                    ))
+                                }
+                                <Text>NEXT</Text>
+                                {/* {
+                                    arrpage.map((ele,i)=>(
+                                        <Tab key={i} cursor='pointer'
+                                                // _selected={{bg:'#2874f0', color:'#fff'}}
+                                                height={'32px'} w='32px' borderRadius={'50%'}
+                                                onClick={()=>setPage(ele)}
+                                                >
+                                                {ele}
+                                            </Tab>
+                                    ))
+                                } */}
+                                
+                            </TabList>
+                        </Tabs>
+                        <Text></Text>
+                    </Flex>
+                    <Box bg={'#f1f3f6'} p='10px 0'>
+                        <Flex gap={5} bg={'#fff'} justify='flex-start' align={'center'}
+                                p='10px' lineHeight={'32px'}>
+                            <Text ml={5} color={'#212121'} fontWeight={'600'} fontSize='16px'>Did you find what you were looking for?</Text>
+                            <Flex gap={3} p='4px 0px' textAlign={'center'} justify='center' align={'center'} 
+                                    >
+                                <Button bg='#fff' border={'0.6px solid #d7d7d7'} borderRadius='2px' p='6px 28px' fontSize={'14px'}>Yes</Button>
+                                <Button bg='#fff' border={'0.6px solid #d7d7d7'} borderRadius='2px' p='6px 28px'fontSize={'14px'}>No</Button>
+                            </Flex>
+                            <Text></Text>
+                        </Flex>
                     </Box>
                 </Box>
             </Flex>
+            {/* <Box border={'1px solid teal'} m={'50px'}>
+                footer
+            </Box> */}
         </Box>
     )
 }
 
 export default Products
-
-
-
-// ADIDAS
-// Allen Solly
-// Ap'pulse
-// BEWAKOOF
-// Billion
-// CHEROKEE
-// Christy World
-// Clovia

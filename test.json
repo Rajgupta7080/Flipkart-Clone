@@ -12128,5 +12128,492 @@
                 "title": "THEWARRIOR Graphic Print Men Round Neck White T-Shirt"
             }
         }
-    ]
+    ],
+    "amazon": {
+        "error": false,
+        "current_page": 1,
+        "next_page": 1,
+        "results": [
+            {
+                "rank": 1,
+                "asin": "B08C1W5N87",
+                "title": "Fire TV Stick, free and live TV, Alexa Voice Remote, TV & smart home controls, HD streaming",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/51KKR5uGn6L._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B08C1W5N87",
+                "prices": {
+                    "current_price": 19.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 300695,
+                    "stars": 4.7
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 2,
+                "asin": "B08XVYZ1Y5",
+                "title": "Fire TV Stick 4K streaming device with latest Alexa Voice Remote (includes TV controls), Dolby Vision",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/411y5UdVmvL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B08XVYZ1Y5",
+                "prices": {
+                    "current_price": 24.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 174092,
+                    "stars": 4.7
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 3,
+                "asin": "B08MQZXN1X",
+                "title": "Fire TV Stick 4K Max streaming device, Wi-Fi 6, Alexa Voice Remote (includes TV controls)",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/41XTOfFgUqL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B08MQZXN1X",
+                "prices": {
+                    "current_price": 34.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 85244,
+                    "stars": 4.7
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 4,
+                "asin": "B09BKCDXZC",
+                "title": "Roku Streaming Stick 4K 2021 | Streaming Device 4K/HDR/Dolby Vision with Roku Voice Remote and TV Controls",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/71wrIZujPIL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B09BKCDXZC",
+                "prices": {
+                    "current_price": 26.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 37084,
+                    "stars": 4.7
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 5,
+                "asin": "B0933D3SN6",
+                "title": "2021 Apple TV 4K (32GB)",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/815g8Uo656S._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B0933D3SN6",
+                "prices": {
+                    "current_price": 109.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 14335,
+                    "stars": 4.8
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 6,
+                "asin": "B08XMDNVX6",
+                "title": "Fire TV Cube, Hands-free streaming device with Alexa, 4K Ultra HD, includes latest Alexa Voice Remote",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/41J618I94lL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B08XMDNVX6",
+                "prices": {
+                    "current_price": 59.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 18903,
+                    "stars": 4.7
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 7,
+                "asin": "B0916TKFF2",
+                "title": "Roku Express 4K+ | Streaming Media Player HD/4K/HDR with Smooth Wireless Streaming and Roku Voice Remote with TV Controls, In",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/71ZEYGj2gBL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B0916TKFF2",
+                "prices": {
+                    "current_price": 24.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 40901,
+                    "stars": 4.7
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 8,
+                "asin": "B014I8SSD0",
+                "title": "Amazon Basics High-Speed HDMI Cable (18 Gbps, 4K/60Hz) - 6 Feet, Black",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61pBvlYVPxL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B014I8SSD0",
+                "prices": {
+                    "current_price": 4.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 467912,
+                    "stars": 4.7
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 9,
+                "asin": "B0933D8TNB",
+                "title": "2021 Apple TV 4K (64GB)",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/815g8Uo656S._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B0933D8TNB",
+                "prices": {
+                    "current_price": 128.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 14335,
+                    "stars": 4.8
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 10,
+                "asin": "B07SHFPD8S",
+                "title": "Full Motion TV Monitor Wall Mount Bracket Articulating Arms Swivels Tilts Extension Rotation for Most 13-42 Inch LED LCD Flat",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61EBlj11AbL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B07SHFPD8S",
+                "prices": {
+                    "current_price": 16.39,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 89075,
+                    "stars": 4.6
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 11,
+                "asin": "B08X7JSCHQ",
+                "title": "Insignia 32-inch Class F20 Series Smart HD 720p Fire TV (NS-32F201NA22, 2021 Model)",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61qXHwJeGVS._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B08X7JSCHQ",
+                "prices": {
+                    "current_price": 99.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 3548,
+                    "stars": 4.5
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 12,
+                "asin": "B07WVFCVJN",
+                "title": "Roku Express | HD Streaming Media Player with High Speed HDMI Cable and Simple Remote",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/717dWfmxXVL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B07WVFCVJN",
+                "prices": {
+                    "current_price": 19.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 168185,
+                    "stars": 4.7
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 13,
+                "asin": "B09WNJT9X3",
+                "title": "Hisense 50-inch ULED U6 Series Quantum Dot QLED 4K UHD Smart Fire TV (50U6HF, 2022 Model)",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61hbJmB1IxL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B09WNJT9X3",
+                "prices": {
+                    "current_price": 459,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 619,
+                    "stars": 4.4
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 14,
+                "asin": "B01KBEOL5E",
+                "title": "Amazon Basics Full Motion Articulating TV Monitor Wall Mount for 22-55 Inch TVs and Flat Panels up to 80 Lbs, Black",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/71IDfON2nfL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B01KBEOL5E",
+                "prices": {
+                    "current_price": 19.09,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 26548,
+                    "stars": 4.7
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 15,
+                "asin": "B00NKYYMAW",
+                "title": "Mounting Dream TV Mount for Most 37-70 Inch TV, Universal Tilt TV Wall Mount Fit 16\", 18\", 24\" Stud with Loading Capacity 132",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61kW1CrcOfS._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B00NKYYMAW",
+                "prices": {
+                    "current_price": 25.48,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 92721,
+                    "stars": 4.7
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 16,
+                "asin": "B06XKNZT1P",
+                "title": "Elgato Stream Deck - Live Content Creation Controller with 15 Customizable LCD Keys, Adjustable Stand, for Windows 10 and mac",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61SePZyhVaL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B06XKNZT1P",
+                "prices": {
+                    "current_price": 89.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 19649,
+                    "stars": 4.8
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 17,
+                "asin": "B09R6SWKMW",
+                "title": "TCL 55\" Class 4-Series 4K UHD HDR Smart Roku TV – 55S455",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/71s3xYeL2jL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B09R6SWKMW",
+                "prices": {
+                    "current_price": 381.97,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 1010,
+                    "stars": 4.5
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 18,
+                "asin": "B07FPP6TB5",
+                "title": "Insignia 32-inch Class F20 Series Smart HD 720p Fire TV (NS-32DF310NA19, 2018 Model)",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/81lj598woRL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B07FPP6TB5",
+                "prices": {
+                    "current_price": 99.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 85381,
+                    "stars": 4.6
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 19,
+                "asin": "B09GY8YCS2",
+                "title": "LOUTOC Universal TV Remote for Roku TV,Replacement for TCL Roku/Hisense Roku/Sharp Roku TV,TV Remote with Netflix Disney+/Hul",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/71k82MNsIQL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B09GY8YCS2",
+                "prices": {
+                    "current_price": 10.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 13314,
+                    "stars": 4.4
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 20,
+                "asin": "B08Z265BJH",
+                "title": "Insignia 50-inch Class F30 Series LED 4K UHD Smart Fire TV (NS-50F301NA22, 2021 Model)",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/81kRxFTpd1L._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B08Z265BJH",
+                "prices": {
+                    "current_price": 249.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 7607,
+                    "stars": 4.6
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 21,
+                "asin": "B015OW3M1W",
+                "title": "Amazon Basics Uni-Directional DisplayPort to HDMI Display Cable 4K@30Hz - 6 Feet",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61lCmBR7q3L._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B015OW3M1W",
+                "prices": {
+                    "current_price": 7.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 44356,
+                    "stars": 4.6
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 22,
+                "asin": "B09Z6Q2MLC",
+                "title": "(Pack of 2) Replaced Remote Control for Roku TV, Compatible for TCL Roku/Hisense Roku/Onn Roku/Sharp Roku/Element Roku/Westin",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/71qzTnadGmL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B09Z6Q2MLC",
+                "prices": {
+                    "current_price": 11.57,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 2105,
+                    "stars": 4.6
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 23,
+                "asin": "B08P3QB66R",
+                "title": "Amazon Fire TV 55\" 4-Series 4K UHD smart TV",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/51EPd38RHQL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B08P3QB66R",
+                "prices": {
+                    "current_price": 429.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 24214,
+                    "stars": 4.6
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 24,
+                "asin": "B0875M44Y5",
+                "title": "Insignia 39-inch Class F20 Series Smart HD 720p Fire TV (NS-39DF310NA21, 2020 Model)",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/81kQyu0HvbL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B0875M44Y5",
+                "prices": {
+                    "current_price": 139.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 85381,
+                    "stars": 4.6
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 25,
+                "asin": "B08TL48K9M",
+                "title": "Sony A80J 77 Inch TV: BRAVIA XR OLED 4K Ultra HD Smart Google TV with Dolby Vision HDR and Alexa Compatibility XR77A80J- 2021",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/91ADOxkYOfL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B08TL48K9M",
+                "prices": {
+                    "current_price": -1,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 2019,
+                    "stars": 4.7
+                },
+                "out_of_stock": true
+            },
+            {
+                "rank": 26,
+                "asin": "B08X7K3H7K",
+                "title": "Insignia 43-inch Class F30 Series LED 4K UHD Smart Fire TV (NS-43F301NA22, 2021 Model)",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/81DnMWhQ2gL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B08X7K3H7K",
+                "prices": {
+                    "current_price": 199.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 7607,
+                    "stars": 4.6
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 27,
+                "asin": "B08GWBBH4R",
+                "title": "TCL 55\" Class 4-Series 4K UHD HDR Smart Roku TV – 55S435, 2021 Model",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/71wJCiFPrfL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B08GWBBH4R",
+                "prices": {
+                    "current_price": 299.99,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 22239,
+                    "stars": 4.6
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 28,
+                "asin": "B07S143MHG",
+                "title": "Amazon Basics 10.2 Gbps High-Speed 4K HDMI Cable with Braided Cord, 6-Foot, Silver",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/71MIhjAxB0L._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B07S143MHG",
+                "prices": {
+                    "current_price": -1,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 19491,
+                    "stars": 4.7
+                },
+                "out_of_stock": true
+            },
+            {
+                "rank": 29,
+                "asin": "B00NH11H38",
+                "title": "Amazon Basics Digital Optical Audio Toslink Cable for Sound Bar, TV - 6 Feet (1.8 Meters)",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/71vq-VtaeVL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B00NH11H38",
+                "prices": {
+                    "current_price": 5.05,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 135000,
+                    "stars": 4.6
+                },
+                "out_of_stock": false
+            },
+            {
+                "rank": 30,
+                "asin": "B07WVFCKSS",
+                "title": "Roku Voice Remote (Official) for Roku Players, Roku TVs and Roku Audio",
+                "image": "https://images-na.ssl-images-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61BrkX55LgL._AC_UL300_SR300,200_.jpg",
+                "full_link": "https://www.amazon.com/dp/B07WVFCKSS",
+                "prices": {
+                    "current_price": 19.88,
+                    "currency": "$"
+                },
+                "reviews": {
+                    "total_reviews": 52364,
+                    "stars": 4.7
+                },
+                "out_of_stock": false
+            }
+        ]
+    }
 }
