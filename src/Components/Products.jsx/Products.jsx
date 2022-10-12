@@ -7,7 +7,7 @@ import ProductItem from './ProductItem'
 // import {StarIcon} from '@chakra-ui/icons'
 const url = `http://localhost:3005`
 const Products = () => {
-    const [date, setData] =  useState([]);
+    const [data, setData] =  useState([]);
     const [page, setPage] = useState(1);
     const perPagelimitProduct = 12;
     const [total, setTotal] = useState(0);
@@ -27,18 +27,45 @@ const Products = () => {
     // const [sortRating, setSortRating] = useState("");
     // const ratingsorturl = sortRating===""?"":`&hidden_stars_gte=${sortRating}`
 
-
     const { value, getCheckboxProps } = useCheckboxGroup()
     console.log(value, " val of checkbox ");
-    
+    console.log(data, " all data");
+    // const filteredArr = [];
+    // value.forEach((el, i)=>{
+    //     for (let index = 0; index < data.length; index++) {
+    //         console.log(data[index].category_name, el, " test 5");
+    //         if(data[index].category_name===el){
+    //             filteredArr.push(data[index])
+    //         }
+    //     }
+    // })
+    // console.log(filteredArr, " filteredArr");
 
     useEffect(()=>{
         fetchData(categories)
-    },[page, sortprice, priceRangeurl, categories])
 
-    const fetchData = (categories="all")=>{
+    },[page, sortprice, priceRangeurl, value])
+
+    const fetchData = ()=>{
         // const categories = categories
-        fetch(`${url}/${categories}?_limit=${perPagelimitProduct}&_page=${page}${pricesorturl}${priceRangeurl}`)
+        let tempUrl = ""
+        const categoryCheckArrurl = ['fashion','mobiles',"top_offers", "grocery", "electronics", "home","appliances"]
+        const brandCheckArrurl = [""]
+        const discountCheckArrurl = ["30", "40", "50", "60", "70"]
+        value.forEach((el)=>{
+            if(categoryCheckArrurl.includes(el)){
+                tempUrl+=`&category_name=${el}`
+            }
+            if(el==="3" || el==="4"){
+                tempUrl+=`&hidden_stars_gte=${el}`
+            }
+            if(discountCheckArrurl.includes(el)){
+                tempUrl+=`&discount_gte=${el}`
+            }
+        })
+
+        console.log(tempUrl);
+        fetch(`${url}/all?_limit=${perPagelimitProduct}&_page=${page}${pricesorturl}${priceRangeurl}${tempUrl}`)
         .then((res)=>{
             const total = res.headers.get('X-Total-Count')
             setTotal(total);
@@ -94,7 +121,7 @@ const Products = () => {
                                 </Wrap>
                             </Box>
                             
-                            <Accordion defaultIndex={[1,2,4,6]} allowMultiple>
+                            <Accordion defaultIndex={[0,2,4,6]} allowMultiple>
                                 <AccordionItem p={'5px'}>
                                     <h2>
                                     <AccordionButton>
@@ -107,13 +134,13 @@ const Products = () => {
                                     <AccordionPanel pb={4}>
                                     <CheckboxGroup  defaultValue={['']} >
                                         <Stack spacing={[1]} direction={['column']} >
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Appliances' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setCategories("appliances")}>Appliances</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Electronics' })}><Text fontSize={'small'} fontWeight='500' onClick={()=>setCategories("electronics")} >Electronics</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "Fashion" })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setCategories("fashion")}>Fashion</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Groceries' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setCategories("grocery")}>Groceries</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Mobiles' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setCategories("mobiles")}>Mobiles</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Home' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setCategories("home")}>Home</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'TopOffers' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setCategories("TopOffers")}>TopOffers</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'appliances' })} ><Text fontSize={'small'} fontWeight='500' >Appliances</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'electronics' })}><Text fontSize={'small'} fontWeight='500'  >Electronics</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "fashion" })} ><Text fontSize={'small'} fontWeight='500'>Faishon</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'grocery' })} ><Text fontSize={'small'} fontWeight='500' >Groceries</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'mobiles' })} ><Text fontSize={'small'} fontWeight='500' >Mobiles</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'home' })} ><Text fontSize={'small'} fontWeight='500' >Home</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'top_offers' })} ><Text fontSize={'small'} fontWeight='500' >TopOffers</Text></Checkbox>
                                             {/* <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Books' })} ><Text fontSize={'small'} fontWeight='500'>Books</Text></Checkbox> */}
                                         </Stack>
                                     </CheckboxGroup>
@@ -135,8 +162,6 @@ const Products = () => {
                                             <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "Men" })} ><Text fontSize={'small'} fontWeight='500'>Men</Text></Checkbox>
                                             <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Women' })} ><Text fontSize={'small'} fontWeight='500'>Women</Text></Checkbox>
                                             <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Unisex' })} ><Text fontSize={'small'} fontWeight='500'>Unisex</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Boys' })} ><Text fontSize={'small'} fontWeight='500'>Boys</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Girls' })} ><Text fontSize={'small'} fontWeight='500'>Girls</Text></Checkbox>
                                         </Stack>
                                     </CheckboxGroup>
                                     </AccordionPanel>
@@ -205,11 +230,11 @@ const Products = () => {
                                     <AccordionPanel pb={4}>
                                     <CheckboxGroup  defaultValue={['']}>
                                         <Stack spacing={[1]} direction={['column']}>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '30% or more' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setDiscountFilter(30)}>30% or more</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '40% or more' })}><Text fontSize={'small'} fontWeight='500'  onClick={()=>setDiscountFilter(40)}>40% or more</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "50% or more" })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setDiscountFilter(50)}>50% or more</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '60% or more' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setDiscountFilter(60)}>60% or more</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '70% or more' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setDiscountFilter(70)}>70% or more</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '30' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setDiscountFilter(30)}>30% or more</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '40' })}><Text fontSize={'small'} fontWeight='500'  onClick={()=>setDiscountFilter(40)}>40% or more</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "50" })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setDiscountFilter(50)}>50% or more</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '60' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setDiscountFilter(60)}>60% or more</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '70' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setDiscountFilter(70)}>70% or more</Text></Checkbox>
                                         </Stack>
                                     </CheckboxGroup>
                                     </AccordionPanel>
@@ -227,8 +252,8 @@ const Products = () => {
                                     <AccordionPanel pb={4}>
                                     <CheckboxGroup  defaultValue={['']}>
                                         <Stack spacing={[1]} direction={['column']}>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '4★ & above' })} ><Text fontSize={'small'} fontWeight='500'>4★ & above</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '3★ & above' })}><Text fontSize={'small'} fontWeight='500'>3★ & above</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "4" })} ><Text fontSize={'small'} fontWeight='500'>4★ & above</Text></Checkbox>
+                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "3" })}><Text fontSize={'small'} fontWeight='500'>3★ & above</Text></Checkbox>
                                         </Stack>
                                     </CheckboxGroup>
                                     </AccordionPanel>
@@ -325,7 +350,7 @@ const Products = () => {
                             </Breadcrumb>
                         </Box>
                         <Box lineHeight={'1.45'} fontSize={'12px'} p='10px 5px 4px 0'>
-                            <Text color={'#878787'}><b>T-shirts</b> have become one of the most common yet stylish choices of clothing for teenagers. As tees are simple to wear, comfortable, and easy to wash, they have become a popular option. You can pair a tee with pants, like chinos, track pants, joggers, jeans, shorts, etc. Wearing appropriate accessories with a half sleeve tee will certainly amp up your style factor. Pick a polo tee with striped details and stylise with a leather strap watch for the best results. You can even find polo tees with solid colours or prints online. Choose boxy, loose, or regular fit tees to stay comfortable during summer, or choose hooded long-sleeve options to stay trendy during winters. You can even choose your preferred sleeve length while shopping online. Explore tees with exciting prints that would certainly impress your peers. Finding a size that would fit you won’t be a hassle online as there are plenty of size options available. Find brands like Adidas, Adrenex, Billion, Nike, Reebok, and many more while shopping for the best t-shirts online. You do not have to get up from your couch to order a t-shirt for yourself. Get them delivered to a preferred location without any hassles. The information you are reading has been last updated on 09-Oct-22</Text>
+                            <Text color={'#878787'}><b>T-shirts</b> have become one of the most common yet stylish choices of clothing for teenagers. As tees are simple to wear, comfortable, and easy to wash, they have become a popular option. You can pair a tee with pants, like chinos, track pants, joggers, jeans, shorts, etc. Wearing appropriate accessories with a half sleeve tee will certainly amp up your style factor. Pick a polo tee with striped details and stylise with a leather strap watch for the best results. You can even find polo tees with solid colours or prints online. Choose boxy, loose, or regular fit tees to stay comfortable during summer, or choose hooded long-sleeve options to stay trendy during winters. You can even choose your preferred sleeve length while shopping online. Explore tees with exciting prints that would certainly impress your peers. Finding a size that would fit you won’t be a hassle online as there are plenty of size options available. Find brands like Adidas, Adrenex, Billion, Nike, Reebok, and many more while shopping for the best t-shirts online. You do not have to get up from your couch to order a t-shirt for yourself. Get them delivered to a preferred location without any hassles. The information you are reading has been last updatad on 09-Oct-22</Text>
                         </Box>
                         <Flex alignItems='center' p='5px 0px 0px 0' gap='2'>
                             <Text fontSize={'16px'} fontWeight={'bold'}>Men's T Shirts</Text>
@@ -350,7 +375,7 @@ const Products = () => {
                     <Box mt={0}>
                         <SimpleGrid minChildWidth='220px' spacing='10px' pt={0}>
                             {
-                                date.map((property, i)=>(
+                                data.map((property, i)=>(
                                     // <ProductItem key={i}/>
                                     <Box key={i}>
                                         <Box overflow='hidden' m={'0px 8px'} pos={'relative'}
