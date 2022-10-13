@@ -12615,5 +12615,151 @@
                 "out_of_stock": false
             }
         ]
-    }
+    },
+    "Products":[
+        { "Mens" : 
+            [
+                {
+                    "id": 1,
+                    "quantity": 1,
+                    "Category_name": "Men",
+                    "Sub_category_name": "Clothing",
+                    "Sub_category_Type":"T-Shirt",
+                    "Brand": "ADIDAS",
+                    "Title": "Solid Men Round Neck Dark Blue T-Shirt",
+                    "imageUrl": [
+                        "https://rukminim1.flixcart.com/image/540/648/kq9ta4w0/t-shirt/c/m/9/m-723-5-ftx-original-imag4bhzme8zjc3j.jpeg?q=50",
+                        "https://rukminim1.flixcart.com/image/540/648/kq9ta4w0/t-shirt/c/m/9/m-723-5-ftx-original-imag4bhzme8zjc3j.jpeg?q=50",
+                        "https://rukminim1.flixcart.com/image/540/648/kq9ta4w0/t-shirt/c/m/9/m-723-5-ftx-original-imag4bhzme8zjc3j.jpeg?q=50"
+                    ],
+
+                    "price": {
+                        "MRP":2999,
+                        "Final_Price":1599,
+                        "Discount": 50
+                    },
+                    "Size":["S", "M", "L", "XL"],
+                    "Rating_Star": 4.4,
+                    "reviews": 591,
+                    "rating": 6764,
+                    "Colour": "White",
+                    "Gender": "Men",
+
+                    "Assured": true,
+                    "Trending": true,
+                    "Free_Delivery":true,
+                    "Popularity": true,
+                    "Newest_First": true,
+                    "AVAILABILITY": true,
+                    
+                    "Buy_More_Save_More": true,
+                    "No Cost EMI": true,
+                    "Special_Price": true,
+
+                    "Top_Discount_on_Sale": true,
+                    "Saver_Deal":false
+                },
+                {
+                    "id": 2
+                }
+            ]
+        },
+
+        { "womens": 
+            [
+                {
+                    "id": 3,
+                    "quantity": 2,
+                    "Category_name": "Women",
+                    "Sub_category_name": "Clothing",
+                    "Sub_category_Type":"Kurtis",
+                    "Brand": "Kurtis_ERA",
+                    "Title": "Women Printed Cotton Rayon Anarkali Kurta With Attached...",
+                    "imageUrl": [
+                        "https://rukminim1.flixcart.com/image/540/648/xif0q/kurta/z/v/y/xxl-dk0009-dimonsher-original-imaggjh6c4a4mhhz.jpeg?q=100",
+                        "https://rukminim1.flixcart.com/image/540/648/xif0q/kurta/z/v/y/xxl-dk0009-dimonsher-original-imaggjh6c4a4mhhz.jpeg?q=100"
+                    ],
+
+                    "price": {
+                        "MRP":1299,
+                        "Final_Price":599,
+                        "Discount": 60
+                    },
+
+                    "Size":["S", "M", "L", "XL"],
+                    "Rating_Star": 4.4,
+                    "reviews": 591,
+                    "rating": 6764,
+                    "Colour": "Red",
+                    "Gender": "Women",
+
+                    "Assured": true,
+                    "Trending": true,
+                    "Free_Delivery":true,
+                    "Popularity": true,
+                    "Newest_First": true,
+                    "AVAILABILITY": true,
+                    
+                    "Buy_More_Save_More": true,
+                    "No Cost EMI": true,
+                    "Special_Price": true,
+
+                    "Top_Discount_on_Sale": true,
+                    "Saver_Deal":false
+                },
+                {
+                    "id": 4,
+                    "Category_name": "Women"
+                }
+            ]
+        },
+
+        { "Electronics": 
+            [
+                {
+                    "id": 3,
+                    "quantity": 1,
+                    "Category_name": "Electronics",
+                    "Sub_category_name": "Mobiles",
+                    "Sub_category_Type":"IPHONE",
+                    "Brand": "APPLE",
+                    "Title": "APPLE iPhone XS (Space Grey, 512 GB)",
+                    "imageUrl": [
+                        "https://rukminim1.flixcart.com/image/312/312/jm9hfgw0/mobile/y/4/u/apple-iphone-xs-mt9l2hn-a-original-imaf97f65bqbdycy.jpeg?q=70",
+                        "https://rukminim1.flixcart.com/image/312/312/jm9hfgw0/mobile/y/4/u/apple-iphone-xs-mt9l2hn-a-original-imaf97f65bqbdycy.jpeg?q=70"
+                    ],
+
+                    "price": {
+                        "MRP":144900,
+                        "Final_Price":134900,
+                        "Discount": 10
+                    },
+
+                    "Size":[],
+                    "Rating_Star": 4.9,
+                    "reviews": 591,
+                    "rating": 6764,
+                    "Colour": "black",
+                    "Gender": "",
+
+                    "Assured": true,
+                    "Trending": true,
+                    "Free_Delivery":true,
+                    "Popularity": true,
+                    "Newest_First": true,
+                    "AVAILABILITY": true,
+                    
+                    "Buy_More_Save_More": true,
+                    "No Cost EMI": true,
+                    "Special_Price": true,
+
+                    "Top_Discount_on_Sale": true,
+                    "Saver_Deal":false
+                },
+                {
+                    "id": 4
+                }
+            ]
+        }
+    ]
 }
