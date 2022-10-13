@@ -1,21 +1,17 @@
 import React, { useState } from 'react'
-// import ProductItem from './ProductItem'
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Badge, Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Center, Checkbox, CheckboxGroup, Flex, HStack, Image, LinkBox, RangeSlider, RangeSliderFilledTrack, RangeSliderThumb, RangeSliderTrack, SimpleGrid, Square, Stack, StackDivider, Tab, TabList, TabPanel, TabPanels, Tabs, Tag, TagCloseButton, TagLabel, Text, useCheckboxGroup, VStack, Wrap, WrapItem } from '@chakra-ui/react'
 import { ChevronRightIcon, StarIcon } from '@chakra-ui/icons'
 import { useEffect } from 'react'
 import ProductItem from './ProductItem'
-// import {StarIcon} from '@chakra-ui/icons'
+import Filter from './Filter/AllFilter'
+
 const url = `http://localhost:3005`
 const Products = () => {
     const [data, setData] =  useState([]);
     const [page, setPage] = useState(1);
     const perPagelimitProduct = 12;
     const [total, setTotal] = useState(0);
-    // console.log(page , " page");
     const [categories, setCategories] = useState("all");
-
-    const [discountFilter, setDiscountFilter] = useState(0);
-    const discountFilterurl = discountFilter!==0
 
     const [priceRange, setPriceRange] = useState([]);
     const priceRangeurl = priceRange[0]>0 || priceRange[1]<100?
@@ -24,22 +20,9 @@ const Products = () => {
     const [sortprice, setPriceSort] = useState("");
     const pricesorturl = sortprice===""?"":`&_sort=new_price&_order=${sortprice}`
 
-    // const [sortRating, setSortRating] = useState("");
-    // const ratingsorturl = sortRating===""?"":`&hidden_stars_gte=${sortRating}`
-
     const { value, getCheckboxProps } = useCheckboxGroup()
     console.log(value, " val of checkbox ");
     console.log(data, " all data");
-    // const filteredArr = [];
-    // value.forEach((el, i)=>{
-    //     for (let index = 0; index < data.length; index++) {
-    //         console.log(data[index].category_name, el, " test 5");
-    //         if(data[index].category_name===el){
-    //             filteredArr.push(data[index])
-    //         }
-    //     }
-    // })
-    // console.log(filteredArr, " filteredArr");
 
     useEffect(()=>{
         fetchData(categories)
@@ -47,7 +30,6 @@ const Products = () => {
     },[page, sortprice, priceRangeurl, value])
 
     const fetchData = ()=>{
-        // const categories = categories
         let tempUrl = ""
         const categoryCheckArrurl = ['fashion','mobiles',"top_offers", "grocery", "electronics", "home","appliances"]
         const brandCheckArrurl = [""]
@@ -69,11 +51,9 @@ const Products = () => {
         .then((res)=>{
             const total = res.headers.get('X-Total-Count')
             setTotal(total);
-            // console.log(total, " total h");
             return res.json()
         })
         .then((res)=>{
-            // console.log(res, " res");
             setData(res)
             // setData(res.attributeOptions[0])
         })
@@ -86,9 +66,7 @@ const Products = () => {
     }
 
     const range = (start, stop) => Array.from({ length: (stop - start)}, (_, i) => start + (i))
-    // console.log(value);
     let arrpage = range(page-4,page+6);
-    // console.log( arrpage, " page");
     
     return (
         <Box bg='#f1f3f6' border='1px solid #f1f3f6' fontFamily='Roboto,Arial,sans-serif'>
@@ -120,214 +98,8 @@ const Products = () => {
                                 ))}
                                 </Wrap>
                             </Box>
+                            <Filter getCheckboxProps={getCheckboxProps} setPriceRange={setPriceRange} priceRange={priceRange}/>
                             
-                            <Accordion defaultIndex={[0,2,4,6]} allowMultiple>
-                                <AccordionItem p={'5px'}>
-                                    <h2>
-                                    <AccordionButton>
-                                        <Box flex='1'  textAlign='left' fontWeight='bold' fontSize='small' textTransform={'uppercase'}>
-                                            CATEGORIES
-                                        </Box>
-                                        <AccordionIcon />
-                                    </AccordionButton>
-                                    </h2>
-                                    <AccordionPanel pb={4}>
-                                    <CheckboxGroup  defaultValue={['']} >
-                                        <Stack spacing={[1]} direction={['column']} >
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'appliances' })} ><Text fontSize={'small'} fontWeight='500' >Appliances</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'electronics' })}><Text fontSize={'small'} fontWeight='500'  >Electronics</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "fashion" })} ><Text fontSize={'small'} fontWeight='500'>Faishon</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'grocery' })} ><Text fontSize={'small'} fontWeight='500' >Groceries</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'mobiles' })} ><Text fontSize={'small'} fontWeight='500' >Mobiles</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'home' })} ><Text fontSize={'small'} fontWeight='500' >Home</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'top_offers' })} ><Text fontSize={'small'} fontWeight='500' >TopOffers</Text></Checkbox>
-                                            {/* <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Books' })} ><Text fontSize={'small'} fontWeight='500'>Books</Text></Checkbox> */}
-                                        </Stack>
-                                    </CheckboxGroup>
-                                    </AccordionPanel>
-                                </AccordionItem>
-
-                                <AccordionItem p={'5px'}>
-                                    <h2>
-                                    <AccordionButton>
-                                        <Box flex='1'  textAlign='left' fontWeight='bold' fontSize='small' textTransform={'uppercase'}>
-                                            GENDER
-                                        </Box>
-                                        <AccordionIcon />
-                                    </AccordionButton>
-                                    </h2>
-                                    <AccordionPanel pb={4}>
-                                    <CheckboxGroup  defaultValue={['']}>
-                                        <Stack spacing={[1]} direction={['column']}>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "Men" })} ><Text fontSize={'small'} fontWeight='500'>Men</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Women' })} ><Text fontSize={'small'} fontWeight='500'>Women</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Unisex' })} ><Text fontSize={'small'} fontWeight='500'>Unisex</Text></Checkbox>
-                                        </Stack>
-                                    </CheckboxGroup>
-                                    </AccordionPanel>
-                                </AccordionItem>
-
-                                <AccordionItem p={'5px'}>
-                                    <h2>
-                                    <AccordionButton>
-                                        <Box flex='1'  textAlign='left' fontWeight='bold' fontSize='small' textTransform={'uppercase'}>
-                                            PRICE
-                                        </Box>
-                                        <AccordionIcon />
-                                    </AccordionButton>
-                                    </h2>
-                                    <AccordionPanel pb={4}>
-                                        <RangeSlider defaultValue={[0, 100]} 
-                                            onChangeEnd={(val) => setPriceRange(val)}>
-                                            <RangeSliderTrack>
-                                                <RangeSliderFilledTrack bg={'#2874F0'}/>
-                                            </RangeSliderTrack>
-                                            <RangeSliderThumb index={0} />
-                                            <RangeSliderThumb index={1} />
-                                        </RangeSlider>
-                                        <Flex mt='10px' justify={'space-between'} align='center'>
-                                            <Text color={'black'} bg='#fff' border={'0.6px solid #d7d7d7'} borderRadius='2px' p='0px 28px' fontSize={'14px'}>{priceRange[0]>0?priceRange[0]*10:"Min"}</Text>
-                                            <Text fontSize={'15px'} >to</Text>
-                                            <Text bg='#fff' border={'0.6px solid #d7d7d7'} borderRadius='2px' p='0px 28px' fontSize={'14px'}>{priceRange[1]<100?priceRange[1]*10:"1000+"}</Text>
-                                        </Flex>
-                                    </AccordionPanel>
-                                </AccordionItem>
-
-                                <AccordionItem p={'5px'}>
-                                    <h2>
-                                    <AccordionButton>
-                                        <Box flex='1'  textAlign='left' fontWeight='bold' fontSize='small'>
-                                            BRAND
-                                        </Box>
-                                        <AccordionIcon />
-                                    </AccordionButton>
-                                    </h2>
-                                    <AccordionPanel pb={4}>
-                                    <CheckboxGroup  defaultValue={['']}>
-                                        <Stack spacing={[1]} direction={['column']}>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'ADIDAS' })} ><Text fontSize={'small'} fontWeight='500'>ADIDAS</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Allen Solly' })}><Text fontSize={'small'} fontWeight='500'>Allen Solly</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "Ap'pulse" })} ><Text fontSize={'small'} fontWeight='500'>Ap'pulse</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'BEWAKOOF' })} ><Text fontSize={'small'} fontWeight='500'>BEWAKOOF</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Billion' })} ><Text fontSize={'small'} fontWeight='500'>Billion</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'CHEROKEE' })} ><Text fontSize={'small'} fontWeight='500'>CHEROKEE</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Christy World' })} ><Text fontSize={'small'} fontWeight='500'>Christy World</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Clovia' })} ><Text fontSize={'small'} fontWeight='500'>Clovia</Text></Checkbox>
-                                        </Stack>
-                                    </CheckboxGroup>
-                                    </AccordionPanel>
-                                </AccordionItem>
-
-                                <AccordionItem p={'5px'}>
-                                    <h2>
-                                    <AccordionButton>
-                                        <Box flex='1'  textAlign='left' fontWeight='bold' fontSize='small' textTransform={'uppercase'}>
-                                        DISCOUNT
-                                        </Box>
-                                        <AccordionIcon />
-                                    </AccordionButton>
-                                    </h2>
-                                    <AccordionPanel pb={4}>
-                                    <CheckboxGroup  defaultValue={['']}>
-                                        <Stack spacing={[1]} direction={['column']}>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '30' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setDiscountFilter(30)}>30% or more</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '40' })}><Text fontSize={'small'} fontWeight='500'  onClick={()=>setDiscountFilter(40)}>40% or more</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "50" })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setDiscountFilter(50)}>50% or more</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '60' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setDiscountFilter(60)}>60% or more</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '70' })} ><Text fontSize={'small'} fontWeight='500' onClick={()=>setDiscountFilter(70)}>70% or more</Text></Checkbox>
-                                        </Stack>
-                                    </CheckboxGroup>
-                                    </AccordionPanel>
-                                </AccordionItem>
-
-                                <AccordionItem p={'5px'}>
-                                    <h2>
-                                    <AccordionButton>
-                                        <Box flex='1'  textAlign='left' fontWeight='bold' fontSize='small' textTransform={'uppercase'}>
-                                        CUSTOMER RATINGS
-                                        </Box>
-                                        <AccordionIcon />
-                                    </AccordionButton>
-                                    </h2>
-                                    <AccordionPanel pb={4}>
-                                    <CheckboxGroup  defaultValue={['']}>
-                                        <Stack spacing={[1]} direction={['column']}>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "4" })} ><Text fontSize={'small'} fontWeight='500'>4★ & above</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "3" })}><Text fontSize={'small'} fontWeight='500'>3★ & above</Text></Checkbox>
-                                        </Stack>
-                                    </CheckboxGroup>
-                                    </AccordionPanel>
-                                </AccordionItem>
-
-                                <AccordionItem p={'5px'}>
-                                    <h2>
-                                    <AccordionButton>
-                                        <Box flex='1'  textAlign='left' fontWeight='bold' fontSize='small' textTransform={'uppercase'}>
-                                        COLOR
-                                        </Box>
-                                        <AccordionIcon />
-                                    </AccordionButton>
-                                    </h2>
-                                    <AccordionPanel pb={4}>
-                                    <CheckboxGroup  defaultValue={['']}>
-                                        <Stack spacing={[1]} direction={['column']}>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'White' })} ><Text fontSize={'small'} fontWeight='500'>White</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Black' })}><Text fontSize={'small'} fontWeight='500'>Black</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "Yellow" })} ><Text fontSize={'small'} fontWeight='500'>Yellow</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Red' })} ><Text fontSize={'small'} fontWeight='500'>Red</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Blue' })} ><Text fontSize={'small'} fontWeight='500'>Blue</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Pink' })} ><Text fontSize={'small'} fontWeight='500'>Pink</Text></Checkbox>
-                                        </Stack>
-                                    </CheckboxGroup>
-                                    </AccordionPanel>
-                                </AccordionItem>
-
-                                <AccordionItem p={'5px'}>
-                                    <h2>
-                                    <AccordionButton>
-                                        <Box flex='1'  textAlign='left' fontWeight='bold' fontSize='small' textTransform={'uppercase'}>
-                                        OFFERS
-                                        </Box>
-                                        <AccordionIcon />
-                                    </AccordionButton>
-                                    </h2>
-                                    <AccordionPanel pb={4}>
-                                    <CheckboxGroup  defaultValue={['']}>
-                                        <Stack spacing={[1]} direction={['column']}>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Buy More, Save More' })} ><Text fontSize={'small'} fontWeight='500'>Buy More, Save More</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'No Cost EMI' })}><Text fontSize={'small'} fontWeight='500'>No Cost EMI</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "Special Price" })} ><Text fontSize={'small'} fontWeight='500'>Special Price</Text></Checkbox>
-                                        </Stack>
-                                    </CheckboxGroup>
-                                    </AccordionPanel>
-                                </AccordionItem>
-
-                                {/* <AccordionItem p={'5px'}>
-                                    <h2>
-                                    <AccordionButton>
-                                        <Box flex='1'  textAlign='left' fontWeight='bold' fontSize='small' textTransform={'uppercase'}>
-                                            CATEGORIES
-                                        </Box>
-                                        <AccordionIcon />
-                                    </AccordionButton>
-                                    </h2>
-                                    <AccordionPanel pb={4}>
-                                    <CheckboxGroup  defaultValue={['']}>
-                                        <Stack spacing={[1]} direction={['column']}>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '' })} ><Text fontSize={'small'} fontWeight='500'></Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: '' })}><Text fontSize={'small'} fontWeight='500'></Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "Men" })} ><Text fontSize={'small'} fontWeight='500'>Men</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Women' })} ><Text fontSize={'small'} fontWeight='500'>Women</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Baby' })} ><Text fontSize={'small'} fontWeight='500'>Baby</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Home' })} ><Text fontSize={'small'} fontWeight='500'>Home</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Sports' })} ><Text fontSize={'small'} fontWeight='500'>Sports</Text></Checkbox>
-                                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Books' })} ><Text fontSize={'small'} fontWeight='500'>Books</Text></Checkbox>
-                                        </Stack>
-                                    </CheckboxGroup>
-                                    </AccordionPanel>
-                                </AccordionItem> */}
-
-                            </Accordion>
                         </VStack>
                     </Box>
                 </Box>
@@ -468,26 +240,8 @@ const Products = () => {
                     <Flex borderTop={'1px solid #e0e0e0'} justify='space-between' align={'center'}
                             p='10px' lineHeight={'32px'}>
                         <Text ml={5}>Page {page} of {Math.ceil(total/perPagelimitProduct)}</Text>
-                        {/* <Flex gap={3} p='4px 0px' textAlign={'center'} justify='center' align={'center'} 
-                                color={'#212121'} fontWeight={'600'}>
-                            {[1,2,3,4,5,6,7,8,9,10,"NEXT"].map((item, i)=>{
-                                return <Text key={i} display={'inline-block'} cursor='pointer' fontSize={'15px'}
-                                            height={'32px'} minW='32px' borderRadius={'50%'}
-                                            _selected={{bg:'#2874f0', color:'#fff'}}
-                                        > {item} </Text>
-                            })}
-                        </Flex> */}
                         <Tabs>
                             <TabList borderBottom={0}>
-                                {/* {Array.from({length: total/10}, (v, i) => i).map((item, i)=>{
-                                    return <Tab key={i} cursor='pointer'
-                                                _selected={{bg:'#2874f0', color:'#fff'}}
-                                                height={'32px'} w='32px' borderRadius={'50%'}
-                                                onClick={()=>setPage(item+1)}
-                                                >
-                                                {item+1}
-                                            </Tab>
-                                })} */}
                                 {
                                     page>1?<Text>PREV</Text>:""
                                 }
@@ -515,18 +269,6 @@ const Products = () => {
                                     ))
                                 }
                                 <Text>NEXT</Text>
-                                {/* {
-                                    arrpage.map((ele,i)=>(
-                                        <Tab key={i} cursor='pointer'
-                                                // _selected={{bg:'#2874f0', color:'#fff'}}
-                                                height={'32px'} w='32px' borderRadius={'50%'}
-                                                onClick={()=>setPage(ele)}
-                                                >
-                                                {ele}
-                                            </Tab>
-                                    ))
-                                } */}
-                                
                             </TabList>
                         </Tabs>
                         <Text></Text>
@@ -545,9 +287,6 @@ const Products = () => {
                     </Box>
                 </Box>
             </Flex>
-            {/* <Box border={'1px solid teal'} m={'50px'}>
-                footer
-            </Box> */}
         </Box>
     )
 }
