@@ -14,6 +14,7 @@ const Products = () => {
     const [total, setTotal] = useState(0);
 
     const [priceRange, setPriceRange] = useState([]);
+    console.log(priceRange, " priceRange ");
     const priceRangeurl = priceRange[0] > 0 || priceRange[1] < 100 ?
         `&new_price_gte=${priceRange[0] * 10}${priceRange[1] < 100 ? `&new_price_lte=${priceRange[1] * 10}` : ""}` : ""
 
@@ -23,7 +24,7 @@ const Products = () => {
     const { value, getCheckboxProps } = useCheckboxGroup()
 
     console.log(value, " val of checkbox ");
-    console.log(data, " all data");
+    // console.log(data, " all data");
 
     useEffect(() => {
         fetchData()
@@ -87,12 +88,12 @@ const Products = () => {
                     }
                     {
                         isLargerThan720?"":
-                        <Box mb={'60px'} mt='0'>
+                        <Box mb={'45px'} mt='0'>
                             <Flex mt='0' justify={'space-between'} align='center' fontSize={'15px'} fontWeight='600' zIndex={'100'} pos={'fixed'}
-                                mb={'20px'}  w="100vw" boxShadow='md'
-                                bg='rgb(255,255,255,1);' borderBottom='rgba(0,0,0, 1);'>
+                                mb={'20px'}  w="100vw" boxShadow='Base'
+                                bg='rgb(255,255,255,1);' borderBottom='1px solid #B0B0B0'>
                                 {/* <Box> */}
-                                    <Flex justify={'center'} align='center' borderRight='1px solid #878787'
+                                    <Flex justify={'center'} align='center' borderRight='0.5px solid #B0B0B0'
                                         bg='rgb(255,255,255,1);' w="50%" 
                                         p='12px' gap={2}
                                         onClick={onOpen}
@@ -109,18 +110,17 @@ const Products = () => {
                                                 <p>Price - Low to High</p>
                                                 <p>Price - High to Low</p> */}
                                                 <RadioGroup defaultValue={placement} onChange={setPlacement}>
-                                                    <VStack direction='row' mb='4'>
-                                                        <Radio value='top'>Popularity</Radio>
-                                                        <Radio value='right'>Low to High</Radio>
-                                                        <Radio value='bottom'>High to Low</Radio>
-                                                        <Radio value='left'>Left</Radio>
-                                                    </VStack>
+                                                    <Stack direction='column' mb='4'>
+                                                        <Radio fontWeight={900} value='top'>Popularity</Radio>
+                                                        <Radio fontWeight={900} value='right'>Price -- Low to High</Radio>
+                                                        <Radio fontWeight={900} value='bottom'>Price -- High to Low</Radio>
+                                                    </Stack>
                                                 </RadioGroup>
                                             </DrawerBody>
                                             </DrawerContent>
                                         </Drawer>
                                 {/* </Box> */}
-                                <MiniFilter />
+                                <MiniFilter getCheckboxProps={getCheckboxProps} value={value}/>
                         </Flex>
                         </Box>
                     }
@@ -165,7 +165,7 @@ const Products = () => {
                                 : ""}
                     </Box>
                     <Box mt={0}>
-                        <SimpleGrid minChildWidth='220px' spacing='10px' pt={0}>
+                        <SimpleGrid columns={2} minChildWidth={isLargerThan720?'220px':""} spacing={isLargerThan720?'10px':""} pt={0}>
                             {
                                 data.map((property, i) => (
                                     <ProductItem key={i} property={property} />

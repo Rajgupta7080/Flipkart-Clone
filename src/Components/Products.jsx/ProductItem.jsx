@@ -1,12 +1,13 @@
-import { Box, Flex, Image, Text } from '@chakra-ui/react'
+import { Box, Flex, Image, Text, useMediaQuery } from '@chakra-ui/react'
 import React from 'react'
 
 const ProductItem = (props) => {
     const { property, i } = props;
+    const [isLargerThan720] = useMediaQuery('(min-width: 720px)')
 
     return (
-        <Box key={i} className='my-box'>
-            <Box overflow='hidden' m={'0px 8px'} pos={'relative'}
+        <Box key={i} className='my-box' border={!isLargerThan720?'0.1px solid #B0B0B0':""}>
+            <Box overflow='hidden' m={isLargerThan720? '0px 8px':""} pos={'relative'}
                 _hover={{ boxShadow: "0 3px 16px 0 rgb(0 0 0 / 11%)" }}
                 transition='box-shadow .2s ease-in-out;'
                 h={'100%'}
@@ -16,7 +17,7 @@ const ProductItem = (props) => {
                     {/* imgage box  */}
                     <Box >
                         <Box>
-                            <Box w={'100%'} minH='320px' pos={''}
+                            <Box w={'100%'} minH='280px' pos={''}
                                 pt='' display={'flex'} justifyContent='center' alignItems={'center'}
                             >
                                 <Flex pos={''} top='0' left={'0'} w={'100%'} overflow='hidden'
@@ -32,8 +33,8 @@ const ProductItem = (props) => {
                         </Box>
                     </Box>
                     {/* whishlist icon */}
-                    <Box pos={'absolute'} display='inline-block' top={'12px'} right='12px' cursor='pointer'>
-                        <Box pos={'relative'} display='inline-flex' >
+                    <Box  pos={'absolute'} display='inline-block' top={'12px'} right={isLargerThan720?'12px':"5px"} cursor='pointer'>
+                        <Box pos={'relative'} display='inline-flex' bg={'#fff'} borderRadius='50%' p='5px' boxShadow={'md'}>
                             <svg width="28" height="28" viewBox="0 0 20 16">
                                 <path
                                     d="M8.695 16.682C4.06 12.382 1 9.536 1 6.065 1 3.219 3.178 1 5.95 1c1.566 0 3.069.746 4.05 1.915C10.981 1.745 12.484 1 14.05 1 16.822 1 19 3.22 19 6.065c0 3.471-3.06 6.316-7.695 10.617L10 17.897l-1.305-1.215z"
