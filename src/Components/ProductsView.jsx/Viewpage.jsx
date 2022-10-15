@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Flex, Grid, GridItem, HStack, Img, Input, Text, useMediaQuery } from '@chakra-ui/react'
 import { FaHeart } from 'react-icons/fa';
 import { HiShoppingCart } from 'react-icons/hi'
@@ -9,8 +9,9 @@ import { AiFillStar } from 'react-icons/ai'
 import { BsLightningCharge } from 'react-icons/bs'
 import ReactImageMagnify from 'react-image-magnify'
 import './viewPage.css'
+import { useParams } from 'react-router-dom';
 function Viewpage() {
-    const viewData = [
+    const product = [
         {
             brand: "HIGHLANDER",
             category_id: 3,
@@ -31,16 +32,40 @@ function Viewpage() {
             item_id: 1
         }
     ]
+
+    const {item_id} = useParams();
+    // console.log(item_id, " ch ");
+    const [viewData, setViewData] = useState([...product]);
+
+    useEffect(()=>{
+        fetchData()
+    },[item_id])
+    const fetchData = async()=>{
+        try{
+            const res = await fetch(`http://localhost:4000/all?item_id=${item_id}`)
+            const res2 = await res.json()
+            console.log(res2);
+            setViewData([...res2]);
+        }catch(err){
+            console.log(err, "err");
+        }
+    }
+
+
     const [isLargerThan720] = useMediaQuery('(min-width: 720px)')
     return (
         <div>
             <HStack p="10px" display={{ base: 'block', md: 'flex', lg: 'flex' }}>
                 {viewData.map((item, index) => (
-                    <Box key={index} w={{ base: '100%', md: '40%', lg: '40%' }} h="100v"  position={isLargerThan720?"sticky":""}>
+                    <Box key={index} w={{ base: '100%', md: '40%', lg: '40%' }}  h={{base:"100h", md:"100vh", lg:"100h"}}  position={isLargerThan720?"sticky":""}>
                         <Box display={"flex"} p="15px">
-                            <Box w="15%"   > <Img h="20%" display={{ base: 'none', md: 'block', lg: 'block' }} border={"2px solid #2974F1"} src={item.image} alt="smallImg" /> </Box>
-                            <Box w="79%">
-                                <ReactImageMagnify {...{
+                            <Box w="15%"> 
+                                <Box p='7px' border={"2px solid #2974F1"}>
+                                    <Img h="20%" display={{ base: 'none', md: 'block', lg: 'block' }} src={item.image} alt="smallImg" /> 
+                                </Box>
+                            </Box>
+                            <Box w="79%" p='10px'>
+                                {/* <ReactImageMagnify {...{
                                     smallImage: {
                                         alt: 'Wristwatch by Ted Baker London',
                                         isFluidWidth: true,
@@ -59,18 +84,17 @@ function Viewpage() {
                                         border: "1px solid blue"
                                     }
                                 }}
-
-                                />
-
+                                /> */}
+                                <Img h='500px' mw='450px' m='auto' src={item.image} />
                             </Box>
                             <Box p='15px' h='53px' bg="white" borderRadius={'50%'} marginLeft="15px"  shadow={'base'}  > <FaHeart color="silver" size="25px" /> </Box>
                         </Box>
-                        <Flex display={{ base: 'none', md: 'block', lg: 'block' }} alignContent={"center"} justifyContent="space-around" w="100%" m="auto" color={"white"}  >
+                        <Flex pt='30px' pl="30px" display={{ base: 'none', md: 'block', lg: 'block' }} alignContent={"center"} justifyContent="space-around" w="100%" m="auto" color={"white"}  >
 
                             <Button alignItems={"center"}
                                 size='md'
                                 height={{ base: '30px', md: '40px', lg: '55px' }}
-                                width='48%'
+                                width='45%'
                                 bg="#FE9E00"
                                 rounded='1px'
                                 fontSize={{ base: '10px', md: '13px', lg: '18px' }}
@@ -81,7 +105,7 @@ function Viewpage() {
                             </Button><Button
                                 size='md'
                                 height={{ base: '30px', md: '40px', lg: '55px' }}
-                                width='48%'
+                                width='45%'
                                 bg="#FB641B"
                                 rounded='1px'
                                 fontSize={{ base: '10px', md: '13px', lg: '18px' }}
@@ -101,7 +125,7 @@ function Viewpage() {
                                 rounded='1px'
                                 color={"black"}
                                 fontSize="15px"
-                                _hover={{ backgroundColor: "#FE9E00" }}
+                                _hover={{ backgroundColor: "#ffff" }}
                             >
                                 ADD TO CART
                             </Button><Button
@@ -121,13 +145,13 @@ function Viewpage() {
 
                 ))}
                 {viewData.map((item, index) => (
-                    <Box key={index} w={{ base: '100%', md: '60%', lg: '60%' }} pt="-50px" h="100vh" overflow="auto" pl="2%" className='example'>
-                        <Box > <Text p="15px" display="flex" alignItems="center" float="right"> <IoMdShareAlt /> Share</Text></Box>
+                    <Box key={index} w={{ base: '100%', md: '60%', lg: '60%' }} pt="-50px" h="100vh" overflow={{base:"none", md:"auto", lg:"auto"}} pl="2%" className='example'>
+                        <Box display={{base:"none", md:"block",lg:"block"}} > <Text p="15px" display="flex" alignItems="center" float="right"> <IoMdShareAlt /> Share</Text></Box>
                         <Box> <Text color={"silver"} > {item.brand} </Text></Box>
-                        <Text> {item.description}</Text>
+                        <Text fontWeight={"500"}> {item.description}</Text>
                         <Text fontSize={"12px"} color="green"> Special price</Text>
-                        <Box display={"flex"} alignItems="center" fontSize={"12px"}> <Text fontSize={"25px"} pr="10px"> ₹{item.new_price} </Text>  <Text pr="10px">  <del> ₹{item.old_price} </del> </Text>  <Text pr="10px" color="green"> {item.discount}% Off</Text></Box>
-                        <Box fontSize={{ base: '10px', md: '11px', lg: '15px' }} fontWeight={"bold"} mb="15px" color={"#868786"} mt="8px" display="flex" alignItems="center" > <Box bg="green" color={"white"} pl="5px" pr="5px" display="flex" alignItems="center" borderRadius={"25px"} > {item.stars} <AiFillStar /></Box>
+                        <Box display={"flex"} alignItems="center"  fontWeight={"500"} fontSize={"12px"}> <Text fontSize={"25px"} pr="10px"> ₹{item.new_price} </Text>  <Text pr="10px">  <del> ₹{item.old_price} </del> </Text>  <Text pr="10px" color="green"> {item.discount}% Off</Text></Box>
+                        <Box fontSize={{ base: '10px', md: '11px', lg: '15px' }} fontWeight={"500"} mb="15px" color={"#868786"} mt="8px" display="flex" alignItems="center" > <Box bg="green" color={"white"} pl="5px" pr="5px" display="flex" alignItems="center" borderRadius={"25px"} > {item.stars} <AiFillStar /></Box>
                             <Text pl="12px" pr="6px"> {item.ratings}</Text> and <Text pl="6px" pr="12px"> {item.reviews}</Text>
                             <Img w="60px" src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/fa_62673a.png" alt="logo" />
                         </Box>
@@ -175,7 +199,7 @@ function Viewpage() {
                         </Flex>
 
                         <Img w={{ base: '200px', md: '280px', lg: '400px' }} p="20px" src="https://rukminim1.flixcart.com/lockin/774/185/images/CCO__PP_2019-07-14.png?q=50" />
-                        <Accordion defaultIndex={[0]} allowMultiple >
+                        <Accordion defaultIndex={[0]} allowMultiple  w="100%" p="0px" ml="-9px">
 
 
                             <AccordionItem bg="white">

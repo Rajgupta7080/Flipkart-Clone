@@ -1,9 +1,6 @@
-import { Box, Grid, GridItem, Img, Text } from '@chakra-ui/react';
 import React from 'react';
-
-import { BsBox } from 'react-icons/bs';
-
-function CategoryBar() {
+import { Box, Grid, GridItem, Img, Text } from '@chakra-ui/react';
+function CategoryBarForMobile() {
     var data = [
         {
             image: "https://rukminim1.flixcart.com/fk-p-flap/128/128/image/f0b3c58d99158fc3.png?q=100",
@@ -49,14 +46,14 @@ function CategoryBar() {
         }
     ]
     return (
-        <Box>
-        <Box display={{base:"none", md:"grid", lg:"grid"}} boxShadow="2xl">
-            <Grid   pb="20px" textAlign={"center"} templateColumns='repeat(10, 1fr)' m="auto" gap="20px" >
+        <div>
+             <Box boxShadow="2xl" display={{base:"block", md:"none", lg:"none"}} bg="#6C2F9D" color={"white"}>
+            <Grid pb="20px" textAlign={"center"} templateColumns='repeat(5, 1fr)' m="auto"  >
                 {
-                    data.map((ele, index) => (
-                        <GridItem key={index} _hover={{color:"#2874F0"}} fontSize={{base:"0px", md:"13px", lg:"14px"}} >
-                            <Box cursor={'pointer'} > <Img src={ele.image} alt=""  height={{base:"0px", md:"60px", lg:"70px"}} m="auto" />
-                             <Text fontWeight={'600'}> {ele.title}</Text>
+                    data.map((ele) => (
+                        <GridItem key={Math.random()}  _hover={{color:"#2874F0"}} fontSize={{base:"10px", md:"13px", lg:"14px"}} >
+                            <Box > <Img src={ele.image} alt=""  height={{base:"60px", md:"60px", lg:"70px"}} m="auto" />
+                             <Text> {ele.title}</Text>
                             </Box>
                            
                         </GridItem>
@@ -64,11 +61,11 @@ function CategoryBar() {
                     ))
                 }
             </Grid>
+            <Img src="https://rukminim1.flixcart.com/fk-p-flap/450/100/image/eceee0573a65ca9e.jpeg?q=90"/>
         </Box>
-       
 
- </Box>
+        </div>
     );
 }
 
-export default CategoryBar;
+export default CategoryBarForMobile;

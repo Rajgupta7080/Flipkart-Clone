@@ -13,30 +13,29 @@ import CategoryBar from './homeComponents/CategoryBar'
 import BannerOffer from './homeComponents/BannerOffer'
 import BannerOffer2 from './homeComponents/BannerOffer2'
 import BeforeFooter from './homeComponents/BeforeFooter'
+import { Box } from '@chakra-ui/react'
+import CategoryBarForMobile from './homeComponents/CategoryBarForMobile'
 
 const Home = () => {
-    const containerStyles = {
-        width: "100%",
-        height: "280px",
-        margin: "0 auto",
-    };
+    
     return (
-        <div>
-            <CategoryBar/>
-            <FinalBanner/>
-            <OfferBanner/>
-            <BannerOffer/>
-            <Fashion/>
-            <Bestselling/> 
-            <Appliances/> 
-            <BannerOffer2/>
+        <Box>
+            <CategoryBar />
+            <FinalBanner />
+            <CategoryBarForMobile />
+            <OfferBanner />
+            <BannerOffer />
+            <Fashion />
+            <Bestselling />
+            <Appliances />
+            <BannerOffer2 />
             <TopOffers />
             <Electronics />
-            <Groceries/>
+            <Groceries />
             <Mobile />
-            <BeforeFooter/>
-            <Footer/>
-        </div>
+            <BeforeFooter />
+            <Footer />
+        </Box>
     )
 }
 

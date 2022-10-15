@@ -11,7 +11,7 @@ const Products = () => {
     const [isLargerThan720] = useMediaQuery('(min-width: 720px)')
     const [data, setData] = useState([]);
     const [page, setPage] = useState(1);
-    const perPagelimitProduct = 6;
+    const perPagelimitProduct = 20;
     const [total, setTotal] = useState(0);
 
     const [priceRange, setPriceRange] = useState([]);
@@ -87,7 +87,7 @@ const Products = () => {
                 <Box mr={3}>
                     {/* sidebar */}
                     {
-                        isLargerThan720? <LeftSidebar
+                        isLargerThan720 ? <LeftSidebar
                         getCheckboxProps={getCheckboxProps}
                         setPriceRange={setPriceRange}
                         priceRange={priceRange}
@@ -97,9 +97,14 @@ const Products = () => {
                     {
                         isLargerThan720?"":
                         <Box mb={'0px'} mt='0'>
-                            <Flex mt='0' justify={'space-between'} align='center' fontSize={'15px'} fontWeight='600' position={'sticky'}
+                            <Flex mt='0' justify={'space-between'} align='center' fontSize={'15px'} fontWeight='600' 
+                                position={'sticky'} 
+                                top='0'
+                                border={'1px solid red'}
                                 mb={'0px'}  w="100vw" boxShadow='Base'
-                                bg='rgb(255,255,255,1);' borderBottom='1px solid #B0B0B0'>
+                                bg='rgb(255,255,255,1);' 
+                                // borderBottom='1px solid #B0B0B0'
+                                >
                                 {/* <Box> */}
                                     <Flex justify={'center'} align='center' borderRight='0.5px solid #B0B0B0'
                                         bg='rgb(255,255,255,1);' w="50%" 
@@ -170,7 +175,9 @@ const Products = () => {
                                 : ""}
                     </Box>
                     <Box mt={0}>
-                        <SimpleGrid columns={2} minChildWidth={isLargerThan720?'220px':""} spacing={isLargerThan720?'10px':""} pt={0}>
+                        <SimpleGrid columns={2} minChildWidth={isLargerThan720?'220px':""} 
+                        spacing={isLargerThan720?'10px':""} pt={0}
+                        >
                             {
                                 data.map((property, i) => (
                                     <ProductItem key={i} property={property} />

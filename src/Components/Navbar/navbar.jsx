@@ -28,7 +28,7 @@ import icon13 from "./Icon/icon13.webp";
 import icon14 from "./Icon/icon14.webp";
 import icon15 from "./Icon/icon15.png";
 
-import { Flex, Box, Center, Link, Image, Spacer, InputGroup, Input, InputLeftElement, Icon } from "@chakra-ui/react";
+import { Flex, Box, Center, Image, Spacer, InputGroup, Input, InputLeftElement, Icon } from "@chakra-ui/react";
 import { HamburgerIcon, SearchIcon } from "@chakra-ui/icons"
 import { BsFillFilePlusFill, BsFillCreditCard2BackFill, BsBellFill, BsQuestionSquareFill } from "react-icons/bs";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
@@ -40,7 +40,7 @@ import { HiDownload } from "react-icons/hi"
 import { useDisclosure } from '@chakra-ui/react';
 
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Drawer,
   DrawerBody,
@@ -48,53 +48,34 @@ import {
   DrawerOverlay,
   DrawerContent,
 } from '@chakra-ui/react'
-import { Navigate, NavLink } from "react-router-dom";
+import { Link, Navigate, NavLink } from "react-router-dom";
 import Register from "../Login/Register";
 import { Signup } from "../Login/SignUp";
-
-const items = [
-  {
-    id: 0,
-    description: "Cobol"
-  },
-  {
-    id: 1,
-    description: "JavaScript"
-  },
-  {
-    id: 2,
-    description: "Basic"
-  },
-  {
-    id: 3,
-    description: "PHP"
-  },
-  {
-    id: 4,
-    description: "Java"
-  }
-];
-
-
 
 
 const Navbar = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = React.useRef();
+  const ref = useRef(null)
+
+  const [hiddenDiv, setHiddenDiv] = useState(false)
 
   const [isLargerThan670] = useMediaQuery('(min-width: 730px)')
-  // const url = `http://localhost:4000/all?description=${searchVal}`
+  const url = `http://localhost:4000/all`
+  // const url = `https://flipkart.dvishal485.workers.dev/search/`
 
   const [data, setData] = useState([])
-  // const [searchVal, setSearchVal] = useState("");
+  const [searchVal, setSearchVal] = useState("");
   useEffect(()=>{
-    fetchData()
-  },[])
-  const fetchData=()=>{
-    fetch(`http://localhost:4000/mobile`)
+    fetchData(searchVal)
+  },[searchVal])
+  
+  const fetchData=(searchVal)=>{
+    fetch(`${url}?_limit=5&q=${searchVal}`)
     .then((res)=>res.json())
     .then((res)=>{
+      // setData(res)
       setData(res)
       console.log(res, " search input data after fetched ");
     })
@@ -106,49 +87,42 @@ const Navbar = () => {
   //   setSearchVal(val)
   // }
 
-  const handleOnSearch = (string, results) => {
-    // onSearch will have as the first callback parameter
-    // the string searched and for the second the results.
-    
-    console.log(string, results," on search ");
-  };
-
-  const handleOnHover = (result) => {
-    // the item hovered
-    console.log(result ," on hover ");
-  };
-
-  const handleOnSelect = (item) => {
-    // the item selected
-    // <Navigate to={`/products/${item.item_id}`}/>
-    console.log(item, " selected ");
-  };
-
-  const handleOnFocus = () => {
-    console.log("Focused");
-  };
-  const handleclick =(item)=>{
-    console.log(item, " after click ");
+  const debounce = (fn, timeout)=>{
+    let timerid;
+    return ()=>{
+      clearTimeout(timerid)
+      timerid = setTimeout(() => {
+        fn()
+      }, timeout);
+    }
   }
-  const formatResult = (item) => {
-    return (
-      // <NavLink>
-        <Box onClick={()=>{
-          handleclick(item)
-        }}>
-          {/* <span style={{ display: 'block', textAlign: 'left' }}>id: {""}</span> */}
-          <Box h='50px' style={{ display: 'block', textAlign: 'left' }}>name: {item.description}</Box>
-        </Box>
-      // </NavLink>
-    )
-  };
+  const handleinput = debounce(()=>{
+    const val = ref.current.value
+    console.log(" event val check in debounce ", val);
+    setHiddenDiv(true)
+    setSearchVal(val)
+  }, 500)
+
+  window.addEventListener("click",(e)=>{
+    console.log(e.target.id, " check window ");
+    if(e.target.id!=="inputBox"){
+      setHiddenDiv(false)
+    }
+
+  })
+
+  const handleSetQuaryUrl = (query_url)=>{
+    // console.log("handleSetQuaryUrl", query_url);
+    // console.log("check after slice ",query_url.slice(48));
+    console.log(query_url);
+  }
 
   if (isLargerThan670) {
     return (
-      <div>
-        <Flex bg="#2874f0" h="56px" align="center">
+      <Box mt='-1px' >
+        <Box mb='4rem' border={'1px solid blue'}>
+        <Flex bg="#2874f0" h="56px" align="center"  position='fixed' w='100%' zIndex={'100'}>
           <Spacer />
-
           <Box>
             <NavLink to='/'>
             <Box mr="10px" cursor={'pointer'} >
@@ -171,41 +145,47 @@ const Navbar = () => {
             </NavLink>
           </Box>
           {/* =======search======== */}
-          <Box w="28%">
+          <Box w="28%" pos={'relative'}>
             <InputGroup>
-              {/* <Input
+              <Input
                 placeholder="Search for products,brands and more"
                 bg="white"
                 w="100%"
                 borderRadius="2px"
                 h="36px"
                 fontSize="14px"
+                ref={ref}
+                // value={}
                 onInput={handleinput}
-              /> */}
-              <Box w={'100%'} pos='relative' zIndex='10'>
+                id='inputBox'
+              />
+              {/* <Box w={'100%'} pos='relative' zIndex='10'>
                 <ReactSearchAutocomplete
                     styling={{
                       borderRadius: "2px",
                       height:"38px",
-                      overflowY:'scroll',
-                      iconColor: "white",
-                      searchIconMargin: "0 0 0 0",
+                      overflowY:'scroll'
                       // border: '1px solid red'
                     }}
+                    showIcon ={false}
+                    showClear = {false}
                     items={items}
                     onSearch={handleOnSearch}
                     onHover={handleOnHover}
                     onSelect={handleOnSelect}
+                    onChange ={handleinput}
                     onFocus={handleOnFocus}
                     placeholder="Search for products,brands and more"
                     formatResult={formatResult}
-                    fuseOptions={{ 
-                      keys: ["item_id", "description"] 
+                    fuseOptions={{
+                      keys: ["id", "description"] 
                     }}
+                    maxResults = "5"
                     // resultStringKeyName={"sy"+Date.now()+Math.random()}
                   />
-              </Box>
+              </Box> */}
               <InputRightElement
+              pos='absolute' zIndex='10'
                 children={
                   <IoSearchSharp
                     color="#2874f0"
@@ -216,7 +196,43 @@ const Navbar = () => {
                 }
               />
             </InputGroup>
-            
+            <Box
+              display={hiddenDiv?"":"none"}
+              pos={'absolute'} zIndex={'10'}
+              maxH='320px' overflowY={'auto'}
+              borderRadius='0 0 2px 2px'
+              borderTop={'1px solid #e0e0e0'}
+              w='100%'
+              bg='#fff'
+              boxShadow={'2px 3px 5px -1px rgb(0 0 0 / 50%)'}
+            >
+              {
+                data.map((item, index)=>(
+                  <Box key={index}>
+                    <NavLink to={`/products/${item.item_id}`}>
+                      <Flex gap={2} p='10px 25px' m='10px 0'
+                      align={'center'}
+                      cursor='pointer'
+                      _hover={{bg:"#F5F8FF"}}
+                      // onClick={()=>handleSetQuaryUrl(item.query_url)}
+                      >
+                        <Box maxH='32px' w='32px'>
+                          <Image maxH='30px' maxW='32px' src=
+                          {item.image}
+                          // {item.thumbnail}
+                          />
+                        </Box>
+                        <Box color={'#212121'}
+                        >
+                          {item.description}
+                          {/* {item.name} */}
+                        </Box>
+                      </Flex>
+                    </NavLink>
+                  </Box>
+                ))
+              }
+            </Box>
           </Box>
           {/* ======================================search end======================================= */}
           <Popover trigger="hover" >
@@ -261,7 +277,7 @@ const Navbar = () => {
                 </Flex>
                 <hr margin="0px" />
                 <Flex h="49px" fontSize='14px' className="pop1">
-                  <Center ml='10px'><HiUserCircle color="#2874f0" size="18px" /></Center> <Center ml='16px'>Flipkart Plus Zone</Center>
+                  <Center ml='10px'><HiUserCircle color="#2874f0" size="18px" /></Center> <Center ml='16px'>My Profile</Center>
                 </Flex>
                 <hr />
                 <Flex className="pop1" h='49px' fontSize='14px'><Center ml='10px'><Image src={vikas} alt="vikas" /></Center> <Center ml='16px'>Flipkart Plus Zone</Center></Flex>
@@ -342,14 +358,17 @@ const Navbar = () => {
 
           <Spacer />
         </Flex>
-      </div>
+      </Box>
+      </Box>
     );
   }
-
+  
   else {
-
-    return (<Box>
-      <Flex bg="#2874f0" h='52px'>
+    return (
+    <Box mt='-1px' ml='-1px'>
+      <Box mb='6.4rem' border={'1px solid blue'}>
+      <Box position='fixed' w='100%' zIndex={'100'}>
+      <Flex bg="#2874f0" h='52px' >
         <Center ml='10px' ref={btnRef} color='white' onClick={onOpen}>
           <HamburgerIcon color='white' fontSize='20px' />
         </Center>
@@ -412,39 +431,22 @@ const Navbar = () => {
         <Center color='white' mr='10px'>Login</Center>
       </Flex>
       <Flex bg="#2874f0" h='52px'>
-        <Center w='100%' ml='1%' mr='1%'> <InputGroup>
-          {/* <Input
-            placeholder="Search for products,brands and more"
-            bg="white"
-            w="100%"
-            borderRadius="2px"
-            h="36px"
-            fontSize="14px"
-          /> */}
-            <Box w={'100%'} pos='relative' zIndex='10'>
-                <ReactSearchAutocomplete
-                    styling={{
-                      borderRadius: "2px",
-                      height:"38px",
-                      overflowY:'scroll',
-                      iconColor: "white",
-                      searchIconMargin: "0 0 0 0",
-                      // border: '1px solid red'
-                    }}
-                    items={data}
-                    onSearch={handleOnSearch}
-                    onHover={handleOnHover}
-                    onSelect={handleOnSelect}
-                    onFocus={handleOnFocus}
-                    placeholder="Search for products,brands and more"
-                    formatResult={formatResult}
-                    fuseOptions={{ 
-                      keys: ["item_id", "description"] 
-                    }}
-                    // resultStringKeyName={"sy"+Date.now()+Math.random()}
-                  />
-              </Box>
-          <InputLeftElement
+        <Center w='100%' ml='1%' mr='1%' pos={'relative'}> 
+        <InputGroup pos={'relative'}>
+            <Input
+                placeholder="Search for products,brands and more"
+                bg="white"
+                w="100%"
+                borderRadius="2px"
+                h="36px"
+                fontSize="14px"
+                ref={ref}
+                // value={}
+                onInput={handleinput}
+                id='inputBox'
+              />
+          {/* <InputLeftElement 
+            pos={'absolute'} zIndex='10'
             children={
               <IoSearchSharp
                 color="#2874f0"
@@ -453,10 +455,53 @@ const Navbar = () => {
                 fontWeight="bold"
               />
             }
-          />
-        </InputGroup></Center>
+          /> */}
+            <Box
+            mt='36px'
+              display={hiddenDiv?"":"none"}
+              pos={'absolute'} zIndex={'10'}
+              maxH='320px' overflowY={'auto'}
+              borderRadius='0 0 2px 2px'
+              borderTop={'1px solid #e0e0e0'}
+              w='100%'
+              bg='#fff'
+              boxShadow={'2px 3px 5px -1px rgb(0 0 0 / 50%)'}
+            >
+              {
+                data.map((item, index)=>(
+                  <Box key={index}>
+                    <NavLink to={`/products/${item.item_id}`}>
+                      <Flex gap={2} p='10px 25px' m='10px 0'
+                      align={'center'}
+                      cursor='pointer'
+                      _hover={{bg:"#F5F8FF"}}
+                      // onClick={()=>handleSetQuaryUrl(item.query_url)}
+                      >
+                        <Box maxH='32px' w='32px'>
+                          <Image maxH='30px' maxW='32px' src=
+                          {item.image}
+                          // {item.thumbnail}
+                          />
+                        </Box>
+                        <Box color={'#212121'}
+                        >
+                          {item.description}
+                          {/* {item.name} */}
+                        </Box>
+                      </Flex>
+                    </NavLink>
+                  </Box>
+                ))
+              }
+            </Box>
+        </InputGroup>
+          
+        </Center>
       </Flex>
-    </Box>)
+    </Box>
+    </Box>
+    </Box>
+    )
 
   }
 
