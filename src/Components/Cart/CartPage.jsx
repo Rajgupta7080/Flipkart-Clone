@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Heading,
   HStack,
   Image,
   Popover,
@@ -23,9 +24,18 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { useEffect } from "react";
+import { useContext } from "react";
 import { useState } from "react";
+import { AiFillSafetyCertificate } from 'react-icons/ai'
+import { MdSecurity } from 'react-icons/md'
+import { Link } from "react-router-dom";
+// import { CartContext } from "../Context/CartContext";
+
 
 function CartPage() {
+  let sellingPrice= 0;
+  let discount=0;
+  let totalAmount= 0;
   const [count, setCount] = useState(0);
   const [Deleteid, setDeleteId] = useState(0);
 
@@ -33,16 +43,19 @@ function CartPage() {
   const cancelRef = useRef();
 
   const [cartData, SetCartData] = useState([]);
+  // const { cartData, SetCartData } = useContext(CartContext);
+  
+  const [ loading, setLoading ] = useState(false);
 
   const initialFocusRef = useRef();
 
-  const url = "http://localhost:3005/all"
-
   function getData() {
-    fetch(`${url}?_limit=5`)
+    setLoading(true);
+    fetch(`http://localhost:4000/products`)
       .then((res) => res.json())
       .then((res) => SetCartData(res))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(()=>setLoading(false))
   }
 
   useEffect(() => {
@@ -53,12 +66,12 @@ function CartPage() {
 
   const handelDeleteCart = () => {
     onClose();
-    fetch(`${url}/${Deleteid}`, {
+    fetch(`http://localhost:4000/products/${Deleteid}`, {
       method: "DELETE",
     });
     setCount(count - 1);
   };
-
+  
   const handelID = (id) => {
     onOpen();
     console.log(id);
@@ -66,7 +79,7 @@ function CartPage() {
   };
 
   const handelPatchLess = (id, quantity) => {
-    fetch(`${url}/${id}`, {
+    fetch(`http://localhost:4000/products/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -78,7 +91,7 @@ function CartPage() {
   };
 
   const handelPatchAdd = (id, quantity) => {
-    fetch(`${url}/${id}`, {
+    fetch(`http://localhost:4000/products/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -88,17 +101,83 @@ function CartPage() {
     setCount(count + 1);
   };
 
-  return (
-    <Box w="100%" bg="#f1f3f6" h="150vh" pt="100px">
-      <HStack
-        w="80%"
-        bg="f1f3f6"
+
+  cartData.map((data)=>{
+    sellingPrice+= data.old_price * data.quantity ;
+    discount+= data.discount;
+    totalAmount+= data.new_price* data.quantity;  
+  })
+  discount = Math.floor(((discount/cartData.length)* sellingPrice)/100); 
+  console.log(sellingPrice);
+  console.log(discount);
+
+
+
+
+  if(loading){
+    return (
+      <Box display='flex' w='100%' h='100vh' justifyContent='center' alignItems='center' >
+        <Heading>Loading</Heading>
+      </Box>
+    )
+  }
+
+
+
+  if(cartData.length===0){
+    return (
+      <Box w="100%" bg="#f1f3f6" h="150vh" pt="100px"  >
+        <Box w="78%" h='60.3vh' margin='auto' style={{boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'}} >
+
+        
+        <Box
+        w="100%"
+        bg="white"
+        h="9vh"
+        margin="auto"
+        display="flex"
+        alignItems="center"
+        justifyContent='center'
+        ><Text color="blue" fontSize="20" fontWeight="400"> Flipkart </Text>
+      </Box>
+      <Box display='block' > 
+        <Box
+        w="100%"
+        bg="white"
         h="50vh"
+        margin="auto"
+        mt='2'
+        display="flex"
+        alignItems="start"
+        justifyContent='center'
+        >
+          <Image src='https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90' 
+          w='20%'
+          mt='5'
+           />
+      </Box>
+           <Text mt='-36' fontWeight='400' fontSize='18px' >Your cart is empty!</Text>
+           <Text  fontWeight='400' fontSize='13px' >Add items to it now.</Text>
+           <Button  color='white' bg='#2874f0' borderRadius='0' mt='4' pl='16' pr='16' >
+              Shop now
+            </Button>
+
+      </Box>
+      </Box>
+      </Box>  
+    )
+  }
+
+  return (
+    <Box w="100%" bg="#f1f3f6" minH='100vh' maxH='-webkit-fit-content'  pt="100px">
+      <HStack
+        w="78%"
+        bg="f1f3f6"
         margin="auto"
         display="flex"
         alignItems="start"
       >
-        <Box shadow="md" bg="f1f3f6" w="69%" height="40vh">
+        <Box shadow="md" bg="f1f3f6" w="69%" position='relative' top='0'   >
           <Box
             w="100%"
             bg="white"
@@ -160,10 +239,10 @@ function CartPage() {
             justifyContent="start"
             alignItems="center"
           >
-            {cartData.map((data) => {
+            {cartData.map((data, i) => {
               return (
                 <Box
-                  key={data.id}
+                  key={i}
                   display="flex"
                   justifyContent="start"
                   w="800px"
@@ -324,14 +403,46 @@ function CartPage() {
             justifyContent='flex-end' alignItems='center'
           >
             <Button  color='white' bg='#fb641b' borderRadius='0' mr='10' pl='10' pr='10' >
-              PLACE ORDER
+              
+              <Link to='/delivery' >PLACE ORDER</Link>
             </Button>
           </Box>
         </Box>
 
-        <Box bg="white" position="sticky" top="0" mt='10' shadow="md" h="20vh" w="29%">
-          {" "}
-          hey 2
+        <Box bg="white" position="sticky" top="0" mt='10' shadow="md" h="20vh" w="31%">
+          
+          <Box display='flex'justifyContent='flex-start' alignItems='center'  bg='white' w='100%' h='12' >
+            <Text ml='5' fontWeight='500' color='grey' >PRICE DETAILS</Text>
+          </Box>
+            <hr style={{color:'black'}} />
+          < Box display='flex'justifyContent='flex-start' alignItems='center'  bg='white' >
+            <Text ml='5' mt='5' fontWeight='400' fontSize='18px' color='black' >Price ({cartData.length} items) </Text>
+            <Spacer/>
+            <Text mr='5' mt='5' fontWeight='400' fontSize='18px' color='black' >₹{sellingPrice}</Text>
+          </Box>
+          < Box display='flex'justifyContent='flex-start' alignItems='center'  bg='white' >
+            <Text ml='5' mt='4' fontWeight='400' fontSize='18px' color='black' >Discount </Text>
+            <Spacer/>
+            <Text mr='5' mt='4' fontWeight='400' fontSize='18px' color='green' >- ₹{discount}</Text>
+          </Box>
+          < Box display='flex'justifyContent='flex-start' alignItems='center'  bg='white' borderBottom='1px dashed grey'  >
+            <Text ml='5' mt='4' mb='5' fontWeight='400' fontSize='18px' color='black' >Delivery Charges </Text>
+            <Spacer/>
+            <Text mr='5' mt='4' mb='5' fontWeight='400' fontSize='18px' color='green' >FREE</Text>
+          </Box>
+            {/* <hr style={{ color:'black'  }} /> */}
+          < Box display='flex'justifyContent='flex-start' alignItems='center'  bg='white' borderBottom='1px dashed grey' >
+            <Text ml='5' mt='4' mb='5' fontWeight='500' fontSize='19px' color='black' >Total Amount </Text>
+            <Spacer/>
+            <Text mr='5' mt='4' mb='5' fontWeight='500' fontSize='19px' color='black' >₹ {totalAmount}</Text>
+          </Box>
+          < Box display='flex'justifyContent='flex-start' alignItems='center'  bg='white' >
+            <Text ml='5' mt='4' mb='5' fontWeight='500' fontSize='17px' color='green' >You will save ₹{discount} on this order </Text>
+          </Box>
+          <Box mt='5' p='5' display='grid' justifyContent='flex-end' alignItems='center'  >
+          <MdSecurity fill="grey"   />
+          <Text mt='-5' ml='5' w='100%' textTransform='full-width' fontWeight='500' > Safe and Secure Payments.Easy returns.{<br/>}100% Authentic products.</Text>
+          </Box>
         </Box>
       </HStack>
     </Box>

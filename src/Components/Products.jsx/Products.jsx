@@ -6,11 +6,12 @@ import ProductItem from './ProductItem'
 import LeftSidebar from './LeftSidebar'
 import MiniFilter from './Filter/MiniFilter'
 
-const url = `http://localhost:3005`
+const url = `http://localhost:4000`
 const Products = () => {
+    const [isLargerThan720] = useMediaQuery('(min-width: 720px)')
     const [data, setData] = useState([]);
     const [page, setPage] = useState(1);
-    const perPagelimitProduct = 12;
+    const perPagelimitProduct = 6;
     const [total, setTotal] = useState(0);
 
     const [priceRange, setPriceRange] = useState([]);
@@ -18,8 +19,16 @@ const Products = () => {
     const priceRangeurl = priceRange[0] > 0 || priceRange[1] < 100 ?
         `&new_price_gte=${priceRange[0] * 10}${priceRange[1] < 100 ? `&new_price_lte=${priceRange[1] * 10}` : ""}` : ""
 
+
+     // for mobile sort price
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [placement, setPlacement] = React.useState("")
+    
     const [sortprice, setPriceSort] = useState("");
-    const pricesorturl = sortprice === "" ? "" : `&_sort=new_price&_order=${sortprice}`
+    console.log(sortprice);
+    let pricesorturl = isLargerThan720?
+    sortprice === ""? "" : `&_sort=new_price&_order=${sortprice}`:
+    placement==="" ?"": `&_sort=new_price&_order=${placement}`
 
     const { value, getCheckboxProps } = useCheckboxGroup()
 
@@ -29,7 +38,7 @@ const Products = () => {
     useEffect(() => {
         fetchData()
         // eslint-disable-next-line
-    }, [page, sortprice, priceRangeurl, value])
+    }, [page, sortprice, priceRangeurl, value, placement])
 
     const fetchData = () => {
         let tempUrl = ""
@@ -68,11 +77,10 @@ const Products = () => {
 
     const range = (start, stop) => Array.from({ length: (stop - start) }, (_, i) => start + (i))
     let arrpage = range(page - 4, page + 6);
+    let ll = Math.ceil(total/perPagelimitProduct)-10;
+    let lastpaginationArray = [ll,ll+1,ll+2,ll+3,ll+4,ll+5,ll+6,ll+7,ll+8,ll+9,ll+10]
 
-    const [isLargerThan720] = useMediaQuery('(min-width: 720px)')
-
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const [placement, setPlacement] = React.useState('')
+    
     return (
         <Box bg='#f1f3f6' border='1px solid #f1f3f6' fontFamily='Roboto,Arial,sans-serif'>
             <Flex pos={'relative'} spacing='10px' m={isLargerThan720?"8px":""} flexDir={isLargerThan720?"":"column"} >
@@ -88,9 +96,9 @@ const Products = () => {
                     }
                     {
                         isLargerThan720?"":
-                        <Box mb={'45px'} mt='0'>
-                            <Flex mt='0' justify={'space-between'} align='center' fontSize={'15px'} fontWeight='600' zIndex={'100'} pos={'fixed'}
-                                mb={'20px'}  w="100vw" boxShadow='Base'
+                        <Box mb={'0px'} mt='0'>
+                            <Flex mt='0' justify={'space-between'} align='center' fontSize={'15px'} fontWeight='600' position={'sticky'}
+                                mb={'0px'}  w="100vw" boxShadow='Base'
                                 bg='rgb(255,255,255,1);' borderBottom='1px solid #B0B0B0'>
                                 {/* <Box> */}
                                     <Flex justify={'center'} align='center' borderRight='0.5px solid #B0B0B0'
@@ -104,16 +112,13 @@ const Products = () => {
                                         <Drawer placement={'bottom'} onClose={onClose} isOpen={isOpen}>
                                             <DrawerOverlay />
                                             <DrawerContent>
-                                            <DrawerHeader borderBottomWidth='1px'>SORT BY</DrawerHeader>
+                                            <DrawerHeader borderBottomWidth='1px' fontSize={'15px'} color='rgba(135,135,135,1.00)'>SORT BY</DrawerHeader>
                                             <DrawerBody>
-                                                {/* <p>Popularity</p>
-                                                <p>Price - Low to High</p>
-                                                <p>Price - High to Low</p> */}
-                                                <RadioGroup defaultValue={placement} onChange={setPlacement}>
+                                                <RadioGroup onChange={setPlacement}>
                                                     <Stack direction='column' mb='4'>
-                                                        <Radio fontWeight={900} value='top'>Popularity</Radio>
-                                                        <Radio fontWeight={900} value='right'>Price -- Low to High</Radio>
-                                                        <Radio fontWeight={900} value='bottom'>Price -- High to Low</Radio>
+                                                        <Radio fontWeight='900' value='pop'>Popularity</Radio>
+                                                        <Radio fontWeight='900' value='asc'>Price -- Low to High</Radio>
+                                                        <Radio fontWeight='900' value='desc'>Price -- High to Low</Radio>
                                                     </Stack>
                                                 </RadioGroup>
                                             </DrawerBody>
@@ -179,35 +184,62 @@ const Products = () => {
                         <Flex borderTop={'1px solid #e0e0e0'} justify='space-between' align={'center'}
                         p='10px' lineHeight={'32px'}>
                         <Text ml={5}>Page {page} of {Math.ceil(total / perPagelimitProduct)}</Text>
-                        <Tabs>
+                        <Tabs p={'10px'}>
                             <TabList borderBottom={0}>
                                 {
-                                    page > 1 ? <Text>PREV</Text> : ""
+                                    page > 1 ? <Text color={'#2874f0'} fontWeight='800' lineHeight='32px' p='0 25px'
+                                    cursor={'pointer'}
+                                    onClick={()=>setPage(page-1)}
+                                    >PREVIOUS</Text> : ""
                                 }
                                 {
                                     page <= 5 ?
                                         Array.from({ length: 10 }, (v, i) => i).map((item, i) => {
                                             return <Tab key={i} cursor='pointer' fontSize={'15px'}
-                                                _selected={{ bg: '#2874f0', color: '#fff' }}
+                                                _selected={{ bg: '', color: '' }}
+                                                bg={page===(i+1)?"#2874f0":""}
+                                                color={page===(i+1)?"#fff":""}
                                                 height={'32px'} w='32px' borderRadius={'50%'}
                                                 onClick={() => setPage(item + 1)}
+                                                fontWeight='800'
                                             >
                                                 {item + 1}
                                             </Tab>
                                         })
                                         :
+                                        page<=total/perPagelimitProduct-5?
                                         arrpage.map((ele, i) => (
                                             <Tab key={i} cursor='pointer' fontSize={'15px'}
                                                 bg={i === 4 ? '#2874f0' : "#fff"} color={i === 4 ? '#fff' : "black"}
                                                 _selected={{ bg: '', color: '' }}
                                                 h={'32px'} w='32px' borderRadius={'50%'}
                                                 onClick={() => handlepagination(ele)}
+                                                fontWeight='800'
                                             >
                                                 {ele}
                                             </Tab>
-                                        ))
+                                        )):
+                                        lastpaginationArray.map((item, i) => {
+                                            return <Tab key={i} cursor='pointer' fontSize={'15px'}
+                                                _selected={{ bg: '', color: '' }}
+                                                bg={page===(item)?"#2874f0":""}
+                                                color={page===(item)?"#fff":""}
+                                                height={'32px'} w='32px' borderRadius={'50%'}
+                                                onClick={() => setPage(item)}
+                                                fontWeight='800'
+                                            >
+                                                {item}
+                                            </Tab>
+                                        })
                                 }
-                                <Text>NEXT</Text>
+                                {
+                                    page<=total/perPagelimitProduct?
+                                    <Text color={'#2874f0'} fontWeight='800' lineHeight='32px' p='0 25px'
+                                        cursor={'pointer'}
+                                        onClick={()=>setPage(page+1)}
+                                        >NEXT</Text>
+                                        :""
+                                }
                             </TabList>
                         </Tabs>
                         <Text></Text>

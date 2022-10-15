@@ -1,12 +1,14 @@
 import { Box, Flex, Image, Text, useMediaQuery } from '@chakra-ui/react'
 import React from 'react'
+import { NavLink } from 'react-router-dom';
 
 const ProductItem = (props) => {
     const { property, i } = props;
     const [isLargerThan720] = useMediaQuery('(min-width: 720px)')
 
     return (
-        <Box key={i} className='my-box' border={!isLargerThan720?'0.1px solid #B0B0B0':""}>
+        <NavLink to={`/products/${property.item_id}`}>
+            <Box key={i} className='my-box' border={!isLargerThan720?'0.1px solid #B0B0B0':""}>
             <Box overflow='hidden' m={isLargerThan720? '0px 8px':""} pos={'relative'}
                 _hover={{ boxShadow: "0 3px 16px 0 rgb(0 0 0 / 11%)" }}
                 transition='box-shadow .2s ease-in-out;'
@@ -87,6 +89,7 @@ const ProductItem = (props) => {
                 {/* </Box> */}
             </Box>
         </Box>
+        </NavLink>
     )
 }
 
