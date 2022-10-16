@@ -84,7 +84,7 @@ function Viewpage() {
         <div>
             <HStack p="10px" display={{ base: 'block', md: 'flex', lg: 'flex' }}>
                 {viewData.map((item, index) => (
-                    <Box key={index} w={{ base: '100%', md: '40%', lg: '40%' }}  h={{base:"100h", md:"100vh", lg:"100h"}}  position={isLargerThan720?"sticky":""}>
+                    <Box key={index} w={{ base: '100%', md: '40%', lg: '40%' }}  h={{base:"100h", md:"100h", lg:"100h"}}  position={isLargerThan720?"sticky":""}>
                         <Box display={"flex"} p="15px">
                             <Box w="15%"> 
                                 <Box display={{base:"none", md:'block', lg:"block"}} p='7px' border={"2px solid #2974F1"}>

@@ -17,9 +17,9 @@ const { cartData, SetCartData, getData } = useContext(CartContext);
     
     
     const toast = useToast()
+  
     
-    
-    let value = Math.floor((Math.random())*10000);
+    let value = Math.floor((Math.random()*10)+1000);
     
     useEffect(()=>{
       orderPageProducts()
@@ -28,7 +28,7 @@ const { cartData, SetCartData, getData } = useContext(CartContext);
         toast({
             position: 'top',
             render: () => (
-              <Box color='white' p={3} bg='blue.500'>
+              <Box color='white' p={3} bg='blue.500' mt="100px">
                 Your OTP is {value}
               </Box>
             ),

@@ -53,7 +53,7 @@ function CartPage() {
 
   console.log(address);
   
-  console.log( address.Name === undefined ? "working" : "fukin wrong" );
+  console.log( address.Name === undefined ? "working" : "it's wrong" );
   console.log( address.Name );
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
@@ -201,7 +201,7 @@ function CartPage() {
   return (
     <Box w="100%" bg="#f1f3f6" minH='100vh' maxH='-webkit-fit-content'  pt="20px">
       <HStack
-        w="85%"
+        w="90%"
         bg="f1f3f6"
         margin="auto"
         display="flex"
@@ -291,13 +291,16 @@ function CartPage() {
                   w="800px"
                   m="5"
                   p="5"
+                  borderTop={"1px solid #F0F0F5"}
                 >
-                  <Box display="block">
-                    <Image src={data.image} h="160px" w='140px' />
+                  <Box display="block"  >
+                    <Box w="200px" h="150px" display="flex" alignItems={'center'} justifyContent={"center"}> 
+                    <Image src={data.image} mw="120px" maxHeight="110px"  /> </Box>
+                 <Box textAlign={'center'}> 
                     <ButtonGroup
-                      display="flex"
-                      justifyContent="flex-start"
-                      mt="3"
+                      // display="flex"
+                      // justifyContent="flex-start"
+                      // mt="3"
                     >
                       <Button
                         disabled={data.quantity === 1}
@@ -311,12 +314,12 @@ function CartPage() {
                       >
                         +
                       </Button>
-                    </ButtonGroup>
+                    </ButtonGroup> </Box>
                   </Box>
-                  <Box w="600px" ml="10">
+                  <Box w="600px" ml="10" >
                     <Text
                       fontSize="17px"
-                      fontWeight="500"
+                      fontWeight="semibold"
                       display="flex"
                       w='100%'
                       justifyContent="start"
@@ -326,7 +329,7 @@ function CartPage() {
                       {data.description}
                     </Text>
                     <Text
-                      fontSize="17px"
+                      fontSize="16px"
                       fontWeight="400"
                       display="flex"
                       mt="1"
@@ -353,10 +356,10 @@ function CartPage() {
                         h="5"
                       />
                     </Box>
-                    <Box display="flex" alignItems="center" mt="5">
+                    <Box display="flex" alignItems="center" mt="3">
                       <Text
                         color="grey"
-                        fontSize="18px"
+                        fontSize="17px"
                         fontWeight="400"
                         display="flex"
                         as="del"
@@ -366,8 +369,8 @@ function CartPage() {
                       </Text>
                       <Text
                         color="black"
-                        fontSize="20px"
-                        fontWeight="500"
+                        fontSize="19px"
+                        fontWeight="semibold"
                         display="flex"
                         justifyContent="start"
                         ml="2"
@@ -388,7 +391,8 @@ function CartPage() {
 
                     <Button
                       display="flex"
-                      mt="6"
+                      size="md"
+                      mt="4"
                       colorScheme="blue"
                       bg="none"
                       color
@@ -437,6 +441,7 @@ function CartPage() {
             })}
           </Box>
           <Box
+        
             position="sticky"
             bottom="0"
             bg="white"
@@ -453,7 +458,7 @@ function CartPage() {
           </Box>
         </Box>
 
-        <Box bg="white" position="sticky" top="0" mt='10' shadow="md" h="20vh" w="31%">
+        <Box bg="white" position="sticky" top="0" mt='10' shadow="md" h="70vh" w="31%"    >
           
           <Box display='flex'justifyContent='flex-start' alignItems='center'  bg='white' w='100%' h='12' >
             <Text ml='5' fontWeight='500' color='grey' >PRICE DETAILS</Text>

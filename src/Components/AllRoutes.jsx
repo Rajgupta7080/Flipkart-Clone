@@ -39,9 +39,9 @@ const AllRoutes = () => {
                     <ConsratsPage/>
                     }/>
                 <Route path='/orderpage' element={
-                    // <PrivateRoutes>
+                     <PrivateRoutes>
                         <OrderPage/>
-                    // </PrivateRoutes>
+                     </PrivateRoutes>
                 }/>
             </Routes>
         </>

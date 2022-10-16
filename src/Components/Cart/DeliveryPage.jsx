@@ -177,8 +177,8 @@ function DeliveryPage(){
                         <Input  value={City}  onChange={handelChange} name="City"  placeholder='City/District/Town' w='45%' border='2px solid ' bg='white' p='6' />
                         <Input value={State}  onChange={handelChange} name="State"  placeholder='State' w='45%' border='2px solid ' bg='white' p='6' />
                     </Box>
-                    <Box display='grid' ml='5' mt={allFilled? '16' : '2'} w='80%' >
-                    <Text display={ allFilled? 'none' : 'flex' }  mb='8'  color='red' fontSize='16px' pl='1'  >Please fill all the details</Text>
+                    <Box display='grid' ml='5' mt={allFilled? '4' : '1'} w='80%' >
+                    <Text display={ allFilled? 'none' : 'flex' }  mb='2'  color='red' fontSize='16px' pl='1'  >Please fill all the details</Text>
                     <Button  color='white'onClick={handelCheckAddress}  bg='#fb641b' w='45%' borderRadius='0' mr='10' pl='10' pr='10' pt='7' pb='7' >SAVE AND DELIVER HERE</Button>
                     </Box>
                 </Box>
@@ -221,11 +221,13 @@ function DeliveryPage(){
              {/* Right BOX */}
              <Box 
              w='29.5%'
-             h='40vh'
+             h='80vh'
              bg="white" 
              position="sticky"
              top="0"
              shadow='sm'
+            
+             
              >
                 <Box display='flex'justifyContent='flex-start' alignItems='center'  bg='white' w='100%' h='12' >
             <Text ml='5' fontWeight='500' color='grey' >PRICE DETAILS</Text>

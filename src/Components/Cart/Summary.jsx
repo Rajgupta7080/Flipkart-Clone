@@ -79,7 +79,7 @@ function Summary(){
         <Box w='100%'  pt='20' bg='#f1f3f6' >
 
             <HStack
-             w="82%"
+             w="90%"
             //  h='50vh'
             //  bg="pink"
              margin="auto"
@@ -182,13 +182,14 @@ function Summary(){
                   key={data.id}
                   display="flex"
                   justifyContent="start"
-                  w="800px"
+                  w="700px"
                   m=""
                   p="5"
                   borderBottom='1px solid grey'
+                 
                 >
-                  <Box display="block">
-                    <Image src={data.image} w="130px" h="140px" />
+                  <Box display="flex" w="200px" h="150px"  alignItems={'center'} justifyContent={"center"}>
+                    <Image src={data.image} mw="130px" maxHeight="140px" />
                     {/* <ButtonGroup
                       display="flex"
                       justifyContent="flex-start"
@@ -334,7 +335,7 @@ function Summary(){
              {/* Right BOX */}
              <Box 
              w='29.5%'
-             h='40vh'
+             h='75vh'
              bg="white" 
              position="sticky"
              top="0"
