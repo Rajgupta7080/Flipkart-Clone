@@ -8,9 +8,9 @@ import {
   Box,
   Button,
   ButtonGroup,
-  Heading,
   HStack,
   Image,
+  Img,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -18,6 +18,7 @@ import {
   PopoverContent,
   PopoverFooter,
   PopoverTrigger,
+  SkeletonText,
   Spacer,
   Text,
   useDisclosure,
@@ -29,7 +30,7 @@ import { useState } from "react";
 import { AiFillSafetyCertificate } from 'react-icons/ai'
 import { MdSecurity } from 'react-icons/md'
 import { Link } from "react-router-dom";
-// import { CartContext } from "../Context/CartContext";
+import { CartContext } from "../Context/CartContext";
 
 
 function CartPage() {
@@ -37,36 +38,43 @@ function CartPage() {
   let discount=0;
   let totalAmount= 0;
   const [count, setCount] = useState(0);
+  const [addQuantityState, setAddQuantityState] = useState(0);
+  const [lessQuantityState, setLessQuantityState] = useState(0);
   const [Deleteid, setDeleteId] = useState(0);
 
+  const [address, setAddress]  = useState({})
+
+  function getAddress(){
+
+    fetch (`http://localhost:4000/address`)
+    .then((res)=>res.json())
+    .then((res)=>setAddress(res));
+  }
+
+  console.log(address);
+  
+  console.log( address.Name === undefined ? "working" : "fukin wrong" );
+  console.log( address.Name );
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
 
-  const [cartData, SetCartData] = useState([]);
-  // const { cartData, SetCartData } = useContext(CartContext);
+  // const [cartData, SetCartData] = useState([]);
+  const { cartData, SetCartData, getData, loading, setLoading, carturl } = useContext(CartContext);
   
-  const [ loading, setLoading ] = useState(false);
+  // const [ loading, setLoading ] = useState(false);
 
   const initialFocusRef = useRef();
 
-  function getData() {
-    setLoading(true);
-    fetch(`http://localhost:4000/products`)
-      .then((res) => res.json())
-      .then((res) => SetCartData(res))
-      .catch((err) => console.log(err))
-      .finally(()=>setLoading(false))
-  }
-
   useEffect(() => {
-    getData();
-  }, [count]);
+    getData()
+    getAddress();
+  }, [count , addQuantityState , lessQuantityState ]);
 
   console.log(cartData);
 
   const handelDeleteCart = () => {
     onClose();
-    fetch(`http://localhost:4000/products/${Deleteid}`, {
+    fetch(`${carturl}/${Deleteid}`, {
       method: "DELETE",
     });
     setCount(count - 1);
@@ -79,7 +87,7 @@ function CartPage() {
   };
 
   const handelPatchLess = (id, quantity) => {
-    fetch(`http://localhost:4000/products/${id}`, {
+    fetch(`${carturl}/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -87,19 +95,38 @@ function CartPage() {
       body: JSON.stringify({ ...quantity, quantity: quantity - 1 }),
     });
     console.log(id);
-    setCount(count - 1);
+    // setCount(count - 1);
+    setLessQuantityState( lessQuantityState - 1 );
   };
 
   const handelPatchAdd = (id, quantity) => {
-    fetch(`http://localhost:4000/products/${id}`, {
+    fetch(`${carturl}/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ ...quantity, quantity: quantity + 1 }),
     });
-    setCount(count + 1);
+    // setCount(count + 1);
+    setAddQuantityState(addQuantityState + 1);
   };
+
+      const handelDeleteAddress= ()=>{
+
+        const useradd = {
+          "Deleted": "ADD NEW ADDRESS"
+        }
+
+        fetch (`http://localhost:4000/address`,{
+          method: 'POST',
+          headers: {
+            'Content-Type' : 'application/json'
+          },
+          body: JSON.stringify(useradd)
+        })
+        setCount(count+1);
+      }
+   
 
 
   cartData.map((data)=>{
@@ -117,7 +144,10 @@ function CartPage() {
   if(loading){
     return (
       <Box display='flex' w='100%' h='100vh' justifyContent='center' alignItems='center' >
-        <Heading>Loading</Heading>
+        <Box padding='6' boxShadow='lg' w='80%' bg='white'>
+        {/* <SkeletonCircle size='10' /> */}
+        <SkeletonText noOfLines={15} w='100%' spacing='4' />
+        </Box>
       </Box>
     )
   }
@@ -169,13 +199,14 @@ function CartPage() {
   }
 
   return (
-    <Box w="100%" bg="#f1f3f6" minH='100vh' maxH='-webkit-fit-content'  pt="100px">
+    <Box w="100%" bg="#f1f3f6" minH='100vh' maxH='-webkit-fit-content'  pt="20px">
       <HStack
-        w="78%"
+        w="85%"
         bg="f1f3f6"
         margin="auto"
         display="flex"
         alignItems="start"
+        gap={2}
       >
         <Box shadow="md" bg="f1f3f6" w="69%" position='relative' top='0'   >
           <Box
@@ -217,8 +248,20 @@ function CartPage() {
                 <PopoverArrow />
                 <PopoverCloseButton />
                 <PopoverBody color="black">
-                  OOPS!! <br />
-                  You Don't Have Any Saved Adress
+
+                  <Text display={ address.Name !== undefined? 'none' : 'flex'  } justifyContent='center' >OOPS!! <br /> You Don't Have Any Saved Adress </Text>
+
+                  <Text display={ address.Name === undefined? 'none' : 'grid' } justifyContent='start'  >
+                    <Box  textAlign='left' bg='white' >
+                     {address.Name} <br />     
+                     {/* {address.Number} <br/> */}
+                     {address.Address} , {address.City}
+                    </Box>
+                    {/* <br/> */}
+                    <Button w='20%' h='30px' mt='1' mb='-5' bg='red' colorScheme='red' color='white' onClick={handelDeleteAddress} >Delete</Button>
+                     </Text>
+                  {/* OOPS!! <br />
+                  You Don't Have Any Saved Adress */}
                 </PopoverBody>
                 <PopoverFooter
                   border="0"
@@ -239,10 +282,10 @@ function CartPage() {
             justifyContent="start"
             alignItems="center"
           >
-            {cartData.map((data, i) => {
+            {cartData.map((data) => {
               return (
                 <Box
-                  key={i}
+                  key={data.id}
                   display="flex"
                   justifyContent="start"
                   w="800px"
@@ -250,7 +293,7 @@ function CartPage() {
                   p="5"
                 >
                   <Box display="block">
-                    <Image src={data.image} w="150px" h="160px" />
+                    <Image src={data.image} h="160px" w='140px' />
                     <ButtonGroup
                       display="flex"
                       justifyContent="flex-start"
@@ -275,6 +318,7 @@ function CartPage() {
                       fontSize="17px"
                       fontWeight="500"
                       display="flex"
+                      w='100%'
                       justifyContent="start"
                       mt="3"
                       variant="list"
@@ -439,9 +483,9 @@ function CartPage() {
           < Box display='flex'justifyContent='flex-start' alignItems='center'  bg='white' >
             <Text ml='5' mt='4' mb='5' fontWeight='500' fontSize='17px' color='green' >You will save ₹{discount} on this order </Text>
           </Box>
-          <Box mt='5' p='5' display='grid' justifyContent='flex-end' alignItems='center'  >
-          <MdSecurity fill="grey"   />
-          <Text mt='-5' ml='5' w='100%' textTransform='full-width' fontWeight='500' > Safe and Secure Payments.Easy returns.{<br/>}100% Authentic products.</Text>
+          <Box mt='5' p='5' display='flex' justifyContent='' alignItems='center' gap={1} >
+            <Img h='31px' w='38px' src='https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/shield_b33c0c.svg'/>
+            <Text color={'#878787'} w='100%' fontWeight='600' > Safe and Secure Payments.Easy returns.{<br/>}100% Authentic products.</Text>
           </Box>
         </Box>
       </HStack>

@@ -22,7 +22,7 @@ function App() {
       {/* {
         isLargerThan720? <Footer/> : ""
       } */}
-      {/* <Footer/> */}
+      <Footer/>
 
     </Box>
   );

@@ -40,7 +40,7 @@ import { HiDownload } from "react-icons/hi"
 import { useDisclosure } from '@chakra-ui/react';
 
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   Drawer,
   DrawerBody,
@@ -51,9 +51,16 @@ import {
 import { Link, Navigate, NavLink } from "react-router-dom";
 import Register from "../Login/Register";
 import { Signup } from "../Login/SignUp";
+import { Authcontext } from "../Context/Authcontext";
+import { IoMdPower } from "react-icons/io";
+import { CartContext } from "../Context/CartContext";
 
 
 const Navbar = () => {
+  const {cartData} = useContext(CartContext);
+  console.log(cartData, " cartData ");
+
+  const {correct, setCorrect} = useContext(Authcontext)
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = React.useRef();
@@ -108,7 +115,6 @@ const Navbar = () => {
     if(e.target.id!=="inputBox"){
       setHiddenDiv(false)
     }
-
   })
 
   const handleSetQuaryUrl = (query_url)=>{
@@ -117,10 +123,16 @@ const Navbar = () => {
     console.log(query_url);
   }
 
+  const handleLogout = ()=>{
+    setCorrect(false)
+    console.log(" handleLogout ", correct);
+  }
+  console.log(" handleLogout ", correct);
+
   if (isLargerThan670) {
     return (
-      <Box mt='-1px' >
-        <Box mb='4rem' border={'1px solid blue'}>
+      <Box mt='-1px' ml='-1px'>
+        <Box mb='3.4rem' border={'1px solid blue'}>
         <Flex bg="#2874f0" h="56px" align="center"  position='fixed' w='100%' zIndex={'100'}>
           <Spacer />
           <Box>
@@ -237,21 +249,7 @@ const Navbar = () => {
           {/* ======================================search end======================================= */}
           <Popover trigger="hover" >
             <PopoverTrigger>
-              <Box
-                bg="white"
-                // h="31px"
-                // w="9.5%"
-                // p='0px 20px'
-                textAlign="center"
-                fontWeight="700"
-                fontSize={'15px'}
-                color="#2874f0"
-                ml="19px"
-                // pt="2px"
-                borderRadius="2px"
-                cursor="pointer"
-                border={'1px solid #dbdbdb'}
-              >
+              <Box >
                 <Register/>
               </Box>
             </PopoverTrigger>
@@ -266,7 +264,9 @@ const Navbar = () => {
               <PopoverArrow bg="white" />
 
               <PopoverBody color="black" className='shade' >
-                <Flex h="56px" justifyContent="space-between">
+                {
+                  correct?"":
+                  <Flex h="56px" justifyContent="space-between">
                   <Center fontWeight="600" fontSize='14px'>New Customer?</Center>
                   <Center>
                     <Link color="#2874f0" fontSize='14px'>
@@ -275,17 +275,41 @@ const Navbar = () => {
                     </Link>
                   </Center>
                 </Flex>
+                }
                 <hr margin="0px" />
-                <Flex h="49px" fontSize='14px' className="pop1">
+                <Flex cursor={'pointer'} h="49px" fontSize='14px' className="pop1">
                   <Center ml='10px'><HiUserCircle color="#2874f0" size="18px" /></Center> <Center ml='16px'>My Profile</Center>
                 </Flex>
                 <hr />
-                <Flex className="pop1" h='49px' fontSize='14px'><Center ml='10px'><Image src={vikas} alt="vikas" /></Center> <Center ml='16px'>Flipkart Plus Zone</Center></Flex>
+                <Flex cursor={'pointer'} className="pop1" h='49px' fontSize='14px'><Center ml='10px'><Image src={vikas} alt="vikas" /></Center> <Center ml='16px'>Flipkart Plus Zone</Center></Flex>
                 <hr />
-                <Flex h="49px" fontSize='14px' className="pop1"  > <Center ml='10px'><RiInboxUnarchiveFill color="#2874f0" size="18px" /></Center> <Center ml='16px'>Orders</Center></Flex><hr />
-                <Flex h="49px" fontSize='14px' className="pop1"> <Center ml='10px'><AiFillHeart color="#2874f0" size="18px" /></Center> <Center ml='16px'> Wishlist</Center></Flex><hr />
-                <Flex h="49px" fontSize='14px' className="pop1">  <Center ml='10px'><RiCoupon3Fill color="#2874f0" size="18px" /></Center><Center ml='16px'>Rewards</Center></Flex><hr />
-                <Flex h="49px" fontSize='14px' className="pop1"> <Center ml='10px'><BsFillCreditCard2BackFill color="#2874f0" size="18px" /></Center> <Center ml='16px'>Gift cards</Center></Flex>
+                {/* orderpage */}
+                <NavLink to='/orderpage'>
+                    <Flex  cursor={'pointer'}  h="49px" fontSize='14px' className="pop1"  > 
+                      <Center ml='10px'>
+                          <RiInboxUnarchiveFill color="#2874f0" size="18px" />
+                      </Center> 
+                        <Center ml='16px'>
+                          Orders
+                        </Center>
+                    </Flex>
+                </NavLink>
+                  <hr />
+                <Flex cursor={'pointer'}  h="49px" fontSize='14px' className="pop1"> <Center ml='10px'><AiFillHeart color="#2874f0" size="18px" /></Center> <Center ml='16px'> Wishlist</Center></Flex><hr />
+                <Flex cursor={'pointer'}  h="49px" fontSize='14px' className="pop1">  <Center ml='10px'><RiCoupon3Fill color="#2874f0" size="18px" /></Center><Center ml='16px'>Rewards</Center></Flex><hr />
+                <Flex cursor={'pointer'}  h="49px" fontSize='14px' className="pop1"> <Center ml='10px'><BsFillCreditCard2BackFill color="#2874f0" size="18px" /></Center> <Center ml='16px'>Gift cards</Center></Flex><hr />
+                {
+                  correct?
+                  <Flex onClick={handleLogout} 
+                  cursor={'pointer'} h="49px" fontSize='14px' className="pop1"> 
+                <Center ml='10px'>
+                  <IoMdPower color="#2874f0" size="18px" />
+                </Center> 
+                  <Center ml='16px'>
+                  Log Out
+                  </Center>
+              </Flex>:""
+                }
               </PopoverBody>
             </PopoverContent>
           </Popover>
@@ -344,6 +368,14 @@ const Navbar = () => {
           <NavLink to='./cart'>
             <Flex align={'center'} justify='' cursor={'pointer'}>
               <Icon as={FaShoppingCart} w={5} h={5} color="white" ml="2%" mr="-5px" />
+                {
+                  cartData.length>0?<Flex 
+                    ml='-8px' mt='-25px' zIndex={5} bg={'#ff6161'} fontSize='12px' p='6px' 
+                    border={'1px solid #fff'}
+                    borderRadius={'40%'} w='18px' h='18px' 
+                    align={'center'} justify='center' color='#fff'
+                    >{cartData.length}</Flex>:""
+                }
               <Box
                 fontSize="17px"
                 ml="10px"
@@ -427,7 +459,18 @@ const Navbar = () => {
         </Center>
         <Spacer />
         <Center w='45px'><BsFillFilePlusFill color='white' /></Center>
-        <Center w='45px'><FaShoppingCart color='white' /></Center>
+        <Center w='45px'>
+          <FaShoppingCart color='white' />
+                {
+                  cartData.length>0?<Flex 
+                    ml='-5px' mt='-20px' zIndex={5} bg={'#d32f2f'} fontSize='9px' p='6px' 
+                    border={'2px solid #fff'} fontWeight='600'
+                    borderRadius={'50%'} w='15px' h='15px' 
+                    align={'center'} justify='center' color='#fff'
+                    >{cartData.length}</Flex>:""
+                }
+        </Center>
+        
         <Center color='white' mr='10px'>Login</Center>
       </Flex>
       <Flex bg="#2874f0" h='52px'>

@@ -73,7 +73,7 @@ function Fashion() {
     }
     useEffect(() => {
         getFashion();
-         setCategory(fashion[0])
+        setCategory(fashion[0])
 
     }, [])
      
@@ -98,6 +98,7 @@ function Fashion() {
         )
     }
     return (
+        <>
         <Box display={"flex"}  mt="20px" boxShadow="rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px" p='1' bg='white' >
 
             <Box w={{base:'0px', md:'26%', lg:"18%"}} h={{base:'0px', md:'300px', lg:"18%"}}  m="auto" textAlign={"center"} className="dealsBox">
@@ -134,7 +135,6 @@ function Fashion() {
                 <Box mb="20px" mt="10px" alignItems={"center"} display="flex" justifyContent={"space-between"}> <Text fontWeight={"500"} fontSize="19px"> Fashion Top Deals</Text> <Button size="sm" colorScheme='messenger'>View All</Button></Box>
                 <Box className='itemGrid'display={{ base: 'grid', md: 'none', lg: 'none' }}>
                     
-                    
                     {fashion.map(item => <Box key={Math.random()} borderRadius="6px" m="5px" bg="white" alignItems="center" textAlign={"center"}  border="1px solid silver">
                     <Img maxWidth="170px" h="170px" m="auto" _hover={{ transform: "scale(1.1)", transition: "400ms" }} p="10px" src={item.image} alt="" />
                         <Text fontWeight="500" p="5px"> {item.description}</Text>
@@ -148,8 +148,9 @@ function Fashion() {
                     
                 </Box>
             </Box>
+            
         </Box>
-
+        </>
     );
 }
 

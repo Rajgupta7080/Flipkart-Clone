@@ -5,20 +5,20 @@ import { useEffect } from 'react'
 import ProductItem from './ProductItem'
 import LeftSidebar from './LeftSidebar'
 import MiniFilter from './Filter/MiniFilter'
+import { Categories } from '../Navbar/Categries'
 
 const url = `http://localhost:4000`
 const Products = () => {
     const [isLargerThan720] = useMediaQuery('(min-width: 720px)')
     const [data, setData] = useState([]);
     const [page, setPage] = useState(1);
-    const perPagelimitProduct = 20;
+    const perPagelimitProduct = 16;
     const [total, setTotal] = useState(0);
 
     const [priceRange, setPriceRange] = useState([]);
     console.log(priceRange, " priceRange ");
     const priceRangeurl = priceRange[0] > 0 || priceRange[1] < 100 ?
         `&new_price_gte=${priceRange[0] * 10}${priceRange[1] < 100 ? `&new_price_lte=${priceRange[1] * 10}` : ""}` : ""
-
 
      // for mobile sort price
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -83,6 +83,7 @@ const Products = () => {
     
     return (
         <Box bg='#f1f3f6' border='1px solid #f1f3f6' fontFamily='Roboto,Arial,sans-serif'>
+            <Categories/>
             <Flex pos={'relative'} spacing='10px' m={isLargerThan720?"8px":""} flexDir={isLargerThan720?"":"column"} >
                 <Box mr={3}>
                     {/* sidebar */}
@@ -100,7 +101,7 @@ const Products = () => {
                             <Flex mt='0' justify={'space-between'} align='center' fontSize={'15px'} fontWeight='600' 
                                 position={'sticky'} 
                                 top='0'
-                                border={'1px solid red'}
+                                // border={'1px solid red'}
                                 mb={'0px'}  w="100vw" boxShadow='Base'
                                 bg='rgb(255,255,255,1);' 
                                 // borderBottom='1px solid #B0B0B0'
@@ -200,6 +201,20 @@ const Products = () => {
                                     >PREVIOUS</Text> : ""
                                 }
                                 {
+                                    Math.ceil(total/perPagelimitProduct)<=10?
+                                    Array.from({ length: Math.ceil(total/perPagelimitProduct) }, (v, i) => i).map((item, i) => {
+                                        return <Tab key={i} cursor='pointer' fontSize={'15px'}
+                                            _selected={{ bg: '', color: '' }}
+                                            bg={page===(i+1)?"#2874f0":""}
+                                            color={page===(i+1)?"#fff":""}
+                                            height={'32px'} w='32px' borderRadius={'50%'}
+                                            onClick={() => setPage(item + 1)}
+                                            fontWeight='800'
+                                        >
+                                            {item + 1}
+                                        </Tab>
+                                    })
+                                    :
                                     page <= 5 ?
                                         Array.from({ length: 10 }, (v, i) => i).map((item, i) => {
                                             return <Tab key={i} cursor='pointer' fontSize={'15px'}

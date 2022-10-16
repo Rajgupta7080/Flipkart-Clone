@@ -34,7 +34,7 @@ const Home = () => {
             <Groceries />
             <Mobile />
             <BeforeFooter />
-            <Footer />
+            {/* <Footer /> */}
         </Box>
     )
 }

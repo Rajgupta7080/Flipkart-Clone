@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Flex, Grid, GridItem, HStack, Img, Input, Text, useMediaQuery } from '@chakra-ui/react'
 import { FaHeart } from 'react-icons/fa';
 import { HiShoppingCart } from 'react-icons/hi'
@@ -9,33 +9,36 @@ import { AiFillStar } from 'react-icons/ai'
 import { BsLightningCharge } from 'react-icons/bs'
 import ReactImageMagnify from 'react-image-magnify'
 import './viewPage.css'
-import { useParams } from 'react-router-dom';
+import { json, Link, useParams } from 'react-router-dom';
+import { CartContext } from '../Context/CartContext';
 function Viewpage() {
-    const product = [
-        {
-            brand: "HIGHLANDER",
-            category_id: 3,
-            category_name: "fashion",
-            image: "https://i.ibb.co/23StKfC/5e3aa027808d.jpg",
-            description: "Georgette Blend Stitched Flared/A-line Gown",
-            stars: 4.3,
-            ratings: "4,161 Ratings ",
-            reviews: " 310 Reviews",
-            warrant: "1 Year Manufacturer Warranty for Phone and 6 Months Warranty for In-Box Accessories",
-            new_price: 1799,
-            old_price: 2999,
-            discount: 40,
-            delivery_type: "Free delivery",
-            offer: "₹16,750",
-            offer2: " Off on Exchange",
-            hidden_stars: 4.3,
-            item_id: 1
-        }
-    ]
+    // const product = [
+    //     {
+    //         brand: "HIGHLANDER",
+    //         category_id: 3,
+    //         category_name: "fashion",
+    //         image: "https://i.ibb.co/23StKfC/5e3aa027808d.jpg",
+    //         description: "Georgette Blend Stitched Flared/A-line Gown",
+    //         stars: 4.3,
+    //         ratings: "4,161 Ratings ",
+    //         reviews: " 310 Reviews",
+    //         warrant: "1 Year Manufacturer Warranty for Phone and 6 Months Warranty for In-Box Accessories",
+    //         new_price: 1799,
+    //         old_price: 2999,
+    //         discount: 40,
+    //         delivery_type: "Free delivery",
+    //         offer: "₹16,750",
+    //         offer2: " Off on Exchange",
+    //         hidden_stars: 4.3,
+    //         item_id: 1
+    //     }
+    // ]
+
+    const { SetCartData, carturl, getData } = useContext(CartContext)
 
     const {item_id} = useParams();
     // console.log(item_id, " ch ");
-    const [viewData, setViewData] = useState([...product]);
+    const [viewData, setViewData] = useState([]);
 
     useEffect(()=>{
         fetchData()
@@ -51,6 +54,30 @@ function Viewpage() {
         }
     }
 
+    const addDatainCart = ()=>{ // viewData[0]
+        console.log(viewData[0], " check data ");
+        fetch(`http://localhost:4000/products`, {
+            method: "POST",
+            body: JSON.stringify({...viewData[0]}),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then((res)=>res.json())
+        .then((res)=>{
+            getData()
+            console.log(" res in view page ", res);
+        })
+    }
+
+    const handleAddToCart = ()=>{
+        addDatainCart()
+        console.log(" handleAddToCart ");
+    }
+    const handleBuyNow = ()=>{
+        addDatainCart()
+    }
+
 
     const [isLargerThan720] = useMediaQuery('(min-width: 720px)')
     return (
@@ -60,23 +87,23 @@ function Viewpage() {
                     <Box key={index} w={{ base: '100%', md: '40%', lg: '40%' }}  h={{base:"100h", md:"100vh", lg:"100h"}}  position={isLargerThan720?"sticky":""}>
                         <Box display={"flex"} p="15px">
                             <Box w="15%"> 
-                                <Box p='7px' border={"2px solid #2974F1"}>
-                                    <Img h="20%" display={{ base: 'none', md: 'block', lg: 'block' }} src={item.image} alt="smallImg" /> 
+                                <Box display={{base:"none", md:'block', lg:"block"}} p='7px' border={"2px solid #2974F1"}>
+                                    <Img w={{base:"0px", md:"30px", lg:"45px"}} m='auto' src={item.image} alt="smallImg" /> 
                                 </Box>
                             </Box>
-                            <Box w="79%" p='10px'>
-                                {/* <ReactImageMagnify {...{
+                            <Box w="79%" p='10px' minH={'500px'} display='flex' justifyContent={'center'} alignItems={'center'} >
+                                <ReactImageMagnify {...{
                                     smallImage: {
-                                        alt: 'Wristwatch by Ted Baker London',
+                                        alt: 'flipkart clone project',
                                         isFluidWidth: true,
                                         src: `${item.image}`,
-                                        border: "1px solid blue"
+                                        // border: "1px solid blue"
                                     },
                                     largeImage: {
                                         src: `${item.image}`,
-                                        width: 1000,
+                                        width: 1200,
                                         height: 1800,
-                                        border: "1px solid blue"
+                                        // border: "1px solid blue"
                                     },
                                     enlargedImageContainerDimensions: {
                                         width: '200%',
@@ -84,8 +111,8 @@ function Viewpage() {
                                         border: "1px solid blue"
                                     }
                                 }}
-                                /> */}
-                                <Img h='500px' mw='450px' m='auto' src={item.image} />
+                                />
+                                {/* <Img  maxH={{base:"500px",md:"300px", lg:"100%"}} mw='450px' m='auto' src={item.image} /> */}
                             </Box>
                             <Box p='15px' h='53px' bg="white" borderRadius={'50%'} marginLeft="15px"  shadow={'base'}  > <FaHeart color="silver" size="25px" /> </Box>
                         </Box>
@@ -93,6 +120,7 @@ function Viewpage() {
 
                             <Button alignItems={"center"}
                                 size='md'
+                                onClick={handleAddToCart}
                                 height={{ base: '30px', md: '40px', lg: '55px' }}
                                 width='45%'
                                 bg="#FE9E00"
@@ -102,18 +130,22 @@ function Viewpage() {
                                 mr="5px"
                             > <HiShoppingCart />
                                 ADD TO CART
-                            </Button><Button
-                                size='md'
-                                height={{ base: '30px', md: '40px', lg: '55px' }}
-                                width='45%'
-                                bg="#FB641B"
-                                rounded='1px'
-                                fontSize={{ base: '10px', md: '13px', lg: '18px' }}
-                                _hover={{ backgroundColor: "#FB641B" }}
-                            >
-                                <BsLightningCharge />
-                                BUY NOW
                             </Button>
+                            <Link to='/cart'>
+                                <Button
+                                    size='md'
+                                    onClick={handleBuyNow}
+                                    height={{ base: '30px', md: '40px', lg: '55px' }}
+                                    width='45%'
+                                    bg="#FB641B"
+                                    rounded='1px'
+                                    fontSize={{ base: '10px', md: '13px', lg: '18px' }}
+                                    _hover={{ backgroundColor: "#FB641B" }}
+                                >
+                                    <BsLightningCharge />
+                                    BUY NOW
+                                </Button>
+                            </Link>
                         </Flex>
 
                         <Flex zIndex={100} display={{ base: 'block', md: 'none', lg: 'none' }} position={"fixed"} bottom="0" alignContent={"center"} justifyContent="space-around" w="100%" m="auto" color={"white"} bg="white">
