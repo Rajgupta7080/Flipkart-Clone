@@ -3,7 +3,7 @@ import { CheckIcon, InfoOutlineIcon } from '@chakra-ui/icons'
 import { useContext, useRef, useState } from "react";
 import { CartContext } from "../Context/CartContext";
 import { MdSecurity } from "react-icons/md";
-import { Link, Navigate } from "react-router-dom";
+import { json, Link, Navigate } from "react-router-dom";
 
 
 
@@ -16,13 +16,16 @@ function Summary(){
 
     let sellingPrice= 0;
     let discount=0;
-    let totalAmount= 0;
+    let totalAmount= 10;
 
        cartData.map((data)=>{
         sellingPrice+= data.old_price * data.quantity ;
         discount+= data.discount;
         totalAmount+= data.new_price* data.quantity;  
+              
+
       })
+      localStorage.setItem("Total", JSON.stringify(totalAmount) );
       discount = Math.floor(((discount/cartData.length)* sellingPrice)/100);
       console.log(sellingPrice, "SP");
       console.log(discount, "DIS");

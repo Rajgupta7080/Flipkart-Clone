@@ -263,7 +263,7 @@ function PaymentPage() {
                                 <Input ml='2' bg='white' w='30%' maxLength={'3'} placeholder="CVV" borderRadius='0' /> 
                                 
                             </Box>
-                            {
+                            {/* {
                                 openOtpBox?
                                 <HStack mt='0'   >
                                     <PinInput placeholder="-"  >
@@ -274,11 +274,11 @@ function PaymentPage() {
                                     </PinInput>
                                 </HStack>
                                 :null
-                            }
+                            } */}
                             
                             <Button ml='16' color='white' mt='4' w='40%' onClick={handelForwardOtp} bg='#fb641b' borderRadius='0' >
                                 <Link 
-                               // to={cardNumber ? '/otp' : ''} 
+                                to={cardNumber ? '/otp' : ''} 
                                   >
                                     PAY ₹{totalAmount}
                                 </Link>

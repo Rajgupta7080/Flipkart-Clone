@@ -258,7 +258,7 @@ function CartPage() {
                      {address.Address} , {address.City}
                     </Box>
                     {/* <br/> */}
-                    <Button w='20%' h='30px' mt='1' mb='-5' bg='red' colorScheme='red' color='white' onClick={handelDeleteAddress} >Delete</Button>
+                    <Button w='20%' h='30px' mt='1' mb='-5' bg='red' colorScheme='red'fontSize="10px" color='white' onClick={handelDeleteAddress} >Delete</Button>
                      </Text>
                   {/* OOPS!! <br />
                   You Don't Have Any Saved Adress */}
