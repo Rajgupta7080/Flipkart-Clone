@@ -1255,50 +1255,15 @@
       "item_id": 8
     }
   ],
-  "products": [
-    {
-      "category_id": 4,
-      "category_name": "fashion",
-      "image": "https://i.ibb.co/Ss80W0S/c509c13a35e0.jpg",
-      "brand": "ANNU PARIDHAN",
-      "description": "Embroidered Rayon Blend Stitched Anarkali Gown",
-      "color": "Pink",
-      "new_price": 339,
-      "old_price": 1599,
-      "discount": 78,
-      "delivery_type": "Free delivery",
-      "hidden_stars": 4.2,
-      "item_id": 53,
-      "quantity": 1,
-      "size": "S, M, L XL",
-      "id": 1
-    },
-    {
-      "category_id": 6,
-      "category_name": "home",
-      "image": "https://i.ibb.co/K06ZMF8/39f2f9d7bacd.jpg",
-      "color": "Pack of 1, Navy Blue",
-      "description": "eleganzze 300 TC Cotton King Striped Bedsheet",
-      "stars": 3.6,
-      "reviews": "(242)",
-      "new_price": 264,
-      "old_price": 2199,
-      "discount": 87,
-      "hidden_stars": 3.6,
-      "item_id": 28,
-      "quantity": 1,
-      "size": "S, M, L XL",
-      "id": 2
-    }
-  ],
+  "products": [],
   "address": {
-    "Name": "dad",
-    "Number": "fad",
-    "Pincode": "ad",
-    "Email": "ad",
-    "Address": "adad",
-    "City": "ad",
-    "State": "d"
+    "Name": "1212",
+    "Number": "12",
+    "Pincode": "12",
+    "Email": "12",
+    "Address": "12",
+    "City": "12",
+    "State": "12"
   },
   "mens": [
     {
@@ -1897,6 +1862,11 @@
       "email": "Gaurav@gmail.com",
       "password": "123456",
       "id": 16
+    },
+    {
+      "email": "RajGupta@gmail.com",
+      "password": "1234567",
+      "id": 17
     }
   ],
   "all": [

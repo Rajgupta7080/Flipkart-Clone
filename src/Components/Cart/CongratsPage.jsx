@@ -49,10 +49,10 @@ import Navbar from '../Navbar/navbar';
                 mt="15px"
               />
               <Box mt="20px">
-                <Text fontFamily="cursive" color="#2874f0" fontSize="28px">
+                <Text  color="#2874f0" fontSize="28px">
                   Order placed for ₹{amount}!
                 </Text>
-                <Text fontFamily="cursive" fontWeight="400">
+                <Text  fontWeight="400">
                   Your item will be delivered by Mon, Oct 24th' 22
                 </Text>
               </Box>
@@ -64,19 +64,19 @@ import Navbar from '../Navbar/navbar';
               />
               <Box>
                 <Text
-                  fontFamily="cursive"
+                  
                   color="black"
                   fontSize="20px"
                   fontWeight="450"
                 >
                   Why call ? just click!
                 </Text>
-                <Text fontFamily="cursive">
+                <Text >
                   Easily tracks all your flipkart orders
                 </Text>
                 <NavLink to='/orderpage'> 
                 <Button
-                  fontFamily="cursive"
+                  
                   mt="12px"
                   borderRadius="4px"
                   color="white"
@@ -102,7 +102,7 @@ import Navbar from '../Navbar/navbar';
           >
             <Flex>
               <Grid
-                fontFamily="cursive"
+                
                 fontWeight="400"
                 color="black"
                 gap="7px"
@@ -143,15 +143,15 @@ import Navbar from '../Navbar/navbar';
                   fontSize="20px"
                   color="green"
                   textAlign="center"
-                  fontFamily="cursive"
+                  
                 >
                   Your Payment was Succesfull
                 </Text>
-                <Text fontFamily="cursive" ml="3.5rem" width="240px">
+                <Text  ml="3.5rem" width="240px">
                   Thank you for shopping with us
                 </Text>
                 <Flex>
-                  <Text fontFamily="cursive" mr="9px" ml="6.5rem">
+                  <Text  mr="9px" ml="6.5rem">
                     Have a nice day{' '}
                   </Text>
   
@@ -166,18 +166,18 @@ import Navbar from '../Navbar/navbar';
           <Box width="92%" h="140px" bg="white">
             <Flex mt="4px" justifyContent="center" alignItems="center" gap="8px">
               {' '}
-              <Text color="#Fdc800" fontFamily="cursive" fontSize="4xl">
+              <Text color="#Fdc800"  fontSize="4xl">
                 THANK
               </Text>
-              <Text color="#2874ee" fontFamily="cursive" fontSize="4xl">
+              <Text color="#2874ee"  fontSize="4xl">
                 YOU!
               </Text>
-              <Text color="#Fdc800" fontFamily="cursive" fontSize="4xl">
+              <Text color="#Fdc800"  fontSize="4xl">
                 VISTIT
               </Text>
               <Text
                 color="#2874ee"
-                fontFamily="cursive"
+                
                 marginRight="3px"
                 fontSize="4xl"
               >
@@ -198,7 +198,7 @@ import Navbar from '../Navbar/navbar';
               bg="#2874ee"
               mt="1rem"
               ml="30.5rem"
-              fontFamily="cursive"
+              
             >
               Continue Shopping
             </Button></NavLink>

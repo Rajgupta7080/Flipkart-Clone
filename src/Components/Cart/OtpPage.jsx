@@ -7,22 +7,18 @@ import { CartContext } from "../Context/CartContext";
 
 function OtpPgae() {
 
-
-
 const [realOtp, setRealOtp] = useState('');
 const [state, setState] = useState(0);
 const [forwardCongo, setForwardCongo] = useState(false);
 
-const { cartData, SetCartData, getData } = useContext(CartContext);
+const { cartData, SetCartData, getData, setOrderpageData, orderpageData } = useContext(CartContext);
     
     const toast = useToast()
-  
     
     let value = Math.floor((Math.random()*10)+1000);
     
     useEffect(()=>{
-      orderPageProducts()
-
+      
         setState(value);
         toast({
             position: 'top',
@@ -33,25 +29,37 @@ const { cartData, SetCartData, getData } = useContext(CartContext);
             ),
           })
           console.log(cartData, "lets see cart data")
-
     }, []);
 
     const orderPageProducts = ()=>{
-      // const data =  [cartData]
-      for(var i=0; i<cartData.length;i++){
-        fetch(`http://localhost:4000/orderedProducts`, {
-          method: "POST",
-          body: JSON.stringify(cartData[i]),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-        .then((res)=>res.json())
-        .then((res)=>{
-          console.log(res,  " orderpage page products" );
-        })  
+      // for(var i=0; i<cartData.length;i++){
+      //   fetch(`https://flipkart-data.onrender.com/orderedProducts`, {
+      //     method: "POST",
+      //     body: JSON.stringify({...cartData[i]}),
+      //     headers: {
+      //       "Content-Type": "application/json"
+      //     }
+      //   })
+      //   .then((res)=>res.json())
+      //   .then((res)=>{
+      //     console.log(res,  " orderpage page products" );
+      //   })
+      // }
+      
+      setOrderpageData([...orderpageData, ...cartData, ])
+
+      for(let i=0; i<cartData.length; i++){
+      fetch(`https://flipkart-data.onrender.com/products/${cartData[i].id}`,{
+          method:"DELETE"
+      })
+      .then(response =>{
+          return response.json( )
+      })
+      .then(data =>{
+        getData()
+          console.log(data, " test after delete data ")
+      })
       }
-    
     }
 
     console.log(value, "default");
@@ -68,6 +76,7 @@ console.log(realOtp);
 const handelSubmitOtp= ()=>{
     if(realOtp == state){
         setForwardCongo(true);
+        orderPageProducts()
         // alert("yes true did it");
     }else{
         // alert("Wr");

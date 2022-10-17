@@ -71,7 +71,7 @@ function Electronics() {
       };
     const getFashion = () => {
         setLoading(true)
-        fetch("http://localhost:4000/electronics")
+        fetch("https://flipkart-data.onrender.com/electronics")
             .then(res => res.json())
             .then(res => setElectronics(res))
             .catch(err => setError(true))

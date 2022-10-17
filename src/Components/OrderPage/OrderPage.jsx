@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Checkbox, CheckboxGroup, Flex, Img, Input, Radio, RadioGroup, Stack, Text, useDisclosure } from '@chakra-ui/react'
 import { FaSearch } from 'react-icons/fa';
 import { IoFilterOutline } from 'react-icons/io5';
@@ -17,18 +17,24 @@ import {
 
 } from '@chakra-ui/react'
 import { ChevronRightIcon } from '@chakra-ui/icons';
+import { CartContext } from '../Context/CartContext';
 function OrderPage() {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [placement, setPlacement] = React.useState('bottom')
     const [Order, setOrder] = useState([]);
+
+    const { orderpageData } = useContext(CartContext);
+
     const getData = () => {
-        fetch(`http://localhost:4000/orderedProducts`)
-            .then((res) => (res.json()))
-            .then((res) => {
-                setOrder(res);
-                console.log(res, "solve ho gaya")
-            })
+        setOrder([...orderpageData]);
+        // fetch(`https://flipkart-data.onrender.com/orderedProducts`)
+        //     .then((res) => (res.json()))
+        //     .then((res) => {
+        //         setOrder(res);
+        //         console.log(res, "solve ho gaya")
+        //     })
     }
+
     // orderedProducts
     useEffect(() => {
         getData();

@@ -66,7 +66,7 @@ function TopOffers() {
     };
     const getFashion = () => {
         setLoading(true)
-        fetch("http://localhost:4000/mens?_limit=12")
+        fetch("https://flipkart-data.onrender.com/mens?_limit=12")
             .then(res => res.json())
             .then(res => settopOffers(res))
             .catch(err => setError(true))
