@@ -69,7 +69,7 @@ const Navbar = () => {
   const [hiddenDiv, setHiddenDiv] = useState(false)
 
   const [isLargerThan670] = useMediaQuery('(min-width: 730px)')
-  const url = `http://localhost:4000/all`
+  const url = `https://flipkart-data.onrender.com/all`
   // const url = `https://flipkart.dvishal485.workers.dev/search/`
 
   const [data, setData] = useState([])

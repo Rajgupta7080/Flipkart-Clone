@@ -38,7 +38,9 @@ export function Login() {
   const {correct, setCorrect} = useContext(Authcontext)
   console.log(correct," check correct in login ");
   // const [otpvalue, setOtpValue] = useState(false)
-  const [name, setName] = useState("Login")
+  let loginsetName = JSON.parse(localStorage.getItem("loginsetName")) || "Login"
+  const [name, setName] = useState(loginsetName)
+  localStorage.setItem("loginsetName", JSON.stringify(name));
 
   let otp
   let raj = 0
@@ -63,7 +65,7 @@ export function Login() {
   }
 
   const handlelogin = (inputValues) => {
-    fetch(`http://localhost:4000/Userdetails`)
+    fetch(`https://flipkart-data.onrender.com/Userdetails`)
       .then((res) => res.json())
       .then((res) => {
         console.log(res, " check res in 67");

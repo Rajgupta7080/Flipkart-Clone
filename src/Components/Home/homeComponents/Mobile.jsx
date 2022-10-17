@@ -71,7 +71,7 @@ function Mobile() {
       };
     const getFashion = () => {
         setLoading(true)
-        fetch("http://localhost:4000/mobile")
+        fetch("https://flipkart-data.onrender.com/mobile")
             .then(res => res.json())
             .then(res => setMobile(res))
             .catch(err => setError(true))

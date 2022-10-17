@@ -64,7 +64,7 @@ function Groceries() {
       };
     const getFashion = () => {
         setLoading(true)
-        fetch("http://localhost:4000/disforyou")
+        fetch("https://flipkart-data.onrender.com/disforyou")
             .then(res => res.json())
             .then(res => setGroceries(res))
             .catch(err => setError(true))

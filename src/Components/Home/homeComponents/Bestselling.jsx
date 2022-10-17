@@ -71,7 +71,7 @@ function Bestselling() {
       };
     const getFashion = () => {
         setLoading(true)
-        fetch("http://localhost:4000/bestselling")
+        fetch("https://flipkart-data.onrender.com/bestselling")
             .then(res => res.json())
             .then(res => setBestselling(res))
             .catch(err => setError(true))
