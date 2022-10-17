@@ -289,8 +289,8 @@ function CartPage() {
                   display="flex"
                   justifyContent="start"
                   w="800px"
-                  m="5"
-                  p="5"
+                  m=""
+                  p="2"
                   borderTop={"1px solid #F0F0F5"}
                 >
                   <Box display="block"  >

@@ -50,13 +50,13 @@ function CategoryBar() {
         }
     ]
     return (
-        <Box>
-            <Box display={{ base: "none", md: "grid", lg: "grid" }} boxShadow="2xl">
-                <Grid pb="20px" textAlign={"center"} templateColumns='repeat(10, 1fr)' m="auto" gap="20px" mt='1rem' >
+        <Box bg="white" boxShadow="2xl">
+            <Box display={{ base: "none", md: "grid", lg: "grid" }}  >
+                <Grid pb="20px" textAlign={"center"} templateColumns='repeat(10, 1fr)' m="auto" gap="20px" mt='1rem' pl="5px" pr="5px"  >
                     {
                         data.map((ele, index) => (
                             <NavLink key={index} to='/products'>
-                                <GridItem _hover={{ color: "#2874F0" }} fontSize={{ base: "0px", md: "13px", lg: "14px" }}
+                                <GridItem _hover={{ color: "#2874F0" }} fontSize={{ base: "0px", md: "12px", lg: "14px" }}
                                 >
                                     <Box cursor={'pointer'} > <Img src={ele.image} alt="" height={{ base: "0px", md: "60px", lg: "70px" }} m="auto" />
                                         <Text fontWeight={'600'}> {ele.title}</Text>
