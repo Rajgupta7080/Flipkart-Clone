@@ -29,7 +29,7 @@ import { useContext } from "react";
 import { useState } from "react";
 import { AiFillSafetyCertificate } from 'react-icons/ai'
 import { MdSecurity } from 'react-icons/md'
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { CartContext } from "../Context/CartContext";
 
 
@@ -186,11 +186,13 @@ function CartPage() {
           mt='5'
            />
       </Box>
+      <Box w="200px" m="auto" textAlign={"center"}> 
            <Text mt='-36' fontWeight='400' fontSize='18px' >Your cart is empty!</Text>
            <Text  fontWeight='400' fontSize='13px' >Add items to it now.</Text>
-           <Button  color='white' bg='#2874f0' borderRadius='0' mt='4' pl='16' pr='16' >
+        <NavLink to="/"  > <Button  color='white' bg='#2874f0' borderRadius='0' mt='4' pl='16' pr='16' >
               Shop now
-            </Button>
+            </Button> </NavLink>
+            </Box>
 
       </Box>
       </Box>

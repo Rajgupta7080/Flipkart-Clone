@@ -56,6 +56,7 @@ function Viewpage() {
 
     const addDatainCart = ()=>{ // viewData[0]
         console.log(viewData[0], " check data ");
+       
         fetch(`http://localhost:4000/products`, {
             method: "POST",
             body: JSON.stringify({...viewData[0]}),

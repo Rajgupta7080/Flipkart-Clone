@@ -25,13 +25,14 @@ function OrderPage() {
         fetch(`http://localhost:4000/orderedProducts`)
             .then((res) => (res.json()))
             .then((res) => {
-                setOrder(res[0].data);
+                setOrder(res);
+                console.log(res, "solve ho gaya")
             })
     }
     // orderedProducts
     useEffect(() => {
         getData();
-    }, [])
+    },[])
     console.log(Order, "der");
     return (
         <Box display="flex" gap="15px" bg="#F1F3F6" pt='2.5rem'>

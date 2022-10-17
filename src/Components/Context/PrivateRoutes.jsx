@@ -4,9 +4,9 @@ import { Authcontext } from './Authcontext'
 
 const PrivateRoutes = ({children}) => {
     const { correct } = useContext(Authcontext);
-    if(!correct){
-        return <Navigate to='/'/>
-    }
+    // if(!correct){
+    //     return <Navigate to='/'/>
+    // }
     return (
         <>{children}</>
     )

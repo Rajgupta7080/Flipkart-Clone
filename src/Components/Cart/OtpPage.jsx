@@ -15,7 +15,6 @@ const [forwardCongo, setForwardCongo] = useState(false);
 
 const { cartData, SetCartData, getData } = useContext(CartContext);
     
-    
     const toast = useToast()
   
     
@@ -33,23 +32,26 @@ const { cartData, SetCartData, getData } = useContext(CartContext);
               </Box>
             ),
           })
+          console.log(cartData, "lets see cart data")
 
     }, []);
 
     const orderPageProducts = ()=>{
-      const data =  [...cartData]
-
-      fetch(`http://localhost:4000/orderedProducts`, {
-        method: "POST",
-        body: JSON.stringify({data}),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      .then((res)=>res.json())
-      .then((res)=>{
-        console.log(res,  " orderpage page products" );
-      })
+      // const data =  [cartData]
+      for(var i=0; i<cartData.length;i++){
+        fetch(`http://localhost:4000/orderedProducts`, {
+          method: "POST",
+          body: JSON.stringify(cartData[i]),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+        .then((res)=>res.json())
+        .then((res)=>{
+          console.log(res,  " orderpage page products" );
+        })  
+      }
+    
     }
 
     console.log(value, "default");
