@@ -257,10 +257,10 @@ function PaymentPage() {
 
                         </Box>
                         <Box display='grid' justifyContent='start' textAlign='start' alignItems='start' >
-                            <Input ml='16' bg='white' w='60%' borderRadius='0' focusBorderColor={cardNumber ? 'lime' : 'red.300'} disabled={cardNumber} onKeyUp={handelCardNumber} placeholder="Enter Card Number" />
+                            <Input ml='16' bg='white' w='60%' borderRadius='0'  focusBorderColor={cardNumber ? 'lime' : 'red.300'} disabled={cardNumber} onKeyUp={handelCardNumber} placeholder="Enter Card Number" />
                             <Box display='flex' w='100%' mt='2'>
                                 <Input ml='16' bg='white' w='40%' type={'month'} placeholder='none' borderRadius='0' />
-                                <Input ml='2' bg='white' w='30%' maxLength={'3'} placeholder="CVV" borderRadius='0' /> 
+                                <Input ml='2'   bg='white' w='30%' maxLength={'3'}  placeholder="CVV" borderRadius='0' /> 
                                 
                             </Box>
                             {/* {

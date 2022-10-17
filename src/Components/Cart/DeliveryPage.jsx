@@ -162,19 +162,19 @@ function DeliveryPage(){
                     </Box >
                     <Box display='flex' justifyContent='space-evenly' mt='8'w='80%' >
                         <Input value={Name}  onChange={handelChange} name="Name" placeholder='Name' w='45%' border='2px solid ' bg='white' p='6' />
-                        <Input value={Number}  onChange={handelChange} name="Number"  placeholder='Mobile Number' w='45%' border='2px solid ' bg='white' p='6' />
+                        <Input value={Number}  onChange={handelChange} type="number" name="Number"  placeholder='Mobile Number' w='45%' border='2px solid ' bg='white' p='6' />
                     </Box>
 
                     <Box display='flex' justifyContent='space-evenly' mt='4'w='80%' >
-                        <Input value={Email}  onChange={handelChange} name="Email"  placeholder='Email' w='45%' border='2px solid ' bg='white' p='6' />
-                        <Input value={Pincode}  onChange={handelChange} name="Pincode"  placeholder='Pincode' w='45%' border='2px solid ' bg='white' p='6' />
+                        <Input value={Email}  onChange={handelChange} name="Email" type={"email"}  placeholder='Email' w='45%' border='2px solid ' bg='white' p='6' />
+                        <Input value={Pincode}  onChange={handelChange} name="Pincode"  type={"number"} placeholder='Pincode' w='45%' border='2px solid ' bg='white' p='6' />
                     </Box>
                     <Box display='flex' justifyContent='space-evenly' mt='4'w='80%' >
                         {/* <Input  placeholder='Address' w='93.5%' border='2px solid ' bg='white' p='6' /> */}
-                        <Textarea value={Address}  onChange={handelChange} name="Address" placeholder='Address' w='93.5%' border='2px solid ' bg='white' pl='6' resize='none' h='20' />
+                        <Textarea value={Address}  onChange={handelChange} type="text" name="Address" placeholder='Address' w='93.5%' border='2px solid ' bg='white' pl='6' resize='none' h='20' />
                         </Box>
                     <Box display='flex' justifyContent='space-evenly' mt='4'w='80%' >
-                        <Input  value={City}  onChange={handelChange} name="City"  placeholder='City/District/Town' w='45%' border='2px solid ' bg='white' p='6' />
+                        <Input  value={City}  onChange={handelChange} name="City"   placeholder='City/District/Town' w='45%' border='2px solid ' bg='white' p='6' />
                         <Input value={State}  onChange={handelChange} name="State"  placeholder='State' w='45%' border='2px solid ' bg='white' p='6' />
                     </Box>
                     <Box display='grid' ml='5' mt={allFilled? '4' : '1'} w='80%' >
