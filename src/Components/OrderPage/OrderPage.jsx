@@ -93,7 +93,7 @@ function OrderPage() {
                             <Img maxWidth="60px" maxHeight="90px" src={item.image} alt="img" />
                             <Box>  <Text fontWeight={"400"} w="300px" fontSize="16px"> {item.description}</Text>
 
-                                <Text color={"#878787"} fontSize="13px"> Color : {item.color}</Text>
+                                {/* <Text color={"#878787"} fontSize="13px"> Color : {item.color}</Text> */}
                             </Box>
                             <Text fontSize={"14px"} fontWeight={"semibold"}>₹ {item.new_price}</Text>
                             <Text display="flex" fontSize={"14px"} alignItems="center"> <BiRadioCircle color="green" size="16px" />  Delivery Expected By  Nov 20</Text>
