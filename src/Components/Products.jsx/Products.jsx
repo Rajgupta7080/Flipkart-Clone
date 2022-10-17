@@ -1,24 +1,31 @@
 import React, { useState } from 'react'
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Image, Radio, RadioGroup, SimpleGrid, Stack, Tab, TabList, Tabs, Text, useCheckboxGroup, useDisclosure, useMediaQuery, VStack } from '@chakra-ui/react'
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Image, Radio, RadioGroup, SimpleGrid, Skeleton, Stack, Tab, TabList, Tabs, Text, useCheckboxGroup, useDisclosure, useMediaQuery, VStack } from '@chakra-ui/react'
 import { ChevronRightIcon } from '@chakra-ui/icons'
 import { useEffect } from 'react'
 import ProductItem from './ProductItem'
 import LeftSidebar from './LeftSidebar'
 import MiniFilter from './Filter/MiniFilter'
 import { Categories } from '../Navbar/Categries'
+import { useDispatch, useSelector } from 'react-redux'
+import { getProductError, getProductLoading, getProductsSuccess } from '../Redux/Products/action'
 
 const url = `https://flipkart-data.onrender.com`
 // https://flipkart-data.onrender.com
 
 const Products = () => {
     const [isLargerThan720] = useMediaQuery('(min-width: 720px)')
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
     const [page, setPage] = useState(1);
     const perPagelimitProduct = 16;
     const [total, setTotal] = useState(0);
 
+    const dispatch = useDispatch();
+    const { loading, error, products } = useSelector((state)=>state)
+
+    console.log(products, " products ", loading, error );
+
     const [priceRange, setPriceRange] = useState([]);
-    console.log(priceRange, " priceRange ");
+    // console.log(priceRange, " priceRange ");
     const priceRangeurl = priceRange[0] > 0 || priceRange[1] < 100 ?
         `&new_price_gte=${priceRange[0] * 10}${priceRange[1] < 100 ? `&new_price_lte=${priceRange[1] * 10}` : ""}` : ""
 
@@ -27,14 +34,14 @@ const Products = () => {
     const [placement, setPlacement] = React.useState("")
     
     const [sortprice, setPriceSort] = useState("");
-    console.log(sortprice);
+    // console.log(sortprice);
     let pricesorturl = isLargerThan720?
     sortprice === ""? "" : `&_sort=new_price&_order=${sortprice}`:
     placement==="" ?"": `&_sort=new_price&_order=${placement}`
 
     const { value, getCheckboxProps } = useCheckboxGroup()
 
-    console.log(value, " val of checkbox ");
+    // console.log(value, " val of checkbox ");
     // console.log(data, " all data");
 
     useEffect(() => {
@@ -43,6 +50,7 @@ const Products = () => {
     }, [page, sortprice, priceRangeurl, value, placement])
 
     const fetchData = () => {
+        dispatch(getProductLoading())
         let tempUrl = ""
         const categoryCheckArrurl = ['fashion', 'mobiles', "top_offers", "grocery", "electronics", "home", "appliances"]
         const discountCheckArrurl = ["30", "40", "50", "60", "70"]
@@ -58,7 +66,8 @@ const Products = () => {
             }
         })
 
-        console.log(tempUrl);
+        // console.log(tempUrl);
+        
         fetch(`${url}/all?_limit=${perPagelimitProduct}&_page=${page}${pricesorturl}${priceRangeurl}${tempUrl}`)
             .then((res) => {
                 const total = res.headers.get('X-Total-Count')
@@ -66,9 +75,10 @@ const Products = () => {
                 return res.json()
             })
             .then((res) => {
-                setData(res)
-                // setData(res.attributeOptions[0])
+                // setData(res)
+                dispatch(getProductsSuccess(res))
             })
+            .catch(()=>dispatch(getProductError()))
     }
 
     const handlepagination = (curr) => {
@@ -175,15 +185,29 @@ const Products = () => {
                                 : ""}
                     </Box>
                     <Box mt={0}>
-                        <SimpleGrid columns={2} minChildWidth={isLargerThan720?'220px':""} 
-                        spacing={isLargerThan720?'10px':""} pt={0}
-                        >
-                            {
-                                data.map((property, i) => (
-                                    <ProductItem key={i} property={property} />
-                                ))
-                            }
-                        </SimpleGrid>
+                        {
+                            loading?
+                            <SimpleGrid columns={1} minChildWidth={isLargerThan720?'220px':""} 
+                            spacing={isLargerThan720?'10px':""} pt={0}
+                            pl='1.2rem'
+                            >
+                                {
+                                    Array.from({ length: 16 }, (v, i) => i).map((item, i)=>(
+                                        <Skeleton key={i} height='320px' w='230px' />
+                                    ))
+                                }
+                            </SimpleGrid>
+                            :
+                            <SimpleGrid columns={2} minChildWidth={isLargerThan720?'220px':""} 
+                            spacing={isLargerThan720?'10px':""} pt={0}
+                            >
+                                {
+                                    products.map((property, i) => (
+                                        <ProductItem key={i} property={property} />
+                                    ))
+                                }
+                            </SimpleGrid>
+                        }
                     </Box>
                     {
                         isLargerThan720
