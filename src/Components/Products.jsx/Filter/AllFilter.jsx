@@ -3,7 +3,7 @@ import React from 'react'
 
 const Filter = ({ getCheckboxProps, setPriceRange, priceRange }) => {
     return (
-        <Accordion defaultIndex={[0, 2, 4, 6]} allowMultiple>
+        <Accordion defaultIndex={[0, 2, 3, 4]} allowMultiple>
             <AccordionItem p={'5px'}>
                 <h2>
                     <AccordionButton>
@@ -43,7 +43,6 @@ const Filter = ({ getCheckboxProps, setPriceRange, priceRange }) => {
                         <Stack spacing={[1]} direction={['column']}>
                             <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "Men" })} ><Text fontSize={'small'} fontWeight='500'>Men</Text></Checkbox>
                             <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Women' })} ><Text fontSize={'small'} fontWeight='500'>Women</Text></Checkbox>
-                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Unisex' })} ><Text fontSize={'small'} fontWeight='500'>Unisex</Text></Checkbox>
                         </Stack>
                     </CheckboxGroup>
                 </AccordionPanel>
@@ -72,31 +71,6 @@ const Filter = ({ getCheckboxProps, setPriceRange, priceRange }) => {
                         <Text fontSize={'15px'} >to</Text>
                         <Text bg='#fff' border={'0.6px solid #d7d7d7'} borderRadius='2px' p='0px 28px' fontSize={'14px'}>{priceRange[1] < 100 ? priceRange[1] * 10 : "1000+"}</Text>
                     </Flex>
-                </AccordionPanel>
-            </AccordionItem>
-
-            <AccordionItem p={'5px'}>
-                <h2>
-                    <AccordionButton>
-                        <Box flex='1' textAlign='left' fontWeight='bold' fontSize='small'>
-                            BRAND
-                        </Box>
-                        <AccordionIcon />
-                    </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4}>
-                    <CheckboxGroup defaultValue={['']}>
-                        <Stack spacing={[1]} direction={['column']}>
-                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'ADIDAS' })} ><Text fontSize={'small'} fontWeight='500'>ADIDAS</Text></Checkbox>
-                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Allen Solly' })}><Text fontSize={'small'} fontWeight='500'>Allen Solly</Text></Checkbox>
-                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "Ap'pulse" })} ><Text fontSize={'small'} fontWeight='500'>Ap'pulse</Text></Checkbox>
-                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'BEWAKOOF' })} ><Text fontSize={'small'} fontWeight='500'>BEWAKOOF</Text></Checkbox>
-                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Billion' })} ><Text fontSize={'small'} fontWeight='500'>Billion</Text></Checkbox>
-                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'CHEROKEE' })} ><Text fontSize={'small'} fontWeight='500'>CHEROKEE</Text></Checkbox>
-                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Christy World' })} ><Text fontSize={'small'} fontWeight='500'>Christy World</Text></Checkbox>
-                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Clovia' })} ><Text fontSize={'small'} fontWeight='500'>Clovia</Text></Checkbox>
-                        </Stack>
-                    </CheckboxGroup>
                 </AccordionPanel>
             </AccordionItem>
 
@@ -159,6 +133,31 @@ const Filter = ({ getCheckboxProps, setPriceRange, priceRange }) => {
                             <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Red' })} ><Text fontSize={'small'} fontWeight='500'>Red</Text></Checkbox>
                             <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Blue' })} ><Text fontSize={'small'} fontWeight='500'>Blue</Text></Checkbox>
                             <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Pink' })} ><Text fontSize={'small'} fontWeight='500'>Pink</Text></Checkbox>
+                        </Stack>
+                    </CheckboxGroup>
+                </AccordionPanel>
+            </AccordionItem>
+
+            <AccordionItem p={'5px'}>
+                <h2>
+                    <AccordionButton>
+                        <Box flex='1' textAlign='left' fontWeight='bold' fontSize='small'>
+                            BRAND
+                        </Box>
+                        <AccordionIcon />
+                    </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4}>
+                    <CheckboxGroup defaultValue={['']}>
+                        <Stack spacing={[1]} direction={['column']}>
+                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'ADIDAS' })} ><Text fontSize={'small'} fontWeight='500'>ADIDAS</Text></Checkbox>
+                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Allen Solly' })}><Text fontSize={'small'} fontWeight='500'>Allen Solly</Text></Checkbox>
+                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: "Ap'pulse" })} ><Text fontSize={'small'} fontWeight='500'>Ap'pulse</Text></Checkbox>
+                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'BEWAKOOF' })} ><Text fontSize={'small'} fontWeight='500'>BEWAKOOF</Text></Checkbox>
+                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Billion' })} ><Text fontSize={'small'} fontWeight='500'>Billion</Text></Checkbox>
+                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'CHEROKEE' })} ><Text fontSize={'small'} fontWeight='500'>CHEROKEE</Text></Checkbox>
+                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Christy World' })} ><Text fontSize={'small'} fontWeight='500'>Christy World</Text></Checkbox>
+                            <Checkbox spacing='0.8rem' {...getCheckboxProps({ value: 'Clovia' })} ><Text fontSize={'small'} fontWeight='500'>Clovia</Text></Checkbox>
                         </Stack>
                     </CheckboxGroup>
                 </AccordionPanel>

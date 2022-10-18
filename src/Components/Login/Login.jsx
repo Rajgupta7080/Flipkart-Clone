@@ -65,7 +65,7 @@ export function Login() {
   }
 
   const handlelogin = (inputValues) => {
-    fetch(`https://flipkart-data.onrender.com/Userdetails`)
+    fetch(`http://localhost:4000/Userdetails`)
       .then((res) => res.json())
       .then((res) => {
         console.log(res, " check res in 67");

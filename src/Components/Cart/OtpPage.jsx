@@ -18,6 +18,7 @@ const { cartData, SetCartData, getData, setOrderpageData, orderpageData } = useC
     let value = Math.floor((Math.random()*10)+1000);
     
     useEffect(()=>{
+      window.scrollTo(0, 0)
       
         setState(value);
         toast({
@@ -33,7 +34,7 @@ const { cartData, SetCartData, getData, setOrderpageData, orderpageData } = useC
 
     const orderPageProducts = ()=>{
       // for(var i=0; i<cartData.length;i++){
-      //   fetch(`https://flipkart-data.onrender.com/orderedProducts`, {
+      //   fetch(`http://localhost:4000/orderedProducts`, {
       //     method: "POST",
       //     body: JSON.stringify({...cartData[i]}),
       //     headers: {
@@ -49,7 +50,7 @@ const { cartData, SetCartData, getData, setOrderpageData, orderpageData } = useC
       setOrderpageData([...orderpageData, ...cartData, ])
 
       for(let i=0; i<cartData.length; i++){
-      fetch(`https://flipkart-data.onrender.com/products/${cartData[i].id}`,{
+      fetch(`http://localhost:4000/products/${cartData[i].id}`,{
           method:"DELETE"
       })
       .then(response =>{

@@ -46,7 +46,7 @@ function CartPage() {
 
   function getAddress(){
 
-    fetch (`https://flipkart-data.onrender.com/address`)
+    fetch (`http://localhost:4000/address`)
     .then((res)=>res.json())
     .then((res)=>setAddress(res));
   }
@@ -66,6 +66,7 @@ function CartPage() {
   const initialFocusRef = useRef();
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     getData()
     getAddress();
   }, [count , addQuantityState , lessQuantityState ]);
@@ -117,7 +118,7 @@ function CartPage() {
           "Deleted": "ADD NEW ADDRESS"
         }
 
-        fetch (`https://flipkart-data.onrender.com/address`,{
+        fetch (`http://localhost:4000/address`,{
           method: 'POST',
           headers: {
             'Content-Type' : 'application/json'

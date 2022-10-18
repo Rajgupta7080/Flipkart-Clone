@@ -5,6 +5,8 @@ import {
   PopoverTrigger,
   PopoverContent,
   Text,
+  Button,
+  useColorMode,
 } from "@chakra-ui/react";
 import { HiUserCircle } from "react-icons/hi";
 import "./navbar.css";
@@ -69,7 +71,7 @@ const Navbar = () => {
   const [hiddenDiv, setHiddenDiv] = useState(false)
 
   const [isLargerThan670] = useMediaQuery('(min-width: 730px)')
-  const url = `https://flipkart-data.onrender.com/all`
+  const url = `http://localhost:4000/all`
   // const url = `https://flipkart.dvishal485.workers.dev/search/`
 
   const [data, setData] = useState([])
@@ -127,7 +129,9 @@ const Navbar = () => {
     setCorrect(false)
     console.log(" handleLogout ", correct);
   }
-  console.log(" handleLogout ", correct);
+  // console.log(" handleLogout ", correct);
+
+  // const { toggleColorMode } = useColorMode();
 
   if (isLargerThan670) {
     return (
@@ -156,8 +160,10 @@ const Navbar = () => {
             </Box>
             </NavLink>
           </Box>
+
           {/* =======search======== */}
-          <Box w="28%" pos={'relative'}>
+
+          <Box w="34%" pos={'relative'}>
             <InputGroup>
               <Input
                 placeholder="Search for products,brands and more"
@@ -221,7 +227,7 @@ const Navbar = () => {
               {
                 data.map((item, index)=>(
                   <Box key={index}>
-                    <NavLink to={`/products/${item.item_id}`}>
+                    <NavLink to={`/products/view/${item.item_id}`}>
                       <Flex gap={2} p='10px 25px' m='10px 0'
                       align={'center'}
                       cursor='pointer'
@@ -388,6 +394,8 @@ const Navbar = () => {
             </Flex>
           </NavLink>
 
+          {/* <Button onClick={toggleColorMode}>Toggle Color Mode</Button> */}
+
           <Spacer />
         </Flex>
       </Box>
@@ -513,7 +521,7 @@ const Navbar = () => {
               {
                 data.map((item, index)=>(
                   <Box key={index}>
-                    <NavLink to={`/products/${item.item_id}`}>
+                    <NavLink to={`/products/view/${item.item_id}`}>
                       <Flex gap={2} p='10px 25px' m='10px 0'
                       align={'center'}
                       cursor='pointer'

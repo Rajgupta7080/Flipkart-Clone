@@ -27,7 +27,7 @@ function OrderPage() {
 
     const getData = () => {
         setOrder([...orderpageData]);
-        // fetch(`https://flipkart-data.onrender.com/orderedProducts`)
+        // fetch(`http://localhost:4000/orderedProducts`)
         //     .then((res) => (res.json()))
         //     .then((res) => {
         //         setOrder(res);
@@ -37,6 +37,7 @@ function OrderPage() {
 
     // orderedProducts
     useEffect(() => {
+        window.scrollTo(0, 0)
         getData();
     },[])
     console.log(Order, "der");
@@ -87,18 +88,15 @@ function OrderPage() {
                 {/* mobile search button end */}
                 <Box mt="6px" w="98%" overflow={"auto"} display={{ base: "none", md: "none", lg: "block" }}>
 
-
                     {Order.map((item) => (
                         <Flex fontSize={{ base: "8.5px", md: "15px", lg: "18px" }} h="110px" border={"0.3px solid #DBDBDB"} rounded="5px" p="5px 0px 5px 0px" key={Math.random()} mb="9px" alignItems={"center"} justifyContent={"space-around"} gap="15px" bg="white" boxShadow="0 2px 4px 0 rgb(0 0 0 / 8%)" _hover={{ boxShadow: 'md' }}>
                             <Img maxWidth="60px" maxHeight="90px" src={item.image} alt="img" />
                             <Box>  <Text fontWeight={"400"} w="300px" fontSize="16px"> {item.description}</Text>
 
-                              
                             </Box>
                             <Text fontSize={"14px"} fontWeight={"semibold"}>₹ {item.new_price}</Text>
                             <Text display="flex" fontSize={"14px"} alignItems="center"> <BiRadioCircle color="green" size="16px" />  Delivery Expected By  Nov 20</Text>
                         </Flex>
-
                     ))}
                 </Box>
                 {/* mobile mode start  */}

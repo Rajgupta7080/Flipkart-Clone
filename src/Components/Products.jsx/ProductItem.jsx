@@ -7,7 +7,7 @@ const ProductItem = (props) => {
     const [isLargerThan720] = useMediaQuery('(min-width: 720px)')
 
     return (
-        <NavLink to={`/products/${property.item_id}`}>
+        <NavLink to={`/products/view/${property.item_id}`}>
             <Box key={i} className='my-box' border={!isLargerThan720?'0.1px solid #B0B0B0':""}>
             <Box overflow='hidden' m={isLargerThan720? '0px 8px':""} pos={'relative'}
                 _hover={{ boxShadow: "0 3px 16px 0 rgb(0 0 0 / 11%)" }}
