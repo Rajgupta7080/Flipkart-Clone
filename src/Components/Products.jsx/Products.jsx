@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Image, Radio, RadioGroup, SimpleGrid, Skeleton, Stack, Tab, TabList, Tabs, Text, useCheckboxGroup, useDisclosure, useMediaQuery, VStack } from '@chakra-ui/react'
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Image, Radio, RadioGroup, SimpleGrid, Skeleton, Stack, Tab, TabList, Tabs, Text, useCheckboxGroup, useDisclosure, useMediaQuery, VStack } from '@chakra-ui/react'
 import { ChevronRightIcon } from '@chakra-ui/icons'
 import { useEffect } from 'react'
 import ProductItem from './ProductItem'
@@ -7,10 +7,13 @@ import LeftSidebar from './LeftSidebar'
 import MiniFilter from './Filter/MiniFilter'
 import { Categories } from '../Navbar/Categries'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProductError, getProductLoading, getProductsSuccess } from '../Redux/Products/action'
+import { getProductError, getProductLoading, getProductsSuccess } from '../../Redux/Products/action'
+import { useParams } from 'react-router'
 
-const url = `https://flipkart-data.onrender.com`
-// https://flipkart-data.onrender.com
+const url = `http://localhost:4000`
+// http://localhost:4000
+
+// http://localhost:4000
 
 const Products = () => {
     const [isLargerThan720] = useMediaQuery('(min-width: 720px)')
@@ -18,6 +21,9 @@ const Products = () => {
     const [page, setPage] = useState(1);
     const perPagelimitProduct = 16;
     const [total, setTotal] = useState(0);
+    
+    const { category_name } = useParams()
+    console.log(category_name, " category_name");
 
     const dispatch = useDispatch();
     const { loading, error, products } = useSelector((state)=>state)
@@ -45,6 +51,7 @@ const Products = () => {
     // console.log(data, " all data");
 
     useEffect(() => {
+        window.scrollTo(0, 0)
         fetchData()
         // eslint-disable-next-line
     }, [page, sortprice, priceRangeurl, value, placement])
@@ -67,8 +74,12 @@ const Products = () => {
         })
 
         // console.log(tempUrl);
+        let homepagecategory_nameurl = ""
+        if(categoryCheckArrurl.includes(category_name)){
+            homepagecategory_nameurl = `category_name=${category_name}`
+        }
         
-        fetch(`${url}/all?_limit=${perPagelimitProduct}&_page=${page}${pricesorturl}${priceRangeurl}${tempUrl}`)
+        fetch(`${url}/all?${homepagecategory_nameurl}&_limit=${perPagelimitProduct}&_page=${page}${pricesorturl}${priceRangeurl}${tempUrl}`)
             .then((res) => {
                 const total = res.headers.get('X-Total-Count')
                 setTotal(total);
@@ -92,6 +103,15 @@ const Products = () => {
     let ll = Math.ceil(total/perPagelimitProduct)-10;
     let lastpaginationArray = [ll,ll+1,ll+2,ll+3,ll+4,ll+5,ll+6,ll+7,ll+8,ll+9,ll+10]
 
+    
+    // if(error){
+    //     return <><Alert status='error' w="100%" m="auto" textAlign={"center"}>
+    //     <AlertIcon />
+    //     <AlertTitle>Opps!</AlertTitle>
+    //     <AlertDescription>Please Refresh and try again.</AlertDescription>
+    // </Alert>
+    // </>
+    // }
     
     return (
         <Box bg='#f1f3f6' border='1px solid #f1f3f6' fontFamily='Roboto,Arial,sans-serif'>
@@ -169,7 +189,7 @@ const Products = () => {
                                     <Flex alignItems='center' p='5px 0px 0px 0' gap='2'>
                                         <Text fontSize={'16px'} fontWeight={'bold'} letterSpacing='1px'>Products View</Text>
                                         <Text fontSize={'12px'} color={'#878787'}>
-                                            (Showing {(page * perPagelimitProduct) - (perPagelimitProduct - 1)} – {page * perPagelimitProduct}
+                                            (Showing {total>0?(page * perPagelimitProduct) - (perPagelimitProduct - 1):0} – {total>perPagelimitProduct?page * perPagelimitProduct:total}
                                             {" "}products of {total} products)</Text>
                                     </Flex>
                                     <Tabs>
@@ -178,7 +198,7 @@ const Products = () => {
                                             <Tab _selected={{ fontWeight: '600', color: '#2874f0', borderBottom: '2px solid #2874f0' }} p={'8px 0 4px'} m={'0 10px'} fontSize={'14px'} color='black'>Popularity</Tab>
                                             <Tab _selected={{ fontWeight: '600', color: '#2874f0', borderBottom: '2px solid #2874f0' }} p={'8px 0 4px'} m={'0 10px'} fontSize={'14px'} color='black' onClick={() => setPriceSort("asc")}>Price - Low to High</Tab>
                                             <Tab _selected={{ fontWeight: '600', color: '#2874f0', borderBottom: '2px solid #2874f0' }} p={'8px 0 4px'} m={'0 10px'} fontSize={'14px'} color='black' onClick={() => setPriceSort("desc")} >Price - High to Low</Tab>
-                                            <Tab _selected={{ fontWeight: '600', color: '#2874f0', borderBottom: '2px solid #2874f0' }} p={'8px 0 4px'} m={'0 10px'} fontSize={'14px'} color='black'>Newest First</Tab>
+                                            {/* <Tab _selected={{ fontWeight: '600', color: '#2874f0', borderBottom: '2px solid #2874f0' }} p={'8px 0 4px'} m={'0 10px'} fontSize={'14px'} color='black'>Newest First</Tab> */}
                                         </TabList>
                                     </Tabs>
                                 </Box>
@@ -186,6 +206,12 @@ const Products = () => {
                     </Box>
                     <Box mt={0}>
                         {
+                            error?<><Alert status='error' m='auto' w="100%" textAlign={"center"}>
+                            <AlertIcon />
+                            <AlertTitle>Opps!</AlertTitle>
+                            <AlertDescription>Please Refresh and try again.</AlertDescription>
+                        </Alert>
+                        </>:
                             loading?
                             <SimpleGrid columns={1} minChildWidth={isLargerThan720?'220px':""} 
                             spacing={isLargerThan720?'10px':""} pt={0}

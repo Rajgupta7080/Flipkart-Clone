@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 import Slider from "react-slick";
+import { NavLink } from 'react-router-dom';
 
 function Electronics() {
     const [electronics, setElectronics] = useState([]);
@@ -71,7 +72,7 @@ function Electronics() {
       };
     const getFashion = () => {
         setLoading(true)
-        fetch("https://flipkart-data.onrender.com/electronics")
+        fetch("http://localhost:4000/all")
             .then(res => res.json())
             .then(res => setElectronics(res))
             .catch(err => setError(true))
@@ -109,15 +110,21 @@ function Electronics() {
                 <Text paddingTop={{base:"120px", md:"120px", lg:"40px"}}  fontSize={{ base: '10px', md: '20px', lg: '30px' }}> Best Of Electronics</Text>
 
                 <WrapItem pt="30px">
-                    <Button  fontSize={{ base: '6px', md: '9px', lg: '12px' }} m={"auto"} colorScheme='messenger'>VIEW ALL</Button>
+                    <Button  fontSize={{ base: '6px', md: '9px', lg: '12px' }} m={"auto"} colorScheme='messenger'>
+                    <NavLink to={`/products/electronics`}>
+                        VIEW ALL
+                    </NavLink>
+                        </Button>
                 </WrapItem>
                 <Img   src="https://rukminim1.flixcart.com/fk-p-flap/278/278/image/7593e7b6640822c1.jpg?q=90" alt="fg" />
 
             </Box>
             <Box w={{ base: '80%', md: '75%', lg: '84%' }} m="auto" className="OffSlider" >
                 <Slider {...settings}>
-                    {electronics.map(item => <Box m="5px" key={Math.random()} alignItems="center" textAlign={"center"} >
-                    <Img maxWidth="210px" h="210px" m="auto" _hover={{ transform: "scale(1.1)", transition: "400ms" }} p="10px" src={item.image} alt="" />
+                    {electronics.filter(item=>item.category_name==="electronics").map(item =>
+                    <NavLink to={`/products/view/${item.item_id}`}>
+                        <Box m="5px" key={Math.random()} alignItems="center" textAlign={"center"} >
+                        <Img maxWidth="210px" h="210px" m="auto" _hover={{ transform: "scale(1.1)", transition: "400ms" }} p="10px" src={item.image} alt="" />
                         <Text fontWeight="500" p="5px" fontSize={{base:"13px", md:"12px", lg:"14px"}}> {item.description}</Text>
                        <Flex textAlign={"center"} justifyContent={'space-around'} w="50%" m="auto">
                          <Text fontSize={"15px"} fontWeight={"600"} >   ₹ {item.new_price}</Text>
@@ -125,7 +132,9 @@ function Electronics() {
                        </Flex>
                        
                         <Text  mt="8px" fontSize={{base:"13px", md:"14px", lg:"15px"}} fontWeight={"medium"} color={"green"} mb="-40px"> {item.discount} % Off</Text>
-                    </Box>)}
+                    </Box>
+                    </NavLink>
+                    )}
 
                 </Slider>
             </Box>
@@ -136,13 +145,17 @@ function Electronics() {
                 <Box className='itemGrid'display={{ base: 'grid', md: 'none', lg: 'none' }} >
                     
                     
-                    {electronics.map(item => <Box m="5px" key={Math.random()} borderRadius="6px" bg="white" alignItems="center" textAlign={"center"}  border="1px solid silver">
-                        <Img mw="160px" h="160px" m="auto" _hover={{ transform: "scale(1.1)", transition: "400ms" }}  p="10px" src={item.image} alt="" />
-                        <Text fontWeight="700"> {item.description}</Text>
+                    {electronics.filter(item=>item.category_name==="electronics").map(item =>
+                        <NavLink to={`/products/view/${item.item_id}`}>
+                            <Box m="5px" key={Math.random()} borderRadius="6px" bg="white" alignItems="center" textAlign={"center"}  border="1px solid silver">
+                            <Img mw="160px" h="160px" m="auto" _hover={{ transform: "scale(1.1)", transition: "400ms" }}  p="10px" src={item.image} alt="" />
+                            <Text fontWeight="700"> {item.description}</Text>
 
-                        <Text color={"green"}>₹ {item.new_price}</Text>
-                        <Text pb="5px" > {item.brand}</Text>
-                    </Box>)}
+                            <Text color={"green"}>₹ {item.new_price}</Text>
+                            <Text pb="5px" > {item.brand}</Text>
+                            </Box>
+                        </NavLink>
+                    )}
                     
                 </Box>
             </Box>

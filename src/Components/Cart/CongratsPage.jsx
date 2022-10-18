@@ -11,7 +11,7 @@ import {
     Grid,
     GridItem,
   } from '@chakra-ui/react'
-  import React, { useContext } from 'react'
+  import React, { useContext, useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
 import { CartContext } from '../Context/CartContext';
 import Navbar from '../Navbar/navbar';
@@ -21,6 +21,9 @@ import Navbar from '../Navbar/navbar';
 
     const { globalAddress } = useContext(CartContext);
     let tracking  = Math.ceil((Math.random()*117)+1578154424840);
+    useEffect(()=>{
+      window.scrollTo(0, 0)
+    },[])
     return (
       <>
         <VStack

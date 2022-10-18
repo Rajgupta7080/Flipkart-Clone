@@ -43,7 +43,7 @@ function Summary(){
   
 
   const handelPatchLess = (id, quantity) => {
-    fetch(`https://flipkart-data.onrender.com/products/${id}`, {
+    fetch(`http://localhost:4000/products/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +56,7 @@ function Summary(){
   };
 
   const handelPatchAdd = (id, quantity) => {
-    fetch(`https://flipkart-data.onrender.com/products/${id}`, {
+    fetch(`http://localhost:4000/products/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

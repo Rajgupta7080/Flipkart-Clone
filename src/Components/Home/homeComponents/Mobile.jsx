@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 import Slider from "react-slick";
+import { NavLink } from 'react-router-dom';
 
 function Mobile() {
     const [mobile, setMobile] = useState([]);
@@ -71,7 +72,7 @@ function Mobile() {
       };
     const getFashion = () => {
         setLoading(true)
-        fetch("https://flipkart-data.onrender.com/mobile")
+        fetch("http://localhost:4000/all")
             .then(res => res.json())
             .then(res => setMobile(res))
             .catch(err => setError(true))
@@ -108,23 +109,30 @@ function Mobile() {
                 <Text paddingTop={{base:"120px", md:"120px", lg:"70px"}} fontSize={{ base: '10px', md: '20px', lg: '30px' }}> Top Mobile Deals</Text>
 
                 <WrapItem pt="20px">
-                    <Button fontSize={{ base: '6px', md: '9px', lg: '12px' }} m={"auto"} colorScheme='messenger'>VIEW ALL</Button>
+                    <Button fontSize={{ base: '6px', md: '9px', lg: '12px' }} m={"auto"} colorScheme='messenger'>
+                    <NavLink to='./products/mobiles'>
+                        VIEW ALL
+                        </NavLink>
+                        </Button>
                 </WrapItem>
                 <Img  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAQJ6xBHIA9e3Pf3QMok5yTZn3XF2Z3KcZ3w&usqp=CAU" alt="fg" />
 
             </Box>
             <Box w={{ base: '80%', md: '74%', lg: '84%' }} m="auto" className="OffSlider" >
                 <Slider {...settings}>
-                    {mobile.map(item => <Box m="5px" key={Math.random()} alignItems="center" textAlign={"center"}>
-                    <Img maxWidth="190px" h="220px" m="auto" _hover={{ transform: "scale(1.1)", transition: "400ms" }} p="10px" src={item.image} alt="" />
-                        <Text fontWeight="500"> {item.description}</Text>
-                       <Flex textAlign={"center"} justifyContent={'space-around'} w="50%" m="auto">
-                         <Text fontSize={"15px"} fontWeight={"600"} >   ₹ {item.new_price}</Text>
-                         <Text  fontSize={"12px"}><del> ₹ {item.old_price}</del></Text>
-                       </Flex>
-                       
-                        <Text fontWeight={"medium"} color={"green"}>Upto {item.discount} % Off</Text>
-                    </Box>)}
+                    {mobile.filter(item=>item.category_name==="mobiles").map(item =>
+                        <NavLink to={`/products/view/${item.item_id}`}>
+                        <Box m="5px" key={Math.random()} alignItems="center" textAlign={"center"}>
+                        <Img maxWidth="190px" h="220px" m="auto" _hover={{ transform: "scale(1.1)", transition: "400ms" }} p="10px" src={item.image} alt="" />
+                            <Text fontWeight="500"> {item.description}</Text>
+                        <Flex textAlign={"center"} justifyContent={'space-around'} w="50%" m="auto">
+                            <Text fontSize={"15px"} fontWeight={"600"} >   ₹ {item.new_price}</Text>
+                            <Text  fontSize={"12px"}><del> ₹ {item.old_price}</del></Text>
+                        </Flex>
+                            <Text fontWeight={"medium"} color={"green"}>Upto {item.discount} % Off</Text>
+                        </Box>
+                        </NavLink>
+                    )}
 
                 </Slider>
             </Box>
@@ -132,17 +140,20 @@ function Mobile() {
                 <Box mb="20px" mt="10px" alignItems={"center"} display="flex" justifyContent={"space-between"}> <Text fontSize={"19px"} >  Top Mobile Deals</Text> <Button size="sm" colorScheme='messenger'>View All</Button></Box>
                 <Box className='itemGrid'display={{ base: 'grid', md: 'none', lg: 'none' }}>
                     
-                    
-                    {mobile.map(item => <Box key={Math.random()} borderRadius="6px" m="5px" bg="white" alignItems="center" textAlign={"center"}  border="1px solid silver">
-                    <Img maxWidth="150px" h="150px" m="auto" _hover={{ transform: "scale(1.1)", transition: "400ms" }} p="10px" src={item.image} alt="" />
-                        <Text fontWeight="500" p="5px" fontSize={{base:"13px", md:"12px", lg:"14px"}}> {item.description}</Text>
-                       <Flex textAlign={"center"} justifyContent={'space-around'} w="50%" m="auto">
-                         <Text fontSize={"15px"} fontWeight={"600"} >   ₹ {item.new_price}</Text>
-                         <Text  fontSize={"12px"}><del> ₹ {item.old_price}</del></Text>
-                       </Flex>
-                       
-                        <Text fontSize={{base:"13px", md:"14px", lg:"15px"}} fontWeight={"medium"} color={"green"} pb="10px">Upto {item.discount} % Off</Text>
-                    </Box>)}
+                    {mobile.filter(item=>item.category_name==="mobiles").map(item => 
+                        <NavLink to={`/products/view/${item.item_id}`}>
+                            <Box key={Math.random()} borderRadius="6px" m="5px" bg="white" alignItems="center" textAlign={"center"}  border="1px solid silver">
+                            <Img maxWidth="150px" h="150px" m="auto" _hover={{ transform: "scale(1.1)", transition: "400ms" }} p="10px" src={item.image} alt="" />
+                                <Text fontWeight="500" p="5px" fontSize={{base:"13px", md:"12px", lg:"14px"}}> {item.description}</Text>
+                            <Flex textAlign={"center"} justifyContent={'space-around'} w="50%" m="auto">
+                                <Text fontSize={"15px"} fontWeight={"600"} >   ₹ {item.new_price}</Text>
+                                <Text  fontSize={"12px"}><del> ₹ {item.old_price}</del></Text>
+                            </Flex>
+                            
+                                <Text fontSize={{base:"13px", md:"14px", lg:"15px"}} fontWeight={"medium"} color={"green"} pb="10px">Upto {item.discount} % Off</Text>
+                            </Box>
+                        </NavLink>
+                    )}
                     
                 </Box>
             </Box>

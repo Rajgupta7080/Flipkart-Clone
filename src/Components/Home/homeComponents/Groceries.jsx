@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 import Slider from "react-slick";
+import { NavLink } from 'react-router-dom';
 
 function Groceries() {
     const [groceries, setGroceries] = useState([]);
@@ -64,7 +65,7 @@ function Groceries() {
       };
     const getFashion = () => {
         setLoading(true)
-        fetch("https://flipkart-data.onrender.com/disforyou")
+        fetch("http://localhost:4000/all")
             .then(res => res.json())
             .then(res => setGroceries(res))
             .catch(err => setError(true))
@@ -101,20 +102,24 @@ function Groceries() {
                 <Text paddingTop={{base:"120px", md:"120px", lg:"70px"}}  fontSize={{ base: '19px', md: '20px', lg: '30px' }}> Rush Hour</Text>
 
                 <WrapItem mt="10%">
-                    <Button fontSize={{ base: '6px', md: '9px', lg: '12px' }} m={"auto"} colorScheme='messenger'>VIEW ALL</Button>
+                    <Button fontSize={{ base: '6px', md: '9px', lg: '12px' }} m={"auto"} colorScheme='messenger'>
+                    <NavLink to='./products/grocery'>VIEW ALL </NavLink>
+                    </Button>
                 </WrapItem>
                 <Img    src="https://www.rvsmedia.co.uk/wp-content/uploads/2021/07/Apparel-Industry_Article_2.jpg" alt="fg" />
 
             </Box>
             <Box w={{ base: '80%', md: '75%', lg: '84%' }} m="auto" className="OffSlider">
                 <Slider {...settings}>
-                    {groceries.map(item => <Box key={Math.random()} m="5px" alignItems="center" textAlign={"center"}>
+                    {groceries.filter(item=>item.category_name==="grocery").map(item =>
+                    <NavLink to={`/products/view/${item.item_id}`}>
+                        <Box key={Math.random()} m="5px" alignItems="center" textAlign={"center"}>
                         <Img mw="170px" h="200px" m="auto" _hover={{ transform: "scale(1.1)",transition:"400ms" }} p="10px" src={item.image} alt="" />
                         <Text fontWeight="600" p="5px" fontSize={{base:"13px", md:"12px", lg:"14px"}}> {item.description}</Text>
                         
                         <Text color={"green"} fontSize={{base:"13px", md:"14px", lg:"15px"}}> Min {item.discount} % Off </Text>
                            
-                    </Box>)}
+                    </Box> </NavLink>)}
 
                 </Slider>
             </Box>
@@ -124,13 +129,15 @@ function Groceries() {
                 <Box className='itemGrid'display={{ base: 'grid', md: 'none', lg: 'none' }} >
                     
                     
-                    {groceries.map(item => <Box key={Math.random()} m="5px" borderRadius="6px" bg="white" alignItems="center" textAlign={"center"}  border="1px solid silver">
+                    {groceries.filter(item=>item.category_name==="grocery").map(item => 
+                    <NavLink to={`/products/view/${item.item_id}`}>
+                    <Box key={Math.random()} m="5px" borderRadius="6px" bg="white" alignItems="center" textAlign={"center"}  border="1px solid silver">
                         <Img w="180px" h="190px" m="auto" _hover={{ transform: "scale(1.1)", transition: "400ms" }}  p="10px" src={item.image} alt="" />
                         <Text fontWeight="700"> {item.description}</Text>
 
                         <Text color={"green"}>Min {item.discount} % Off</Text>
                         <Text pb="5px" > {item.brand}</Text>
-                    </Box>)}
+                    </Box></NavLink>)}
                     
                 </Box>
             </Box>

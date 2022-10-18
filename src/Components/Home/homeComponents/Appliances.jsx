@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 import Slider from "react-slick";
+import { NavLink } from 'react-router-dom';
 
 function Appliances() {
     const [appliances, setAppliances] = useState([]);
@@ -64,7 +65,7 @@ function Appliances() {
       };
     const getFashion = () => {
         setLoading(true)
-        fetch("https://flipkart-data.onrender.com/appliances")
+        fetch("http://localhost:4000/all")
             .then(res => res.json())
             .then(res => setAppliances(res))
             .catch(err => setError(true))
@@ -101,37 +102,45 @@ function Appliances() {
                 <Text p="8px" paddingTop={{base:"120px", md:"120px", lg:"70px"}} fontSize={{ base: '10px', md: '20px', lg: '30px' }}>  Appliances Top Deals</Text>
 
                 <WrapItem  pt="20px">
-                    <Button fontSize={{ base: '6px', md: '9px', lg: '12px' }} m={"auto"} colorScheme='messenger'>VIEW ALL</Button>
+                    <Button fontSize={{ base: '6px', md: '9px', lg: '12px' }} m={"auto"} colorScheme='messenger'>
+                    <NavLink to='./products/appliances'>VIEW ALL </NavLink>
+                    </Button>
                 </WrapItem>
                 <Img  src="https://rukminim1.flixcart.com/fk-p-flap/278/278/image/964e5530abdf3180.jpg?q=90" alt="fg" />
 
             </Box>
             <Box w={{ base: '80%', md: '75%', lg: '84%' }} m="auto" className='OffSlider'>
                 <Slider {...settings}>
-                    {appliances.map(item => <Box key={Math.random()} m="5px" alignItems="center" textAlign={"center"} >
+                    {appliances.filter(item=>item.category_name==="appliances").map(item => 
+                    <NavLink to={`/products/view/${item.item_id}`}>
+                    <Box key={Math.random()} m="5px" alignItems="center" textAlign={"center"} >
                     <Img maxWidth="190px" h="200px" m="auto" _hover={{ transform: "scale(1.1)", transition: "400ms" }} p="10px" src={item.image} alt="" />
                         <Text fontWeight="500" p="5px" fontSize={{base:"13px", md:"12px", lg:"14px"}}> {item.description}</Text>
-                       
-                       
+                    
                         <Text fontWeight={"medium"} mt="8px" fontSize={{base:"13px", md:"14px", lg:"15px"}} color={"green"}>Under ₹ {item.old_price}</Text>  
                   
-                    </Box>)}
+                    </Box>
+                    </NavLink>
+                    )}
 
                 </Slider>
             </Box>
              {/* mobile version */}
-             <Box display={{ base: 'block', md: 'none', lg: 'none' }} bg="orange" backgroundImage={"https://rukminim1.flixcart.com/fk-p-reco/850/200/images/Reco_BDS_9be2e3.jpg?q=90"} p="10px"> 
+            <Box display={{ base: 'block', md: 'none', lg: 'none' }} bg="orange" backgroundImage={"https://rukminim1.flixcart.com/fk-p-reco/850/200/images/Reco_BDS_9be2e3.jpg?q=90"} p="10px"> 
                 <Box mb="20px" mt="10px" alignItems={"center"} display="flex" justifyContent={"space-between"}> <Text fontSize={"19px"}>  Appliances Top Deals</Text> <Button size="sm" colorScheme='messenger'>View All</Button></Box>
                 <Box className='itemGrid'display={{ base: 'grid', md: 'none', lg: 'none' }} >
                     
                     
-                    {appliances.map(item => <Box key={Math.random()}   m="5px" borderRadius="6px" bg="white" alignItems="center" textAlign={"center"} border="1px solid silver">
+                    {appliances.filter(item=>item.category_name==="appliances").map(item => 
+                    <NavLink to={`/products/view/${item.item_id}`}>
+                    <Box key={Math.random()}   m="5px" borderRadius="6px" bg="white" alignItems="center" textAlign={"center"} border="1px solid silver">
                     <Img maxWidth="150px" h="150px" m="auto" _hover={{ transform: "scale(1.1)", transition: "400ms" }} p="10px" src={item.image} alt="" />
                         <Text fontWeight="500" p="5px"> {item.description}</Text>
-                       
-                       
+
                         <Text pb="10px" fontWeight={"medium"} color={"green"}>Under ₹ {item.old_price}</Text>  
-                    </Box>)}
+                    </Box>
+                    </NavLink>
+                    )}
                     
                 </Box>
             </Box>

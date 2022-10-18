@@ -18,8 +18,9 @@ const AllRoutes = () => {
         <>
             <Routes>
                 <Route path='/' element={<Home/>}/>
+                <Route path='/products/:category_name' element={<Products/>}/>
                 <Route path='/products' element={<Products/>}/>
-                <Route path='/products/:item_id' element={<Viewpage/>}/>
+                <Route path='/products/view/:item_id' element={<Viewpage/>}/>
                 <Route path='/cart' element={<CartPage/>}/>
                 <Route  path="/delivery" element={
                     <PrivateRoutes>
@@ -39,9 +40,9 @@ const AllRoutes = () => {
                     <ConsratsPage/>
                     }/>
                 <Route path='/orderpage' element={
-                     <PrivateRoutes>
+                    <PrivateRoutes>
                         <OrderPage/>
-                     </PrivateRoutes>
+                    </PrivateRoutes>
                 }/>
             </Routes>
         </>

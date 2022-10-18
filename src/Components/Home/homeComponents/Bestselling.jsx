@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 import Slider from "react-slick";
+import { NavLink } from 'react-router-dom';
 
 function Bestselling() {
     const [bestselling, setBestselling] = useState([]);
@@ -71,7 +72,7 @@ function Bestselling() {
       };
     const getFashion = () => {
         setLoading(true)
-        fetch("https://flipkart-data.onrender.com/bestselling")
+        fetch("http://localhost:4000/all")
             .then(res => res.json())
             .then(res => setBestselling(res))
             .catch(err => setError(true))
@@ -108,20 +109,27 @@ function Bestselling() {
                 <Text paddingTop={{base:"120px", md:"100px", lg:"70px"}} fontSize={{ base: '10px', md: '20px', lg: '30px' }}> Living Room Decorations </Text>
 
                 <WrapItem mt="20px">
-                    <Button fontSize={{ base: '6px', md: '9px', lg: '12px' }} m={"auto"} colorScheme='messenger'>VIEW ALL</Button>
+                    <Button fontSize={{ base: '6px', md: '9px', lg: '12px' }} m={"auto"} colorScheme='messenger'>
+                    <NavLink to='./products/home'>
+                        VIEW ALL
+                        </NavLink>
+                        </Button>
                 </WrapItem>
                 <Img   src="https://rukminim1.flixcart.com/reco/278/278/images/Reco_DTO.jpg?q=90" alt="fg" />
 
             </Box>
             <Box w={{ base: '80%', md: '75%', lg: '84%' }} m="auto" className="OffSlider">
                 <Slider {...settings}>
-                    {bestselling.map(item => <Box m="5px" key={Math.random()} alignItems="center" textAlign={"center"} >
-                    <Img maxWidth="190px" h="240px" m="auto" _hover={{ transform: "scale(1.1)", transition: "400ms" }} p="10px" src={item.image} alt="" />
-                        <Text p="5px" fontWeight="500" fontSize={{base:"13px", md:"12px", lg:"14px"}}> {item.description}</Text>
-                      
-                       
-                        <Text pb="16px" fontWeight={"medium"} color={"green"} mt="8px" fontSize={{base:"13px", md:"14px", lg:"15px"}}> From  ₹  {item.new_price} </Text>
-                    </Box>)}
+                    {bestselling.filter(item=>item.category_name==="home").map(item =>
+                        <NavLink to={`/products/view/${item.item_id}`}>
+                            <Box m="5px" key={Math.random()} alignItems="center" textAlign={"center"} >
+                            <Img maxWidth="190px" h="240px" m="auto" _hover={{ transform: "scale(1.1)", transition: "400ms" }} p="10px" src={item.image} alt="" />
+                                <Text p="5px" fontWeight="500" fontSize={{base:"13px", md:"12px", lg:"14px"}}> {item.description}</Text>
+                            
+                                <Text pb="16px" fontWeight={"medium"} color={"green"} mt="8px" fontSize={{base:"13px", md:"14px", lg:"15px"}}> From  ₹  {item.new_price} </Text>
+                            </Box>
+                        </NavLink>
+                    )}
 
                 </Slider>
             </Box>
